@@ -1,0 +1,74 @@
+{
+    "LS_COLORS": {
+        "branch": "master",
+        "description": "A collection of LS_COLORS definitions; needs your contribution!",
+        "homepage": "",
+        "owner": "trapd00r",
+        "repo": "LS_COLORS",
+        "rev": "6680df5e3e05176ef7028c749894923bd105e6ee",
+        "sha256": "1sy5pmick8915cvrqjy94j8mvpc5g4yd1cfflrkfy143paf9iklv",
+        "type": "tarball",
+        "url": "https://github.com/trapd00r/LS_COLORS/archive/6680df5e3e05176ef7028c749894923bd105e6ee.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "neovim": {
+        "branch": "master",
+        "description": "Vim-fork focused on extensibility and usability",
+        "homepage": "https://neovim.io",
+        "owner": "neovim",
+        "repo": "neovim",
+        "rev": "42b441738d833543c98c97cad0c200bde28ae233",
+        "sha256": "1bn34ay4xvzm14cbz2zn65c77bnpamjffp4b5cmcvhp7hc3l18zv",
+        "type": "tarball",
+        "url": "https://github.com/neovim/neovim/archive/42b441738d833543c98c97cad0c200bde28ae233.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "niv": {
+        "branch": "master",
+        "description": "Easy dependency management for Nix projects",
+        "homepage": "https://github.com/nmattia/niv",
+        "owner": "nmattia",
+        "repo": "niv",
+        "rev": "f73bf8d584148677b01859677a63191c31911eae",
+        "sha256": "0jlmrx633jvqrqlyhlzpvdrnim128gc81q5psz2lpp2af8p8q9qs",
+        "type": "tarball",
+        "url": "https://github.com/nmattia/niv/archive/f73bf8d584148677b01859677a63191c31911eae.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "nixpkgs": {
+        "branch": "nixos-19.09",
+        "description": "A read-only mirror of NixOS/nixpkgs tracking the released channels. Send issues and PRs to",
+        "homepage": "https://github.com/NixOS/nixpkgs",
+        "owner": "NixOS",
+        "repo": "nixpkgs-channels",
+        "rev": "a7ceb2536ab11973c59750c4c48994e3064a75fa",
+        "sha256": "0hka65f31njqpq7i07l22z5rs7lkdfcl4pbqlmlsvnysb74ynyg1",
+        "type": "tarball",
+        "url": "https://github.com/NixOS/nixpkgs-channels/archive/a7ceb2536ab11973c59750c4c48994e3064a75fa.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "nixpkgs-unstable": {
+        "branch": "nixpkgs-unstable",
+        "description": "A read-only mirror of NixOS/nixpkgs tracking the released channels. Send issues and PRs to",
+        "homepage": "https://github.com/NixOS/nixpkgs",
+        "owner": "NixOS",
+        "repo": "nixpkgs-channels",
+        "rev": "10100a97c8964e82b30f180fda41ade8e6f69e41",
+        "sha256": "011f36kr3c1ria7rag7px26bh73d1b0xpqadd149bysf4hg17rln",
+        "type": "tarball",
+        "url": "https://github.com/NixOS/nixpkgs-channels/archive/10100a97c8964e82b30f180fda41ade8e6f69e41.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "powerlevel10k": {
+        "branch": "master",
+        "description": "A Zsh theme",
+        "homepage": "",
+        "owner": "romkatv",
+        "repo": "powerlevel10k",
+        "rev": "f14ffcff2c959841cc361cdb671099e011cae058",
+        "sha256": "023yjvdg7n2276kvvbw684yrnyam099zfzsh2vzcqvi9lsmp4s0r",
+        "type": "tarball",
+        "url": "https://github.com/romkatv/powerlevel10k/archive/f14ffcff2c959841cc361cdb671099e011cae058.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    }
+}

@@ -28,7 +28,7 @@ in
       exercism
       fd
       ffsend
-      firefox-bin
+      firefox
       gitAndTools.gh
       gnome3.geary
       git-lfs

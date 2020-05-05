@@ -3,14 +3,14 @@
 # Any items in the `env` entry below will be added as
 # environment variables. Some entries may override variables
 # set by alacritty itself.
-env:
+#env:
   # TERM variable
   #
   # This value is used to set the `$TERM` environment variable for
   # each instance of Alacritty. If it is not present, alacritty will
   # check the local terminfo database and use `alacritty` if it is
   # available, otherwise `xterm-256color` is used.
-  TERM: xterm-256color
+  #TERM: alacritty
 
 #window:
   # Window dimensions (changes require restart)
@@ -38,7 +38,7 @@ env:
   #  y: 0
 
   # Spread additional padding evenly around the terminal content.
-  # dynamic_padding: False
+  #dynamic_padding: false
 
   # Window decorations
   #
@@ -87,15 +87,6 @@ env:
   # scrollback is enabled (history > 0).
   #multiplier: 3
 
-# Spaces per Tab (changes require restart)
-#
-# This setting defines the width of a tab in cells.
-#
-# Some applications, like Emacs, rely on knowing about the width of a tab.
-# To prevent unexpected behavior in these applications, it's also required to
-# change the `it` value in terminfo when altering this setting.
-#tabspaces: 8
-
 # Font configuration
 font:
   # Normal (roman) font face
@@ -106,7 +97,7 @@ font:
     #   - (macOS) Menlo
     #   - (Linux/BSD) monospace
     #   - (Windows) Consolas
-    family: FiraCode Nerd Font
+    family: MesloLGS Nerd Font
 
     # The `style` can be specified to pick a specific face.
     style: Regular
@@ -117,10 +108,10 @@ font:
     #
     # If the bold family is not specified, it will fall back to the
     # value specified for the normal font.
-    family: FiraCode Nerd Font
+    family: MesloLGS Nerd Font
 
     # The `style` can be specified to pick a specific face.
-    #style: Bold
+    style: Bold
 
   # Italic font face
   italic:
@@ -128,7 +119,7 @@ font:
     #
     # If the italic family is not specified, it will fall back to the
     # value specified for the normal font.
-    family: FiraCode Nerd Font
+    family: MesloLGS Nerd Font
 
     # The `style` can be specified to pick a specific face.
     style: Italic
@@ -139,13 +130,13 @@ font:
     #
     # If the bold italic family is not specified, it will fall back to the
     # value specified for the normal font.
-    family: FiraCode Nerd Font
+    family: MesloLGS Nerd Font
 
     # The `style` can be specified to pick a specific face.
-    #style: MesloLGS NF
+    style: Bold Italic
 
   # Point size
-  size: 11.0
+  size: 10.0
 
   # Offset is the extra space around each character. `offset.y` can be thought of
   # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
@@ -183,17 +174,17 @@ font:
 colors:
   # Default colors
   primary:
-    background: '0x282c34'
     foreground: '0xabb2bf'
+    background: '0x282c34'
 
   # Cursor colors
   cursor:
-    text: '0x282c34'
+    text: '0x5c6370'
     cursor: '0xabb2bf'
 
   # Normal colors
   normal:
-    black:   '0x282c34'
+    black:   '0x5c6370'
     red:     '0xe06c75'
     green:   '0x98c379'
     yellow:  '0xe5c07b'
@@ -204,14 +195,95 @@ colors:
 
   # Bright colors
   bright:
-    black:   '0x3e4452'
+    black:   '0x4b5263'
     red:     '0xbe5046'
     green:   '0x98c379'
     yellow:  '0xd19a66'
     blue:    '0x61afef'
     magenta: '0xc678dd'
     cyan:    '0x56b6c2'
-    white:   '0x5c6370'
+    white:   '0x3e4452'
+
+# Colors (Tomorrow Night Bright)
+
+    # Bright and dim foreground colors
+    #
+    # The dimmed foreground color is calculated automatically if it is not present.
+    # If the bright foreground color is not set, or `draw_bold_text_with_bright_colors`
+    # is `false`, the normal foreground color will be used.
+    #dim_foreground: '#9a9a9a'
+    #bright_foreground: '#ffffff'
+
+  # Cursor colors
+  #
+  # Colors which should be used to draw the terminal cursor. If these are
+  # unset, the cursor color will be the inverse of the cell color.
+  #cursor:
+  #  text: '#000000'
+  #  cursor: '#ffffff'
+
+  # Vi mode cursor colors
+  #
+  # Colors for the cursor when the vi mode is active. If these are unset, the
+  # cursor color will be the inverse of the cell color.
+  #vi_mode_cursor:
+  #  text: '#000000'
+  #  cursor: '#ffffff'
+
+  # Selection colors
+  #
+  # Colors which should be used to draw the selection area. If selection
+  # background is unset, selection color will be the inverse of the cell colors.
+  # If only text is unset the cell text color will remain the same.
+  #selection:
+  #  text: '#eaeaea'
+  #  background: '#404040'
+
+  # Normal colors
+  #normal:
+  #  black:   '#000000'
+  #  red:     '#d54e53'
+  #  green:   '#b9ca4a'
+  #  yellow:  '#e6c547'
+  #  blue:    '#7aa6da'
+  #  magenta: '#c397d8'
+  #  cyan:    '#70c0ba'
+  #  white:   '#eaeaea'
+
+  # Bright colors
+  #bright:
+  #  black:   '#666666'
+  #  red:     '#ff3334'
+  #  green:   '#9ec400'
+  #  yellow:  '#e7c547'
+  #  blue:    '#7aa6da'
+  #  magenta: '#b77ee0'
+  #  cyan:    '#54ced6'
+  #  white:   '#ffffff'
+
+  # Dim colors
+  #
+  # If the dim colors are not set, they will be calculated automatically based
+  # on the `normal` colors.
+  #dim:
+  #  black:   '#000000'
+  #  red:     '#8c3336'
+  #  green:   '#7a8530'
+  #  yellow:  '#97822e'
+  #  blue:    '#506d8f'
+  #  magenta: '#80638e'
+  #  cyan:    '#497e7a'
+  #  white:   '#9a9a9a'
+
+  # Indexed Colors
+  #
+  # The indexed colors include all colors from 16 to 256.
+  # When these are not set, they're filled with sensible defaults.
+  #
+  # Example:
+  #   `- { index: 16, color: '#ff00ff' }`
+  #
+  #indexed_colors: []
 
 # Visual Bell
 #
@@ -237,7 +309,7 @@ colors:
 #visual_bell:
 #  animation: EaseOutExpo
 #  duration: 0
-#  color: '0xffffff'
+#  color: '#ffffff'
 
 # Background opacity
 #
@@ -252,7 +324,7 @@ colors:
   #save_to_clipboard: false
 
 # Allow terminal applications to change Alacritty's window title.
-#dynamic_title: true
+dynamic_title: true
 
 #cursor:
   # Cursor style
@@ -263,12 +335,24 @@ colors:
   #   - | Beam
   #style: Block
 
+  # Vi mode cursor style
+  #
+  # If the vi mode cursor style is `None` or not specified, it will fall back to
+  # the style of the active value of the normal cursor.
+  #
+  # See `cursor.style` for available options.
+  #vi_mode_style: None
+
   # If this is `true`, the cursor will be rendered as a hollow box when the
   # window is not focused.
   #unfocused_hollow: true
 
+  # Thickness of the cursor relative to the cell width as floating point number
+  # from `0.0` to `1.0`.
+  #thickness: 0.15
+
 # Live config reload (changes require restart)
-live_config_reload: true
+#live_config_reload: true
 
 # Shell
 #
@@ -303,43 +387,19 @@ live_config_reload: true
 # Send ESC (\x1b) before characters when alt is pressed.
 #alt_send_esc: true
 
-#debug:
-  # Display the time it takes to redraw each frame.
-  #render_timer: false
-
-  # Keep the log file after quitting Alacritty.
-  #persistent_logging: false
-
-  # Log level
-  #
-  # Values for `log_level`:
-  #   - None
-  #   - Error
-  #   - Warn
-  #   - Info
-  #   - Debug
-  #   - Trace
-  #log_level: Warn
-
-  # Print all received window events.
-  #print_events: false
-
-  # Record all characters and escape sequences as test data.
-  #ref_test: false
-
-#mouse:
+mouse:
   # Click settings
   #
   # The `double_click` and `triple_click` settings control the time
   # alacritty should wait for accepting multiple clicks as one double
   # or triple click.
-  #double_click: { threshold: 300 }
-  #triple_click: { threshold: 300 }
+  # double_click: { threshold: 300 }
+  # triple_click: { threshold: 300 }
 
   # If this is `true`, the cursor is temporarily hidden when typing.
   #hide_when_typing: false
 
-  #url:
+  url:
     # URL launcher
     #
     # This program is executed when clicking on a text which is recognized as a URL.
@@ -351,9 +411,9 @@ live_config_reload: true
     #   - (macOS) open
     #   - (Linux/BSD) xdg-open
     #   - (Windows) explorer
-    #launcher:
-    #  program: xdg-open
-    #  args: []
+    launcher:
+     program: xdg-open
+     args: []
 
     # URL modifiers
     #
@@ -424,6 +484,7 @@ live_config_reload: true
 #
 # - `action`: Execute a predefined action
 #
+#   - ToggleViMode
 #   - Copy
 #   - Paste
 #   - PasteSelection
@@ -443,11 +504,41 @@ live_config_reload: true
 #   - ToggleFullscreen
 #   - SpawnNewInstance
 #   - ClearLogNotice
+#   - ClearSelection
 #   - ReceiveChar
 #   - None
 #
+#   (`mode: Vi` only):
+#   - Open
+#   - Up
+#   - Down
+#   - Left
+#   - Right
+#   - First
+#   - Last
+#   - FirstOccupied
+#   - High
+#   - Middle
+#   - Low
+#   - SemanticLeft
+#   - SemanticRight
+#   - SemanticLeftEnd
+#   - SemanticRightEnd
+#   - WordRight
+#   - WordLeft
+#   - WordRightEnd
+#   - WordLeftEnd
+#   - Bracket
+#   - ToggleNormalSelection
+#   - ToggleLineSelection
+#   - ToggleBlockSelection
+#   - ToggleSemanticSelection
+#
 #   (macOS only):
 #   - ToggleSimpleFullscreen: Enters fullscreen without occupying another space
+#
+#   (Linux/BSD only):
+#   - CopySelection: Copies into selection buffer
 #
 # - `command`: Fork and execute a specified command plus arguments
 #
@@ -489,40 +580,108 @@ live_config_reload: true
 #
 # If the same trigger is assigned to multiple actions, all of them are executed
 # at once.
-#key_bindings:
+key_bindings:
+  - { key: Paste,                                action: Paste          }
+  - { key: Copy,                                 action: Copy           }
+  - { key: L,         mods: Control,             action: ClearLogNotice }
+  # - { key: L,         mods: Control, mode: ~Vi,  chars: "\x0c"          }
+  - { key: PageUp,    mods: Shift,   mode: ~Alt, action: ScrollPageUp,  }
+  - { key: PageDown,  mods: Shift,   mode: ~Alt, action: ScrollPageDown }
+  - { key: Home,      mods: Shift,   mode: ~Alt, action: ScrollToTop,   }
+  - { key: End,       mods: Shift,   mode: ~Alt, action: ScrollToBottom }
+
+  # Vi Mode
+  #- { key: Space,  mods: Shift|Control, mode: Vi, action: ScrollToBottom          }
+  #- { key: Space,  mods: Shift|Control,           action: ToggleViMode            }
+  #- { key: Escape,                      mode: Vi, action: ClearSelection          }
+  #- { key: I,                           mode: Vi, action: ScrollToBottom          }
+  #- { key: I,                           mode: Vi, action: ToggleViMode            }
+  #- { key: Y,      mods: Control,       mode: Vi, action: ScrollLineUp            }
+  #- { key: E,      mods: Control,       mode: Vi, action: ScrollLineDown          }
+  #- { key: G,                           mode: Vi, action: ScrollToTop             }
+  #- { key: G,      mods: Shift,         mode: Vi, action: ScrollToBottom          }
+  #- { key: B,      mods: Control,       mode: Vi, action: ScrollPageUp            }
+  #- { key: F,      mods: Control,       mode: Vi, action: ScrollPageDown          }
+  #- { key: U,      mods: Control,       mode: Vi, action: ScrollHalfPageUp        }
+  #- { key: D,      mods: Control,       mode: Vi, action: ScrollHalfPageDown      }
+  #- { key: Y,                           mode: Vi, action: Copy                    }
+  #- { key: Y,                           mode: Vi, action: ClearSelection          }
+  #- { key: Copy,                        mode: Vi, action: ClearSelection          }
+  #- { key: V,                           mode: Vi, action: ToggleNormalSelection   }
+  #- { key: V,      mods: Shift,         mode: Vi, action: ToggleLineSelection     }
+  #- { key: V,      mods: Control,       mode: Vi, action: ToggleBlockSelection    }
+  #- { key: V,      mods: Alt,           mode: Vi, action: ToggleSemanticSelection }
+  #- { key: Return,                      mode: Vi, action: Open                    }
+  #- { key: K,                           mode: Vi, action: Up                      }
+  #- { key: J,                           mode: Vi, action: Down                    }
+  #- { key: H,                           mode: Vi, action: Left                    }
+  #- { key: L,                           mode: Vi, action: Right                   }
+  #- { key: Up,                          mode: Vi, action: Up                      }
+  #- { key: Down,                        mode: Vi, action: Down                    }
+  #- { key: Left,                        mode: Vi, action: Left                    }
+  #- { key: Right,                       mode: Vi, action: Right                   }
+  #- { key: Key0,                        mode: Vi, action: First                   }
+  #- { key: Key4,   mods: Shift,         mode: Vi, action: Last                    }
+  #- { key: Key6,   mods: Shift,         mode: Vi, action: FirstOccupied           }
+  #- { key: H,      mods: Shift,         mode: Vi, action: High                    }
+  #- { key: M,      mods: Shift,         mode: Vi, action: Middle                  }
+  #- { key: L,      mods: Shift,         mode: Vi, action: Low                     }
+  #- { key: B,                           mode: Vi, action: SemanticLeft            }
+  #- { key: W,                           mode: Vi, action: SemanticRight           }
+  #- { key: E,                           mode: Vi, action: SemanticRightEnd        }
+  #- { key: B,      mods: Shift,         mode: Vi, action: WordLeft                }
+  #- { key: W,      mods: Shift,         mode: Vi, action: WordRight               }
+  #- { key: E,      mods: Shift,         mode: Vi, action: WordRightEnd            }
+  #- { key: Key5,   mods: Shift,         mode: Vi, action: Bracket                 }
+
   # (Windows, Linux, and BSD only)
-  #- { key: V,        mods: Control|Shift, action: Paste            }
-  #- { key: C,        mods: Control|Shift, action: Copy             }
-  #- { key: Insert,   mods: Shift,         action: PasteSelection   }
-  #- { key: Key0,     mods: Control,       action: ResetFontSize    }
-  #- { key: Equals,   mods: Control,       action: IncreaseFontSize }
-  #- { key: Add,      mods: Control,       action: IncreaseFontSize }
-  #- { key: Subtract, mods: Control,       action: DecreaseFontSize }
-  #- { key: Minus,    mods: Control,       action: DecreaseFontSize }
+  - { key: V,        mods: Control|Shift,           action: Paste            }
+  - { key: C,        mods: Control|Shift,           action: Copy             }
+  # - { key: C,        mods: Control|Shift, mode: Vi, action: ClearSelection   }
+  - { key: Insert,   mods: Shift,                   action: PasteSelection   }
+  - { key: Key0,     mods: Control,                 action: ResetFontSize    }
+  - { key: Equals,   mods: Control,                 action: IncreaseFontSize }
+  - { key: Add,      mods: Control,                 action: IncreaseFontSize }
+  - { key: Subtract, mods: Control,                 action: DecreaseFontSize }
+  - { key: Minus,    mods: Control,                 action: DecreaseFontSize }
 
   # (Windows only)
   #- { key: Return,   mods: Alt,           action: ToggleFullscreen }
 
   # (macOS only)
-  #- { key: Key0,   mods: Command,         action: ResetFontSize    }
-  #- { key: Equals, mods: Command,         action: IncreaseFontSize }
-  #- { key: Add,    mods: Command,         action: IncreaseFontSize }
-  #- { key: Minus,  mods: Command,         action: DecreaseFontSize }
-  #- { key: K,      mods: Command,         action: ClearHistory     }
-  #- { key: K,      mods: Command,         chars: "\x0c"            }
-  #- { key: V,      mods: Command,         action: Paste            }
-  #- { key: C,      mods: Command,         action: Copy             }
-  #- { key: H,      mods: Command,         action: Hide             }
-  #- { key: M,      mods: Command,         action: Minimize         }
-  #- { key: Q,      mods: Command,         action: Quit             }
-  #- { key: W,      mods: Command,         action: Quit             }
-  #- { key: F,      mods: Command|Control, action: ToggleFullscreen }
+  #- { key: K,      mods: Command, mode: ~Vi, chars: "\x0c"            }
+  #- { key: Key0,   mods: Command,            action: ResetFontSize    }
+  #- { key: Equals, mods: Command,            action: IncreaseFontSize }
+  #- { key: Add,    mods: Command,            action: IncreaseFontSize }
+  #- { key: Minus,  mods: Command,            action: DecreaseFontSize }
+  #- { key: K,      mods: Command,            action: ClearHistory     }
+  #- { key: V,      mods: Command,            action: Paste            }
+  #- { key: C,      mods: Command,            action: Copy             }
+  #- { key: C,      mods: Command, mode: Vi,  action: ClearSelection   }
+  #- { key: H,      mods: Command,            action: Hide             }
+  #- { key: M,      mods: Command,            action: Minimize         }
+  #- { key: Q,      mods: Command,            action: Quit             }
+  #- { key: W,      mods: Command,            action: Quit             }
+  #- { key: N,      mods: Command,            action: SpawnNewInstance }
+  #- { key: F,      mods: Command|Control,    action: ToggleFullscreen }
 
-  #- { key: Paste,                    action: Paste                            }
-  #- { key: Copy,                     action: Copy                             }
-  #- { key: L,         mods: Control, action: ClearLogNotice                   }
-  #- { key: L,         mods: Control, chars: "\x0c"                            }
-  #- { key: PageUp,    mods: Shift,   action: ScrollPageUp,   mode: ~Alt       }
-  #- { key: PageDown,  mods: Shift,   action: ScrollPageDown, mode: ~Alt       }
-  #- { key: Home,      mods: Shift,   action: ScrollToTop,    mode: ~Alt       }
-  #- { key: End,       mods: Shift,   action: ScrollToBottom, mode: ~Alt       }
+#debug:
+  # Display the time it takes to redraw each frame.
+  #render_timer: false
+
+  # Keep the log file after quitting Alacritty.
+  #persistent_logging: false
+
+  # Log level
+  #
+  # Values for `log_level`:
+  #   - None
+  #   - Error
+  #   - Warn
+  #   - Info
+  #   - Debug
+  #   - Trace
+  #log_level: Warn
+
+  # Print all received window events.
+  #print_events: false

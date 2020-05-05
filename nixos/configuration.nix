@@ -18,8 +18,25 @@
   boot.loader.grub.version = 2;
   boot.loader.grub.device = "nodev";
   boot.loader.grub.efiSupport = true;
-  #boot.loader.grub.useOSProber = true;
+  boot.loader.grub.useOSProber = false;
   boot.supportedFilesystems = [ "ntfs" ];
+  boot.loader.grub.extraEntries = ''
+	menuentry "Windows Boot Manager (on /dev/nvme0n1p2)" --class windows --class os {
+		insmod part_gpt
+		insmod fat
+		search --no-floppy --fs-uuid --set=root 40E2-A3BF
+		chainloader /EFI/Microsoft/Boot/bootmgfw.efi
+	}
+
+	menuentry "Fedora" --class fedora --class os {
+		insmod part_gpt
+		insmod ext2
+		insmod fat
+		search --no-floppy --fs-uuid --set=root 40E2-A3BF
+		chainloader /EFI/fedora/grubx64.efi
+	}
+'';
+
 
   # networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = false;  # Enables wireless support via wpa_supplicant.

@@ -1,4 +1,7 @@
-# # Hook direnv
+# initialize keychain
+eval $(keychain -q --eval id_rsa)
+# Hook direnv
+export DIRENV_LOG_FORMAT=
 eval "$(direnv hook zsh)"
 
 # Enable Powerlevel10k instant prompt. Should stay at the top of ~/.zshrc.

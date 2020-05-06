@@ -13,7 +13,6 @@ in
 
   home.packages = with pkgs-unstable; [
       ark
-      alacritty
       awscli
       bitwarden
       blender
@@ -38,7 +37,7 @@ in
       gwenview
       handbrake
       htop
-      ldmtool
+      keychain
       lorri
       libsixel
       luajit
@@ -46,6 +45,7 @@ in
       niv
       neovim
       nerdfonts
+      nix-du
       nix-index
       nix-prefetch
       nix-prefetch-github

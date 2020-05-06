@@ -41,8 +41,8 @@
   # networking.wireless.enable = false;  # Enables wireless support via wpa_supplicant.
 
   # Enable networking
-  # networking.interfaces.enp0s31f6.useDHCP = true;
-  # networking.interfaces.wlp2s0.useDHCP = true;
+  networking.interfaces.enp0s31f6.useDHCP = true;
+  networking.interfaces.wlp2s0.useDHCP = true;
   networking.networkmanager.enable = true;
 
   # Configure network proxy if necessary
@@ -63,7 +63,7 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     git
-    latte-dock
+    # latte-dock
     ntfs3g
     kdeApplications.knotes
     os-prober
@@ -104,10 +104,12 @@
   services.xserver.layout = "us";
   # services.xserver.xkbOptions = "eurosign:e";
   services.xserver.screenSection = ''
-    Option "metamodes" "nvidia-auto-select +0+0 { ForceCompositionPipeline = On }"
-    Option         "AllowIndirectGLXProtocol" "off"
-    Option         "TripleBuffer" "on"
+      Option "NoFlip" "true"
   '';
+  # Old but deprecated settings
+  #Option "metamodes" "nvidia-auto-select +0+0 { ForceCompositionPipeline = On }"
+  #Option         "AllowIndirectGLXProtocol" "off"
+  # Option         "TripleBuffer" "on"
 
   # Enable touchpad support.
   # services.xserver.libinput.enable = true;

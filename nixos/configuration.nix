@@ -42,8 +42,9 @@
 
   # Enable networking
   networking.interfaces.enp0s31f6.useDHCP = true;
-  networking.interfaces.wlp2s0.useDHCP = true;
+  # networking.interfaces.wlp2s0.useDHCP = true;
   networking.networkmanager.enable = true;
+  networking.resolvconf.dnsExtensionMechanism = false;
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -58,6 +59,9 @@
 
   # Set your time zone.
   services.localtime.enable = true;
+
+  # Enable early oom
+  services.earlyoom.enable = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget

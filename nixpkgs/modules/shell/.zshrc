@@ -9,12 +9,6 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# Bind ctrl left and right
-bindkey '^[[1;5D' backward-word
-bindkey '^[[1;5C' forward-word
-
-bindkey '^[[1;3D' beginning-of-line
-bindkey '^[[1;3C' end-of-line
 
 # Dircolors and LS_colors
 export CLICOLOR=1
@@ -125,9 +119,19 @@ if (( ${+terminfo[smkx]} && ${+terminfo[rmkx]} )); then
 	add-zle-hook-widget -Uz zle-line-finish zle_application_mode_stop
 fi
 
-# Set up alt left alt right options
-bindkey "^[^[[C" forward-word
-bindkey "^[^[[D" backward-word
+# Control left/right for backward word/forward word
+key[Control-Left]="${terminfo[kLFT5]}"
+key[Control-Right]="${terminfo[kRIT5]}"
+
+[[ -n "${key[Control-Left]}"  ]] && bindkey -- "${key[Control-Left]}"  backward-word
+[[ -n "${key[Control-Right]}" ]] && bindkey -- "${key[Control-Right]}" forward-word
+
+# Alt left/right for beginning-of-line/end-of-line
+key[Alt-Left]="${terminfo[kLFT3]}"
+key[Alt-Right]="${terminfo[kRIT3]}"
+
+[[ -n "${key[Alt-Left]}"  ]] && bindkey -- "${key[Alt-Left]}"  beginning-of-line
+[[ -n "${key[Alt-Right]}" ]] && bindkey -- "${key[Alt-Right]}" end-of-line
 
 # Fish like history
 autoload -Uz up-line-or-beginning-search down-line-or-beginning-search

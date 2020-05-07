@@ -20,6 +20,7 @@ in
       cudnn_cudatoolkit_10_1
       coreutils
       curl
+      gitAndTools.delta
       direnv
       dotnetCorePackages.netcore_3_1
       discord

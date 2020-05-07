@@ -3,14 +3,14 @@
 # Any items in the `env` entry below will be added as
 # environment variables. Some entries may override variables
 # set by alacritty itself.
-#env:
+env:
   # TERM variable
   #
   # This value is used to set the `$TERM` environment variable for
   # each instance of Alacritty. If it is not present, alacritty will
   # check the local terminfo database and use `alacritty` if it is
   # available, otherwise `xterm-256color` is used.
-  #TERM: alacritty
+  TERM: xterm-256color
 
 #window:
   # Window dimensions (changes require restart)
@@ -317,8 +317,8 @@ colors:
 # The value `0.0` is completely transparent and `1.0` is opaque.
 #background_opacity: 1.0
 
-#selection:
-  #semantic_escape_chars: ",│`|:\"' ()[]{}<>\t"
+# selection:
+  # semantic_escape_chars: ",│`|:\"' ()[]{}<>\t"
 
   # When set to `true`, selected text will be copied to the primary clipboard.
   #save_to_clipboard: false
@@ -372,7 +372,7 @@ dynamic_title: true
 #
 # Directory the shell is started in. If this is unset, or `None`, the working
 # directory of the parent process will be used.
-#working_directory: None
+working_directory: /home/mjlbach 
 
 # WinPTY backend (Windows only)
 #
@@ -385,7 +385,7 @@ dynamic_title: true
 #winpty_backend: false
 
 # Send ESC (\x1b) before characters when alt is pressed.
-#alt_send_esc: true
+alt_send_esc: true
 
 mouse:
   # Click settings
@@ -590,6 +590,9 @@ key_bindings:
   - { key: Home,      mods: Shift,   mode: ~Alt, action: ScrollToTop,   }
   - { key: End,       mods: Shift,   mode: ~Alt, action: ScrollToBottom }
 
+  # - { key: Home,      mods: Shift,              action: ScrollToTop,   }
+  # - { key: End,       mods: Shift,              action: ScrollToBottom }
+
   # Vi Mode
   #- { key: Space,  mods: Shift|Control, mode: Vi, action: ScrollToBottom          }
   #- { key: Space,  mods: Shift|Control,           action: ToggleViMode            }
@@ -645,6 +648,7 @@ key_bindings:
   - { key: Subtract, mods: Control,                 action: DecreaseFontSize }
   - { key: Minus,    mods: Control,                 action: DecreaseFontSize }
 
+  - { key: Back,     mods: Shift,                   chars: "\x7f" }
   # (Windows only)
   #- { key: Return,   mods: Alt,           action: ToggleFullscreen }
 

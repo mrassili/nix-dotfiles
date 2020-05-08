@@ -19,7 +19,6 @@
   boot.loader.grub.device = "nodev";
   boot.loader.grub.efiSupport = true;
   boot.loader.grub.useOSProber = false;
-  boot.supportedFilesystems = [ "ntfs" ];
   boot.loader.grub.extraEntries = ''
 	menuentry "Windows Boot Manager (on /dev/nvme0n1p2)" --class windows --class os {
 		insmod part_gpt
@@ -36,6 +35,7 @@
 		chainloader /EFI/fedora/grubx64.efi
 	}
 '';
+  boot.supportedFilesystems = [ "ntfs" ];
 
   # networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = false;  # Enables wireless support via wpa_supplicant.
@@ -102,6 +102,7 @@
   # Enable sound.
   sound.enable = true;
   hardware.pulseaudio.enable = true;
+  hardware.pulseaudio.support32Bit = true;
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
@@ -129,6 +130,7 @@
   hardware.opengl = {
 	enable = true;
         driSupport32Bit = true;
+	extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
         setLdLibraryPath = true;
     };
 

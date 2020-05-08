@@ -33,6 +33,12 @@
       fsType = "vfat";
     };
 
+  fileSystems."/data" =
+    { device = "/dev/disk/by-uuid/E68CD0738CD0402B";
+      fsType = "ntfs";
+      options = ["rw" "uid=1000" "gid=1000" "exec" "umask=000"];
+    };
+
   swapDevices =
     [ { device = "/dev/disk/by-uuid/daddec15-1691-4efc-b783-9d683b44a05c"; }
     ];

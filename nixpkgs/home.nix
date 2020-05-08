@@ -24,7 +24,6 @@ in
       direnv
       dotnetCorePackages.netcore_3_1
       discord
-      emacs
       exercism
       fd
       ffsend
@@ -56,7 +55,9 @@ in
       nodejs-13_x
       nnn
       openssh
+      okular
       poetry
+      # python-language-server
       pre-commit
       rsync
       riot-desktop
@@ -90,6 +91,9 @@ in
   
 
   services.lorri.enable = true;
+  programs.emacs.enable = true;
+  services.emacs.enable = true;
+  # services.emacs.client.enable = true;
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
   # when a new Home Manager release introduces backwards

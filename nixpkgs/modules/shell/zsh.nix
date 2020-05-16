@@ -26,7 +26,7 @@ in
   programs.zsh = {
     enable = true;
     enableCompletion= false;
-    initExtraBeforeCompInit = builtins.readFile ./.zshrc ;
+    initExtraBeforeCompInit = builtins.readFile ./zshrc.zsh ;
     plugins = [ {
       name = "powerlevel10k";
       src =  pkgs.fetchFromGitHub {

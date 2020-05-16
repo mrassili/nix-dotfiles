@@ -5,37 +5,44 @@
 { config, pkgs, ... }:
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ./modules/sync/dropbox.nix
+      # ./modules/sync/dropbox.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = false;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.efi.efiSysMountPoint = "/boot/efi";
-  boot.loader.grub.enable = true;
-  boot.loader.grub.version = 2;
-  boot.loader.grub.device = "nodev";
-  boot.loader.grub.efiSupport = true;
-  boot.loader.grub.useOSProber = false;
-  boot.loader.grub.extraEntries = ''
-	menuentry "Windows Boot Manager (on /dev/nvme0n1p2)" --class windows --class os {
-		insmod part_gpt
-		insmod fat
-		search --no-floppy --fs-uuid --set=root 40E2-A3BF
-		chainloader /EFI/Microsoft/Boot/bootmgfw.efi
-	}
-
-	menuentry "Fedora" --class fedora --class os {
-		insmod part_gpt
-		insmod ext2
-		insmod fat
-		search --no-floppy --fs-uuid --set=root 40E2-A3BF
-		chainloader /EFI/fedora/grubx64.efi
-	}
-'';
   boot.supportedFilesystems = [ "ntfs" ];
+  boot.loader = {
+    systemd-boot.enable = false;
+    efi = {
+      canTouchEfiVariables = true;
+      efiSysMountPoint = "/boot/efi";
+    };
+    grub = {
+      enable = true;
+      version = 2;
+      device = "nodev";
+      efiSupport = true;
+      useOSProber = false;
+      extraEntries = ''
+        menuentry "Windows Boot Manager (on /dev/nvme0n1p2)" --class windows --class os {
+          insmod part_gpt
+          insmod fat
+          search --no-floppy --fs-uuid --set=root 40E2-A3BF
+          chainloader /EFI/Microsoft/Boot/bootmgfw.efi
+        }
+
+        menuentry "Fedora" --class fedora --class os {
+          insmod part_gpt
+          insmod ext2
+          insmod fat
+          search --no-floppy --fs-uuid --set=root 40E2-A3BF
+          chainloader /EFI/fedora/grubx64.efi
+        }
+      '';
+    };
+  };
 
   # networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = false;  # Enables wireless support via wpa_supplicant.
@@ -57,6 +64,19 @@
   #   defaultLocale = "en_US.UTF-8";
   # };
 
+  fonts = {
+    enableFontDir = true;
+    enableGhostscriptFonts = true;
+    fonts = with pkgs; [
+      ubuntu_font_family
+      fira-code
+      fira-code-symbols
+    ];
+    fontconfig.defaultFonts = {
+      sansSerif = ["Ubuntu"];
+      monospace = ["Fira Code"];
+    };
+  };
   # Set your time zone.
   services.localtime.enable = true;
 
@@ -67,14 +87,13 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     git
-    # latte-dock
     ntfs3g
     kdeApplications.knotes
     os-prober
     plasma-browser-integration
     unzip
     vim
-    wget 
+    wget
     xdg-desktop-portal-kde
   ];
 
@@ -87,7 +106,7 @@
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
-  services.openssh.ports = [5037];
+  services.openssh.ports = [ 5037 ];
   services.openssh.passwordAuthentication = false;
 
   # Open ports in the firewall.
@@ -109,7 +128,7 @@
   services.xserver.layout = "us";
   # services.xserver.xkbOptions = "eurosign:e";
   services.xserver.screenSection = ''
-      Option "NoFlip" "true"
+    Option "NoFlip" "true"
   '';
   # Old but deprecated settings
   #Option "metamodes" "nvidia-auto-select +0+0 { ForceCompositionPipeline = On }"
@@ -125,20 +144,20 @@
   services.xserver.videoDrivers = [ "nvidia" ];
   # services.xserver.startDbusSession = false;
   # services.dbus.socketActivated = true;
-  
+
   # Enable OpenGL
   hardware.opengl = {
-	enable = true;
-        driSupport32Bit = true;
-	extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
-        setLdLibraryPath = true;
-    };
+    enable = true;
+    driSupport32Bit = true;
+    extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
+    setLdLibraryPath = true;
+  };
 
   # Enable Docker
   virtualisation.docker = {
-	enable = true;
-	enableNvidia = true;
-    };
+    enable = true;
+    enableNvidia = true;
+  };
 
   # Compatibility with geary
   programs.dconf.enable = true;
@@ -151,24 +170,23 @@
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.mjlbach = {
-        isNormalUser = true;
-        createHome = true;
-        uid = 1000;
-        extraGroups = ["wheel" "video" "networkmanager" "vboxusers" "docker"];
-        shell = pkgs.zsh;
-    };
+    isNormalUser = true;
+    createHome = true;
+    uid = 1000;
+    extraGroups = [ "wheel" "video" "networkmanager" "vboxusers" "docker" ];
+    shell = pkgs.zsh;
+  };
 
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database
   # servers. You should change this only after NixOS release notes say you
   # should.
   nix = {
-      autoOptimiseStore = true;
-      trustedUsers = ["root" "@wheel"];
+    autoOptimiseStore = true;
+    trustedUsers = [ "root" "@wheel" ];
   };
   nixpkgs.config.allowUnfree = true;
 
   system.stateVersion = "20.03"; # Did you read the comment?
 
 }
-

@@ -30,6 +30,7 @@ in
       firefox
       gitAndTools.gh
       gnome3.geary
+      gimp
       git-lfs
       gnupg
       gnutls
@@ -38,13 +39,18 @@ in
       handbrake
       htop
       keychain
-      lorri
+      krita
+      latte-dock
+      libreoffice
+      # libdbusmenu-glib
+      # lorri
       libsixel
       luajit
       mosh
       niv
       neovim
       nerdfonts
+      nextcloud-client
       nix-du
       nix-index
       nix-prefetch
@@ -56,8 +62,9 @@ in
       nnn
       openssh
       okular
+      podman
       poetry
-      # python-language-server
+      python-language-server
       pre-commit
       rsync
       riot-desktop
@@ -70,6 +77,7 @@ in
       spectacle
       spotify
       steam
+      tabbed
       termshark
       tldr
       tmux
@@ -81,6 +89,7 @@ in
       watchman
       wireguard-tools
       xpra
+      xst
       xsv
       ytop
       virtualgl

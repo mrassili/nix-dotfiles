@@ -201,7 +201,7 @@ export WORKON_HOME="$HOME/.virtualenvs"
 
 export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).
 
-upgrade () {
+home-upgrade () {
   $HOME/.emacs.d/bin/doom --yes upgrade && \
   nix-channel --update && \
   niv -s ~/.config/nixpkgs/nix/sources.json update && \
@@ -209,7 +209,7 @@ upgrade () {
   nvim +PlugUpdate +qall &> /dev/null
 }
 
-nupe () {
+system-upgrade () {
   sudo nix-channel --update && \
   sudo nixos-rebuild switch
 }

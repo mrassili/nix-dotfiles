@@ -1,5 +1,8 @@
-{ config, pkgs, libs, sources, ... }:
+{ config, pkgs, libs, ... }:
 
+let
+  sources = import ../nix/sources.nix;
+in
 {
   home.packages = with pkgs; [
     awscli
@@ -24,7 +27,7 @@
     rsync
     sd
     socat
-    # sources.LS_COLORS
+    sources.LS_COLORS
     termshark
     tldr
     tmux
@@ -40,20 +43,9 @@
     zsh-powerlevel10k
   ];
 
-  programs.zsh = {
-    enable = true;
-    enableCompletion = false;
-    initExtraBeforeCompInit = builtins.readFile ../configs/zshrc.zsh;
-    # plugins = [{
-    #   name = "powerlevel10k";
-    #   src = pkgs.fetchFromGitHub {
-    #     inherit (sources.powerlevel10k) owner repo rev sha256;
-    #   };
-    # }];
-  };
-
-  services.lorri.enable = true;
-  # home.file.".zshrc".source = ./zshrc.zsh;
-  # home.file.".dircolors".source = sources.LS_COLORS.outPath + "/LS_COLORS";
-  home.file.".tmux.conf".source = ../configs/tmux.conf;
+  # home.file.".zshrc".source = ../configs/zsh/zshrc.zsh;
+  home.file.".aws/config".source = ../configs/aws/aws_config;
+  home.file.".dircolors".source = sources.LS_COLORS.outPath + "/LS_COLORS";
+  home.file.".tmux.conf".source = ../configs/tmux/tmux.conf;
+  xdg.configFile."direnv/direnvrc".source = ../configs/direnv/direnvrc;
 }

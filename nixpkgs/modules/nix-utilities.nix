@@ -8,7 +8,6 @@
     nix-prefetch
     nix-prefetch-github
     nix-prefetch-git
-    nextcloud-client
     nixpkgs-fmt
   ];
 }

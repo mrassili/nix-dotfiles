@@ -2,27 +2,28 @@
 
 {
   home.packages = with pkgs; [
+    # xpra
     ark
     bitwarden
+    exercism
     firefox
     gnome3.geary
+    graphviz
     gwenview
     latte-dock
-    okular
-    graphviz
     libreoffice
-    openssh
-    spotify
-    simplescreenrecorder
-    unityhub
-    exercism
-    # xpra
-    zgrviewer
     nerdfonts
+    nextcloud-client
+    okular
+    openssh
+    simplescreenrecorder
     spectacle
+    spotify
     steam
-    wireguard-tools
+    unityhub
     virtualgl
+    wireguard-tools
+    zgrviewer
     zotero
   ];
 }

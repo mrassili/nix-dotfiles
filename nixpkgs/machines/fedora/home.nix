@@ -1,23 +1,26 @@
 { config, pkgs, libs, ... }:
 let
-  sources = import ./nix/sources.nix;
+  sources = import ../../nix/sources.nix;
   pkgs = import sources.nixpkgs-unstable { };
 in
 {
   # Let Home Manager install and manage itself.
   imports = [
-    ./modules/cli.nix
-    ./modules/python.nix
-    ./modules/cuda.nix
-    ./modules/alacritty.nix
-    ./modules/chat.nix
-    ./modules/git.nix
-    ./modules/media.nix
-    ./modules/nixos-desktop.nix
-    ./modules/nix-utilities.nix
-    ./modules/editors.nix
+    ../../modules/cli.nix
+    ../../modules/cuda.nix
+    ../../modules/editors.nix
+    ../../modules/git.nix
+    ../../modules/nix-utilities.nix
+    ../../modules/python.nix
+    ../../modules/ssh.nix
   ];
 
+  home.packages = with pkgs; [
+    python-language-server
+  ];
+
+  xdg.configFile."alacritty/alacritty.yml".source = ../configs/terminal/alacritty.yml;
+  services.lorri.enable = true;
   programs.home-manager.enable = true;
 
   # services.emacs.client.enable = true;

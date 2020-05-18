@@ -128,3 +128,8 @@ dmypy.json
 # Pyre type checker
 .pyre/
 tags
+
+# Ignore symlinks
+nixpkgs/home.nix
+nixpkgs/config.nix
+**/.DS_Store

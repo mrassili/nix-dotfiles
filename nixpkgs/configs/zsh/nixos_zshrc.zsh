@@ -1,3 +1,7 @@
+# initialize keychain
+eval $(keychain -q --eval id_rsa)
+
+# Hook direnv
 emulate zsh -c "$(direnv export zsh)"
 
 # Enable Powerlevel10k instant prompt. Should stay at the top of ~/.zshrc.
@@ -8,7 +12,8 @@ fi
 # Enable direnv
 emulate zsh -c "$(direnv hook zsh)"
 
-# Set dircolors
+# Dircolors and LS_colors
+export CLICOLOR=1
 eval $( dircolors -b $HOME/.dircolors )
 
 # Completion
@@ -49,6 +54,9 @@ zstyle ':completion:*:hosts' hosts $hosts
 # Glob settings
 setopt extendedglob
 
+# Correction
+# setopt correctall
+
 # History
 export HISTSIZE=2000
 export HISTFILE="$HOME/.history" 
@@ -57,7 +65,7 @@ setopt hist_ignore_all_dups
 setopt hist_ignore_space
 setopt share_history
 
-# use emacs keybinding
+# Set emacs mode
 bindkey -e
 
 # create a zkbd compatible hash;
@@ -116,9 +124,6 @@ key[Control-Right]="${terminfo[kRIT5]}"
 key[Alt-Left]="${terminfo[kLFT3]}"
 key[Alt-Right]="${terminfo[kRIT3]}"
 
-key[Alt-Left]="^[[1;3D"
-key[Alt-Right]="^[[1;3C"
-
 [[ -n "${key[Alt-Left]}"  ]] && bindkey -- "${key[Alt-Left]}"  beginning-of-line
 [[ -n "${key[Alt-Right]}" ]] && bindkey -- "${key[Alt-Right]}" end-of-line
 
@@ -130,6 +135,7 @@ zle -N down-line-or-beginning-search
 [[ -n "${key[Up]}"   ]] && bindkey -- "${key[Up]}"   up-line-or-beginning-search
 [[ -n "${key[Down]}" ]] && bindkey -- "${key[Down]}" down-line-or-beginning-search
 
+
 # Rationalize dot (... -> ../..)
 rationalise-dot() {
   if [[ $LBUFFER = *.. ]]; then
@@ -139,6 +145,7 @@ rationalise-dot() {
   fi
 }
 
+# Automatically expand dots
 zle -N rationalise-dot
 bindkey . rationalise-dot
 
@@ -158,27 +165,16 @@ zle -N edit-command-line
 bindkey '^x^e' edit-command-line
 
 # Prompt configuration
-source ~/.config/shell/powerlevel10k/powerlevel10k.zsh-theme
-source ~/.config/shell/powerlevel10k/config/p10k-lean.zsh
-
-#Aliases
-upgrade () {
-  git -C ~/.config/shell/z.lua pull 
-  git -C ~/.config/shell/powerlevel10k pull
-  doom -y upgrade
-  rustup update
-  cargo +nightly install sd
-}
+source ~/.zsh/plugins/powerlevel10k/powerlevel10k.zsh-theme
+source ~/.zsh/plugins/powerlevel10k/config/p10k-lean.zsh
 
 alias ls="ls --color=auto"
-alias ll="exa -alh --sort=modified"
-alias l="exa"
+alias ll="ls -alh --color=auto"
+alias l="ls --color=auto"
 
-
-function start_container () {
-  bash $HOME/.containers/launch_scripts/$1.sh
+em () {
+  emacsclient $1 > /dev/null 2>&1 || emacs $1 &
 }
-
 # Useful docker commands
 # Can also append --filter="ancestor=tdw:bp-1.4.5a" to ignore running container
 das () {
@@ -196,37 +192,38 @@ function _dsh(){
 
 compdef _dsh dsh
 
+
+em () {
+  emacsclient $1 > /dev/null 2>&1 || emacs $1 &
+}
+
 # FZF
 export FZF_DEFAULT_COMMAND='fd --type f'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # Enable z.lua
-eval "$(lua $HOME/.config/shell/z.lua/z.lua --init zsh)"
+eval "$(z --init zsh)"
 
+# Set environmental variables
+export EDITOR="nvim"
 
 list-ec2 () {
 aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceType, State.Name, LaunchTime, PublicDnsName]' --output table
 }
+
 # Set environmental variables
 export EDITOR="nvim"
 
+home-upgrade () {
+  $HOME/.emacs.d/bin/doom --yes upgrade && \
+  nix-channel --update && \
+  niv -s ~/.config/nixpkgs/nix/sources.json update && \
+  home-manager switch
+  nvim +PlugUpdate +qall &> /dev/null
+}
 
-# # >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-# activate_conda() {
-# __conda_setup="$('/home/michael/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-# if [ $? -eq 0 ]; then
-#     eval "$__conda_setup"
-# else
-#     if [ -f "/home/michael/miniconda3/etc/profile.d/conda.sh" ]; then
-# 	. "/home/michael/miniconda3/etc/profile.d/conda.sh"
-#     else
-# 	export PATH="/home/michael/miniconda3/bin:$PATH"
-#     fi
-# fi
-# unset __conda_setup
-# }
-# <<< conda initialize <<<
-
-. /home/michael/.nix-profile/etc/profile.d/nix.sh
+system-upgrade () {
+  sudo nix-channel --update && \
+  sudo nixos-rebuild switch
+}

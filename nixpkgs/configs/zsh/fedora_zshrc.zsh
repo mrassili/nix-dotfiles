@@ -1,6 +1,3 @@
-# Add nix profile
-. /home/michael/.nix-profile/etc/profile.d/nix.sh
-
 # initialize keychain
 eval $(keychain -q --eval id_rsa)
 

@@ -1,3 +1,10 @@
+# Add nix profile
+. /home/michael/.nix-profile/etc/profile.d/nix.sh
+
+# initialize keychain
+eval $(keychain -q --eval id_rsa)
+
+# Hook direnv
 emulate zsh -c "$(direnv export zsh)"
 
 # Enable Powerlevel10k instant prompt. Should stay at the top of ~/.zshrc.
@@ -9,6 +16,7 @@ fi
 emulate zsh -c "$(direnv hook zsh)"
 
 # Set dircolors
+export CLICOLOR=1
 eval $( dircolors -b $HOME/.dircolors )
 
 # Completion
@@ -214,6 +222,4 @@ home-upgrade () {
   home-manager switch
   nvim +PlugUpdate +qall &> /dev/null
   doom -y upgrade
-  brew upgrade
-  brew cask upgrade
 }

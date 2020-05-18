@@ -20,7 +20,7 @@ in
   programs.zsh = {
     enable = true;
     enableCompletion = false;
-    initExtraBeforeCompInit = builtins.readFile ../configs/zsh/mac_zshrc.zsh;
+    initExtraBeforeCompInit = builtins.readFile ../../configs/zsh/mac_zshrc.zsh;
     plugins = [{
       name = "powerlevel10k";
       src = pkgs.fetchFromGitHub {
@@ -29,6 +29,7 @@ in
     }];
   };
 
+  home.file.".zshenv".source = ../../configs/zsh/mac_zshenv.zsh;
   xdg.configFile."nvim/init.vim".source = ../../configs/neovim/init.vim;
   programs.home-manager.enable = true;
 }

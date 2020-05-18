@@ -2,9 +2,11 @@ typeset -U path
 path=($HOME/go/bin
       $HOME/.cargo/bin
       $HOME/.poetry/bin
-      $HOME/.emacs.d/bin
+      $HOME/.config/emacs/bin
       /usr/local/bin
       /usr/local/sbin
+      /usr/local/go/bin
+      /Users/michael/.npm-packages/bin
       /usr/bin
       $path)
 

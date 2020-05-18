@@ -19,7 +19,19 @@ in
     python-language-server
   ];
 
-  xdg.configFile."alacritty/alacritty.yml".source = ../configs/terminal/alacritty.yml;
+  programs.zsh = {
+    enable = true;
+    enableCompletion = false;
+    initExtraBeforeCompInit = builtins.readFile ../../configs/zsh/fedora_zshrc.zsh;
+    plugins = [{
+      name = "powerlevel10k";
+      src = pkgs.fetchFromGitHub {
+        inherit (sources.powerlevel10k) owner repo rev sha256;
+      };
+    }];
+  };
+
+  xdg.configFile."alacritty/alacritty.yml".source = ../../configs/terminal/alacritty.yml;
   services.lorri.enable = true;
   programs.home-manager.enable = true;
 

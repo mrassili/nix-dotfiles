@@ -1,0 +1,2 @@
+*.key filter=git-crypt diff=git-crypt
+ssh_config filter=git-crypt diff=git-crypt

@@ -1,5 +1,5 @@
 {
-    allowUnfree = true;
-    cudaSupport = true;
-    firefox.enablePlasmaBrowserIntegration = true;
+  allowUnfree = true;
+  cudaSupport = true;
+  firefox.enablePlasmaBrowserIntegration = true;
 }

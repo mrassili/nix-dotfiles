@@ -12,6 +12,7 @@ in
   programs.home-manager.enable = true;
 
   home.packages = with pkgs-unstable; [
+      alacritty
       ark
       awscli
       bitwarden
@@ -88,7 +89,7 @@ in
       watch
       watchman
       wireguard-tools
-      xpra
+      # xpra
       xst
       xsv
       ytop

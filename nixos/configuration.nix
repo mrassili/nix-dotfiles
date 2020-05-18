@@ -159,6 +159,10 @@
     enableNvidia = true;
   };
 
+  # Enable podman uid mappings
+  # virtualisation.containers.enable = true;
+  # virtualisation.containers.users = [ "mjlbach" ];
+
   # Compatibility with geary
   programs.dconf.enable = true;
   services.gnome3.gnome-keyring.enable = true;

@@ -59,16 +59,15 @@
         "url": "https://github.com/NixOS/nixpkgs-channels/archive/6d035a9d10d930d92e6016abec531e43e48a469f.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
-    "powerlevel10k": {
+     "powerlevel10k": {
         "branch": "master",
         "description": "A Zsh theme",
         "homepage": "",
         "owner": "romkatv",
         "repo": "powerlevel10k",
-        "rev": "8e86b0c8d4b13f693968a0f5b639270bc77f72de",
-        "sha256": "1lj14xmzjj189d0p5q6pndm22yc13rdhqd0b9bmxrp88jrqxnlsa",
+        "rev": "c0091537a940e2aa8fd5166c7df3cfafb18abc85",
+        "sha256": "027rhknw9w27f85iaqs5c11p7c54ml920s2pmm5056lrqlf4pds2",
         "type": "tarball",
-        "url": "https://github.com/romkatv/powerlevel10k/archive/8e86b0c8d4b13f693968a0f5b639270bc77f72de.tar.gz",
+        "url": "https://github.com/romkatv/powerlevel10k/archive/c0091537a940e2aa8fd5166c7df3cfafb18abc85.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
-    }
-}
+    }}

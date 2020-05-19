@@ -1,5 +1,5 @@
 # initialize keychain
-eval $(keychain -q --eval id_rsa)
+eval $(keychain -q)
 
 # Hook direnv
 emulate zsh -c "$(direnv export zsh)"

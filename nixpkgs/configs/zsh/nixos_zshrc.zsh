@@ -1,5 +1,8 @@
-# initialize keychain
-eval $(keychain -q)
+# Emacs tramp mode compatibility
+[[ $TERM == "tramp" ]] && unsetopt zle && PS1='$ ' && return
+
+# initialize keychain: This can go below instant prompt so long as -q is enabled and --eval is disabled
+eval $(keychain -q --eval)
 
 # Hook direnv
 emulate zsh -c "$(direnv export zsh)"

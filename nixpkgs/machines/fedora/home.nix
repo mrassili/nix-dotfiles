@@ -15,10 +15,6 @@ in
     ../../modules/ssh.nix
   ];
 
-  home.packages = with pkgs; [
-    python-language-server
-  ];
-
   programs.zsh = {
     enable = true;
     enableCompletion = false;

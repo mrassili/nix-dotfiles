@@ -12,10 +12,6 @@ in
     ../../modules/nix-utilities.nix
   ];
 
-  home.packages = with pkgs; [
-    python-language-server
-  ];
-
   programs.zsh = {
     enable = true;
     enableCompletion = false;

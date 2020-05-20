@@ -7,16 +7,12 @@ in
   imports = [
     ../../modules/cli.nix
     ../../modules/git.nix
+    ../../modules/editors.nix
     ../../modules/nix-utilities.nix
     ../../modules/python.nix
     ../../modules/ssh.nix
   ];
   # Let Home Manager install and manage itself.
-  home.packages = with pkgs; [
-    neovim
-    rnix-lsp
-  ];
-
   programs.zsh = {
     enable = true;
     enableCompletion = false;
@@ -30,6 +26,5 @@ in
   };
 
   home.file.".zshenv".source = ../../configs/zsh/mac_zshenv.zsh;
-  xdg.configFile."nvim/init.vim".source = ../../configs/neovim/init.vim;
   programs.home-manager.enable = true;
 }

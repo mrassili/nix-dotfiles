@@ -9,7 +9,6 @@ in
     ../../modules/git.nix
     ../../modules/editors.nix
     ../../modules/nix-utilities.nix
-    ../../modules/python.nix
     ../../modules/ssh.nix
   ];
   # Let Home Manager install and manage itself.

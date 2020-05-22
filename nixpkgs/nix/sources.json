@@ -53,10 +53,10 @@
         "homepage": "https://github.com/NixOS/nixpkgs",
         "owner": "NixOS",
         "repo": "nixpkgs-channels",
-        "rev": "6405edf2dca7f6faaa29266136dfa7f8f969b511",
-        "sha256": "069skn0ayxmhdlw1xcj92cij7wydkk2bndkcyk4vvhms16p9wj46",
+        "rev": "571212eb839d482992adb05479b86eeb6a9c7b2f",
+        "sha256": "0ncsh5rkjbcdaksngmn7apiq1qhm5z1z6xa1x70svxq91znibp4f",
         "type": "tarball",
-        "url": "https://github.com/NixOS/nixpkgs-channels/archive/6405edf2dca7f6faaa29266136dfa7f8f969b511.tar.gz",
+        "url": "https://github.com/NixOS/nixpkgs-channels/archive/571212eb839d482992adb05479b86eeb6a9c7b2f.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "powerlevel10k": {
@@ -65,10 +65,10 @@
         "homepage": "",
         "owner": "romkatv",
         "repo": "powerlevel10k",
-        "rev": "c713ded9e76032f90014bc6829165d0dd69d28b3",
-        "sha256": "1kpwvsamxc3whbcspbm4ijz28y9hr328h4h0fqazgqcvfqz3aa51",
+        "rev": "936b0d6dea09059d2d45fde17bc4d912b29e8703",
+        "sha256": "1x03xbp2vdmj67q2k9iwjh4xg6gdhz7jkxxmzyx7x3frhwshnaz8",
         "type": "tarball",
-        "url": "https://github.com/romkatv/powerlevel10k/archive/c713ded9e76032f90014bc6829165d0dd69d28b3.tar.gz",
+        "url": "https://github.com/romkatv/powerlevel10k/archive/936b0d6dea09059d2d45fde17bc4d912b29e8703.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     }
 }

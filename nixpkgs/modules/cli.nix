@@ -43,7 +43,7 @@ in
     zsh-powerlevel10k
   ];
 
-  # home.file.".zshrc".source = ../configs/zsh/zshrc.zsh;
+  home.file.".gitconfig".source = ../configs/git/gitconfig;
   home.file.".aws/config".source = ../configs/aws/aws_config;
   home.file.".dircolors".source = sources.LS_COLORS.outPath + "/LS_COLORS";
   home.file.".tmux.conf".source = ../configs/tmux/tmux.conf;

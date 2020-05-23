@@ -19,7 +19,7 @@
   reviewone = !nvim -p +\"tabdo Gdiff $REVIEW_BASE\" +\"let g:gitgutter_diff_base = '$REVIEW_BASE'\"
 
 [core]
-    pager = delta --plus-color="#012800" --minus-color="#340001" --theme='Monokai Extended'
+    pager = delta --theme='TwoDark'
 
 [interactive]
     diffFilter = delta --color-only

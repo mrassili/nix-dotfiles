@@ -11,7 +11,7 @@ in
     ../../modules/editors.nix
     ../../modules/git.nix
     ../../modules/nix-utilities.nix
-    ../../modules/python.nix
+    # ../../modules/python.nix
     ../../modules/ssh.nix
   ];
 

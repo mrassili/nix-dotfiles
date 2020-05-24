@@ -224,5 +224,5 @@ home-upgrade () {
   nix-channel --update
   home-manager switch
   nvim +PlugUpdate +qall &> /dev/null
-  doom -y upgrade
+  (( $+commands[doom] )) && doom -y upgrade
 }

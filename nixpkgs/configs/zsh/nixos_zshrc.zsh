@@ -17,6 +17,7 @@ emulate zsh -c "$(direnv hook zsh)"
 
 # Dircolors and LS_colors
 export CLICOLOR=1
+export COLORTERM="truecolor"
 eval $( dircolors -b $HOME/.dircolors )
 
 # Completion

@@ -39,6 +39,7 @@ in
     xsv
     ytop
     z-lua
+    zoxide
     zsh
     zsh-powerlevel10k
   ];

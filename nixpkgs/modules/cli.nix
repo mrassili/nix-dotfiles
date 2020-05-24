@@ -15,7 +15,9 @@ in
     fd
     ffsend
     fzf
+    gawk
     gnupg
+    gnused
     gnutls
     htop
     keychain

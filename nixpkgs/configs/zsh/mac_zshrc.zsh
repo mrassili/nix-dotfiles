@@ -197,8 +197,8 @@ export FZF_DEFAULT_COMMAND='fd --type f'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# Enable z.lua
-eval "$(z --init zsh)"
+# Enable zoxide
+eval "$(zoxide init zsh)"
 
 # Set environmental variables
 export EDITOR="nvim"

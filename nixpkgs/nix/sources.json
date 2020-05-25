@@ -17,10 +17,10 @@
         "homepage": "https://neovim.io",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "37ee95504e43d246f4fa971fb7a38c2a1bc6b16f",
-        "sha256": "1dc2iz4qa4vjx9hwg66128xr8l7ha216nzw17p7rk751qwd6n0bc",
+        "rev": "8c588246a505e4fcd3d28e6d1f670e834c918529",
+        "sha256": "0s2xnbp6dgcz52z41rhq9nz4v6hqygx7qwa22y942xyq8j68cxg8",
         "type": "tarball",
-        "url": "https://github.com/neovim/neovim/archive/37ee95504e43d246f4fa971fb7a38c2a1bc6b16f.tar.gz",
+        "url": "https://github.com/neovim/neovim/archive/8c588246a505e4fcd3d28e6d1f670e834c918529.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "niv": {
@@ -65,10 +65,10 @@
         "homepage": "",
         "owner": "romkatv",
         "repo": "powerlevel10k",
-        "rev": "a963533cbd8718a23f193869100c332f0bd6d6a8",
-        "sha256": "1d7k2ws9c4xg6wa7myr841i5fmhqgvlp9hkdiznnr4lihvmv39mm",
+        "rev": "ed3287b737bafff6eefdf59a532caac88d2ff915",
+        "sha256": "129v1kkmixhpxfjlr3n6k9pzh4j75dp61wq2h3aqsf7gjlsdsbp1",
         "type": "tarball",
-        "url": "https://github.com/romkatv/powerlevel10k/archive/a963533cbd8718a23f193869100c332f0bd6d6a8.tar.gz",
+        "url": "https://github.com/romkatv/powerlevel10k/archive/ed3287b737bafff6eefdf59a532caac88d2ff915.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     }
 }

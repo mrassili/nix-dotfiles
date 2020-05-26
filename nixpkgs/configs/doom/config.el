@@ -1,13 +1,83 @@
-;;; .doom.d/config.el -*- lexical-binding: t; -*-
+;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
-;; (setq mac-command-modifier 'super)
+;; Place your private configuration here! Remember, you do not need to run 'doom
+;; sync' after modifying this file!
 
-;; (setq ns-use-native-fullscreen t)
 
-;; (setq company-idle-delay 0)
-;; (setq company-lsp-cache-candidates 'auto)
+;; Some functionality uses this to identify you, e.g. GPG configuration, email
+;; clients, file templates and snippets.
+(setq user-full-name "Michael Lingelbach"
+      user-mail-address "m.j.lbach@gmail.com")
+
+;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
+;; are the three important ones:
+;;
+;; + `doom-font'
+;; + `doom-variable-pitch-font'
+;; + `doom-big-font' -- used for `doom-big-font-mode'; use this for
+;;   presentations or streaming.
+;;
+;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
+;; font string. You generally only need these two:
+(setq doom-font (font-spec :family "Meslo LGS NF" :size 14))
+
+;; There are two ways to load a theme. Both assume the theme is installed and
+;; available. You can either set `doom-theme' or manually load a theme with the
+;; `load-theme' function. This is the default:
+(setq doom-theme 'doom-one)
+
+;; If you use `org' and don't want your org files in the default location below,
+;; change `org-directory'. It must be set before org loads!
+(setq org-directory "~/org/")
 (setq org-agenda-files (doom-files-in "~/org" :match "\\.org$" :depth 3))
-(setq org-directory "~/org")
+
+;; This determines the style of line numbers in effect. If set to `nil', line
+;; numbers are disabled. For relative line numbers, set this to `relative'.
+(setq display-line-numbers-type t)
+
+;; Don't override dumb terminal
+(setq tramp-terminal-type "tramp")
+
+(after! lsp-python-ms
+  (setq lsp-python-ms-executable (executable-find "python-language-server"))
+  (set-lsp-priority! 'mspyls 1))
+
+(after! tramp (add-to-list 'tramp-remote-path 'tramp-own-remote-path))
+
+(after! lsp-mode
+  (lsp-register-client
+    (make-lsp-client :new-connection (lsp-tramp-connection "python-language-server")
+                      :major-modes '(python-mode)
+                      :remote? t
+                      :notification-handlers (lsp-ht ("python/languageServerStarted" 'lsp-python-ms--language-server-started-callback)
+                                                    ("telemetry/event" 'ignore)
+                                                    ("python/reportProgress" 'lsp-python-ms--report-progress-callback)
+                                                    ("python/beginProgress" 'lsp-python-ms--begin-progress-callback)
+                                                    ("python/endProgress" 'lsp-python-ms--end-progress-callback))
+                      :initialization-options 'lsp-python-ms--extra-init-params
+                      :initialized-fn (lambda (workspace)
+                                        (with-lsp-workspace workspace
+                                          (lsp--set-configuration (lsp-configuration-section "python"))))
+                      :server-id 'pyls-remote)))
+
+;; Here are some additional functions/macros that could help you configure Doom:
+;;
+;; - `load!' for loading external *.el files relative to this one
+;; - `use-package' for configuring packages
+;; - `after!' for running code after a package has loaded
+;; - `add-load-path!' for adding directories to the `load-path', relative to
+;;   this file. Emacs searches the `load-path' when you load packages with
+;;   `require' or `use-package'.
+;; - `map!' for binding new keys
+;;
+
+;; To get information about any of these functions/macros, move the cursor over
+;; the highlighted symbol at press 'K' (non-evil users must press 'C-c g k').
+;; This will open documentation for it, including demos of how they are used.
+;;
+;; You can also try 'gd' (or 'C-c g d') to jump to their definition and see how
+;; they are implemented.
+
 ;; (use-package! org-gcal
 ;;   :after org
 ;;   :config
@@ -16,35 +86,3 @@
 ;;         org-gcal-file-alist '(("your-mail@gmail.com" .  "~/schedule.org")
 ;;                               ("another-mail@gmail.com" .  "~/task.org"))))
 
-;; (defun nick-mac-hide-last-frame (orig-fun &rest args)
-;;     "Check if last visible frame is being closed and hide it instead."
-;;     (if (and (featurep 'ns)
-;;               (display-graphic-p nil)
-;;               (= 1 (length (frame-list)))) (progn
-;;         (when (eq (frame-parameter (selected-frame) 'fullscreen) 'fullboth)
-;;           (set-frame-parameter (selected-frame) 'fullscreen nil)
-;;           (sit-for 1.2))
-;;         (ns-hide-emacs t)
-;;         (sit-for 1.5)
-;;         (modify-frame-parameters (selected-frame) default-frame-alist)
-;;         (delete-other-windows))
-;;       (apply orig-fun args)))
-
-;; (defun nick-handle-delete-frame (event)
-;;     "Hide last visible frame when clicking frame close button."
-;;     (interactive "e")
-;;     (let ((frame (posn-window (event-start event))))
-;;       (delete-frame frame t)))
-
-;; (defun nick-save-buffers-kill-terminal (&optional arg)
-;;     "Hide last visible frame instead of closing Emacs."
-;;     (interactive "P")
-;;     (delete-frame (selected-frame) t))
-
-;; (advice-add 'delete-frame :around #'nick-mac-hide-last-frame)
-;; (advice-add 'handle-delete-frame :override #'nick-handle-delete-frame)
-;; (advice-add 'save-buffers-kill-terminal :override
-;;     #'nick-save-buffers-kill-terminal)
-
-; (setq menu-bar-mode 1)
-;; Place your private configuration here

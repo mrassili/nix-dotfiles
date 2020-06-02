@@ -15,6 +15,12 @@ in
     ../../modules/ssh.nix
   ];
 
+  home.packages = with pkgs; [
+      emacsUnstable
+      mu
+      isync
+    ];
+
   programs.zsh = {
     enable = true;
     enableCompletion = false;

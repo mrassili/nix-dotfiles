@@ -1,5 +1,9 @@
 # Emacs tramp mode compatibility
-[[ $TERM == "tramp" ]] && unsetopt zle && PS1='$ ' && return
+[[ $TERM == "tramp" ]] && \
+  unsetopt zle && \
+  PS1='$ ' && \
+  . $HOME/.nix-profile/etc/profile.d/nix.sh && \
+  return
 
 # initialize keychain: This can go below instant prompt so long as -q is enabled and --eval is disabled
 eval $(keychain -q --eval)

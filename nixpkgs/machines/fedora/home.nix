@@ -2,6 +2,7 @@
 let
   sources = import ../../nix/sources.nix;
   pkgs = import sources.nixpkgs-unstable { };
+  nixos-unstable = import sources.nixos-unstable { };
 in
 {
   # Let Home Manager install and manage itself.
@@ -16,7 +17,6 @@ in
   ];
 
   home.packages = with pkgs; [
-      emacsUnstable
       mu
       isync
     ];
@@ -33,9 +33,15 @@ in
     }];
   };
 
+  programs.emacs = {
+    enable = true;
+    package = nixos-unstable.emacsGcc;
+  };
+
   xdg.configFile."alacritty/alacritty.yml".source = ../../configs/terminal/alacritty.yml;
   services.lorri.enable = true;
   programs.home-manager.enable = true;
+  programs.bash.enable = true;
 
   # services.emacs.client.enable = true;
   # This value determines the Home Manager release that your

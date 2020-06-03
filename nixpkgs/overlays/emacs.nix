@@ -6,6 +6,6 @@ let
 in import (fetchGitHubArchive {
   owner = "nix-community";
   repo = "emacs-overlay";
-  rev = "4a055e0e8bbf7c2b304bd671d94843ae3fe8f55b";
-  sha256 = "0aad4l8z7war9w9s4j5s2sx91br8b768p65az2vfgpm8qm5q998p";
+  rev = "a7456b41281507d4f6838cedf89290f4f3b4e02f";
+  sha256 = "17a1cd0xfhhhmnjglasixb7dmdgyibxwllddw7r1id1vvbsz1zxg";
 })

@@ -17,10 +17,10 @@
         "homepage": "https://neovim.io",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "8a1276005a1099187710bdcc19284de51a0aa89a",
-        "sha256": "0d5hsc35nzgnwda7aasri8qsab6cxja9gvswbny68a0v7qk86daj",
+        "rev": "dbc8ec94464049311e69274cad562585d7bb6749",
+        "sha256": "06cmp67d5sm9673g0n6xd9vnc0dapsnihqxvi9ym4aj9nc6mjh21",
         "type": "tarball",
-        "url": "https://github.com/neovim/neovim/archive/8a1276005a1099187710bdcc19284de51a0aa89a.tar.gz",
+        "url": "https://github.com/neovim/neovim/archive/dbc8ec94464049311e69274cad562585d7bb6749.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "niv": {
@@ -65,10 +65,10 @@
         "homepage": "https://github.com/NixOS/nixpkgs",
         "owner": "NixOS",
         "repo": "nixpkgs-channels",
-        "rev": "00df2371122aeb96b4ca80451b1ac7b9b7b8d847",
-        "sha256": "0k35kh30gjqvr6j9j395drmrxnl7knkc9nsizwsclggh7r7ml50w",
+        "rev": "c27e54de99df793756a5314f8fd5dd3e49d31927",
+        "sha256": "0289m555hpmml5g6idicg1bckphww22p87s8qca2k046zkz0ykx0",
         "type": "tarball",
-        "url": "https://github.com/NixOS/nixpkgs-channels/archive/00df2371122aeb96b4ca80451b1ac7b9b7b8d847.tar.gz",
+        "url": "https://github.com/NixOS/nixpkgs-channels/archive/c27e54de99df793756a5314f8fd5dd3e49d31927.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "powerlevel10k": {
@@ -77,10 +77,10 @@
         "homepage": "",
         "owner": "romkatv",
         "repo": "powerlevel10k",
-        "rev": "7760aa66d75581c221cfbfe6f94cc6d15547cdaf",
-        "sha256": "1qqkpx9mb138zx8f502xky8izla17vr303d0xq0q3rivc86zfi81",
+        "rev": "05dad31f3f2fa83fb9f60c08d045c85347fbf545",
+        "sha256": "1rpbwzhlaispk9djb52xnrqknv5nwmlhvz7iw1icwrfdjh5lgrb9",
         "type": "tarball",
-        "url": "https://github.com/romkatv/powerlevel10k/archive/7760aa66d75581c221cfbfe6f94cc6d15547cdaf.tar.gz",
+        "url": "https://github.com/romkatv/powerlevel10k/archive/05dad31f3f2fa83fb9f60c08d045c85347fbf545.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     }
 }

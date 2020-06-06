@@ -2,6 +2,7 @@
 let
   sources = import ../../nix/sources.nix;
   pkgs = import sources.nixpkgs-unstable { };
+  nixos-unstable = import sources.nixos-unstable { };
 in
 {
   # Let Home Manager install and manage itself.
@@ -19,6 +20,11 @@ in
     ../../modules/ssh.nix
   ];
 
+  home.packages = with pkgs; [
+      mu
+      isync
+    ];
+
   programs.zsh = {
     enable = true;
     enableCompletion = false;
@@ -31,7 +37,11 @@ in
     }];
   };
 
-  programs.emacs.enable = true;
+  programs.emacs = with nixos-unstable; {
+    enable = true;
+    package = emacsUnstable;
+    extraPackages = (epkgs: [ epkgs.vterm] );
+  };
   services.emacs.enable = true;
   services.lorri.enable = true;
   programs.home-manager.enable = true;

@@ -187,7 +187,7 @@
   # should.
   nix = {
     autoOptimiseStore = true;
-    trustedUsers = [ "root" "@wheel" ];
+    trustedUsers = [ "root" "mjlbach" "@wheel" ];
   };
   nixpkgs.config.allowUnfree = true;
 

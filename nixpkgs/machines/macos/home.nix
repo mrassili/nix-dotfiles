@@ -12,6 +12,11 @@ in
     ../../modules/ssh.nix
   ];
   # Let Home Manager install and manage itself.
+  home.packages = with pkgs; [
+      mu
+      isync
+    ];
+
   programs.zsh = {
     enable = true;
     enableCompletion = false;

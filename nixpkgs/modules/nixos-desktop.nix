@@ -11,7 +11,7 @@
     graphviz
     gwenview
     latte-dock
-    libreoffice
+    libreoffice-qt
     nerdfonts
     nextcloud-client
     okular

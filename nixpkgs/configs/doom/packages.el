@@ -6,5 +6,6 @@
 ;;   :after lsp-mode)
 ;;; Examples:
 ;; (package! some-package)
+(package! nose :disable :t)
 ;; (package! another-package :recipe (:host github :repo "username/repo"))
 ;; (package! builtin-package :disable t)

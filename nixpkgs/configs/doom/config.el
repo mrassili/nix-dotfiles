@@ -9,6 +9,21 @@
 (setq user-full-name "Michael Lingelbach"
       user-mail-address "m.j.lbach@gmail.com")
 
+;; Settings for hydra
+(setq ivy-read-action-function #'ivy-hydra-read-action)
+
+(remove-hook 'doom-first-buffer-hook #'smartparens-global-mode)
+
+;; Settings for mail
+(setq mu4e-view-use-gnus t)
+
+(when (fboundp 'imagemagick-register-types)
+  (imagemagick-register-types))
+
+;; Set bindings for copy and paste
+(global-set-key (kbd "C-S-c") #'clipboard-kill-ring-save)
+(global-set-key (kbd "C-S-v") #'clipboard-yank)
+
 ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
 ;; are the three important ones:
 ;;
@@ -38,11 +53,12 @@
 ;; Don't override dumb terminal
 (setq tramp-terminal-type "tramp")
 
+(after! tramp (add-to-list 'tramp-remote-path 'tramp-own-remote-path))
+
 (after! lsp-python-ms
   (setq lsp-python-ms-executable (executable-find "python-language-server"))
   (set-lsp-priority! 'mspyls 1))
 
-(after! tramp (add-to-list 'tramp-remote-path 'tramp-own-remote-path))
 
 (after! lsp-mode
   (lsp-register-client

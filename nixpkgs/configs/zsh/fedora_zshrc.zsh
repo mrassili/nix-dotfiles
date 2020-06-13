@@ -184,6 +184,8 @@ alias ls="ls --color=auto"
 alias ll="ls -alh --color=auto"
 alias l="ls --color=auto"
 
+alias open="xdg-open"
+
 # Useful docker commands
 # Can also append --filter="ancestor=tdw:bp-1.4.5a" to ignore running container
 das () {
@@ -228,5 +230,8 @@ home-upgrade () {
   nix-channel --update
   home-manager switch
   nvim +PlugUpdate +qall &> /dev/null
-  (( $+commands[doom] )) && doom -y upgrade
+  git -C ~/.emacs.d pull --rebase origin develop
+  (( $+commands[doom] )) && doom sync
+
+  # (( $+commands[doom] )) && doom -y upgrade
 }

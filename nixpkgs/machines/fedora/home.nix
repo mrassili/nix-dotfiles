@@ -30,6 +30,7 @@ in
   home.packages = with pkgs; [
       mu
       isync
+      alacritty
     ];
 
   programs.zsh = {

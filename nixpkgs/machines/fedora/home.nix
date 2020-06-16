@@ -13,9 +13,6 @@ let
 in
 
 {
-  home.sessionVariables = {
-    LOCALE_ARCHIVE = "${pkgs.glibcLocales.override {allLocales = false;}}/lib/locale/locale-archive";
-  };
   # Let Home Manager install and manage itself.
   imports = [
     ../../modules/cli.nix
@@ -30,7 +27,6 @@ in
   home.packages = with pkgs; [
       mu
       isync
-      alacritty
     ];
 
   programs.zsh = {

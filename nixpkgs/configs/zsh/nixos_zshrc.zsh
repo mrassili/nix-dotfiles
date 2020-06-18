@@ -220,11 +220,11 @@ aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceType, 
 export EDITOR="nvim"
 
 home-upgrade () {
-  $HOME/.emacs.d/bin/doom --yes upgrade && \
   nix-channel --update && \
   niv -s ~/.config/nixpkgs/nix/sources.json update && \
   home-manager switch
-  nvim +PlugUpdate +qall &> /dev/null
+  nvim +PlugUpdate +qall &> /dev/null && \
+  $HOME/.emacs.d/bin/doom --yes upgrade
 }
 
 system-upgrade () {

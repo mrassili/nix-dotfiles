@@ -40,7 +40,7 @@ call plug#end()
 set autoindent
 filetype plugin indent on
 syntax on
-set synmaxcol=120
+" set synmaxcol=120
 
 "" Incremental live completion
 set inccommand=nosplit
@@ -369,6 +369,7 @@ let g:python_highlight_space_errors = 0
 " log file location: /Users/michael/.local/share/nvim/vim-lsp.log
 :lua << EOF
   local nvim_lsp = require('nvim_lsp')
+  vim.lsp.set_log_level("debug")
 
   local on_attach = function(_, bufnr)
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
@@ -398,6 +399,68 @@ let g:python_highlight_space_errors = 0
     on_attach = on_attach,
     cmd = {"python-language-server"}
   }
+  nvim_lsp['diagnosticls'].setup {
+    on_attach = on_attach,
+    filetypes={"sh"},
+    init_options = {
+        linters= {
+          shellcheck= {
+            command= "shellcheck",
+            debounce= 100,
+            args= { "--format=gcc", "-" },
+            offsetLine= 0,
+            offsetColumn= 0,
+            sourceName= "shellcheck",
+            formatLines= 1,
+	    formatPattern= { 
+	      "^[^:]+:(\\d+):(\\d+):\\s+([^:]+):\\s+(.*)$",
+	      {
+	        line= 1,
+	        column= 2,
+	        message= 4,
+	        security= 3
+	      }
+	    },
+            securities= {
+              error= "error",
+              warning= "warning",
+              note= "info"
+            }
+          },
+          languagetool= {
+            command= "languagetool",
+            debounce= 200,
+            args= {"-"},
+            offsetLine= 0,
+            offsetColumn= 0,
+            sourceName= "languagetool",
+            formatLines= 2,
+	    formatPattern= { 
+	    "^\\d+?\\.\\)\\s+Line\\s+(\\d+),\\s+column\\s+(\\d+),\\s+([^\\n]+)\nMessage:\\s+(.*)$",
+	    {
+	    line= 1,
+	    column= 2,
+	    message= { 4, 3 }
+	    }
+	    },
+          }
+        },
+        formatters= {
+          dartfmt= {
+            command= "dartfmt",
+            args= { "--fix" },
+          }
+        },
+        filetypes= {
+          sh= "shellcheck",
+          email= "languagetool"
+        },
+        formatFiletypes= {
+          dart= "dartfmt"
+        }
+      }
+
+    }
 EOF
 
 command! -buffer -nargs=0 LspShowLineDiagnostics lua require'jumpLoc'.openLineDiagnostics()

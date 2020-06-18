@@ -16,12 +16,9 @@
 
 (setq comp-async-env-modifier-form '((setenv "LIBRARY_PATH"
                                              (concat
-        (shell-command-to-string "nix eval --raw '(let pkgs = import <nixpkgs> {}; in (pkgs.lib.getLib pkgs.libgccjit + /lib/gcc/x86_64-unknown-linux-gnu/9.3.0:)'")
-        (shell-command-to-string "nix eval --raw '(let pkgs = import <nixpkgs> {}; in (pkgs.lib.getLib pkgs.stdenv.cc.cc + /lib)'")
-        (shell-command-to-string "nix eval --raw '(let pkgs = import <nixpkgs> {}; in (pkgs.lib.getLib pkgs.stdenv.glibc + /lib)'")
-        )
-  )))
-
+        (shell-command-to-string "nix eval --raw '(let pkgs = import <nixpkgs> {}; in with pkgs; stdenv.lib.makeLibraryPath [stdenv.cc.cc stdenv.glibc])'")
+        ":"
+        (shell-command-to-string "nix eval --raw '(let pkgs = import <nixpkgs> {}; in with pkgs; lib.getLib libgccjit + /lib/gcc/x86_64-unknown-linux-gnu/9.3.0 )'")))))
         ;; "/nix/store/a6z7ighixg7gb6krf9k60ylgmahij63x-gcc-9.3.0-lib/lib:"
         ;; "/nix/store/jx19wa4xlh9n4324xdl9rjnykd19mmq3-glibc-2.30/lib:"
         ;; "/nix/store/wfvfxj1w9gj21nbai6rsyhwvkbqf59w0-libgccjit-9.3.0/lib/gcc/x86_64-unknown-linux-gnu/9.3.0:"

@@ -1,0 +1,5 @@
+{
+    "rules" : [
+        { "pattern" : { "feature" : "procname", "matches" : "picom" }, "profile" : "No VRR/OSD" }
+    ]
+}

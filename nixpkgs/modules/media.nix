@@ -2,8 +2,8 @@
 
 {
   home.packages = with pkgs; [
-    #blender
-    #handbrake
+    blender
+    handbrake
     krita
     vlc
     gimp

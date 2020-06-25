@@ -7,7 +7,7 @@
     bitwarden
     exercism
     firefox
-    #gnome3.geary
+    gnome3.geary
     graphviz
     gwenview
     latte-dock

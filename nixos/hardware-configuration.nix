@@ -8,18 +8,13 @@
     [ <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
     ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "sd_mod" "sr_mod" ];
+  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" "sr_mod" ];
   boot.initrd.kernelModules = [ "dm-snapshot" ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/3244183c-5adf-47c9-8b20-6be2d3f45502";
-      fsType = "ext4";
-    };
-
-  fileSystems."/home" =
-    { device = "/dev/disk/by-uuid/b792912b-943e-48d4-a2ff-c716ef4123fc";
+    { device = "/dev/disk/by-uuid/1ee7f7bf-554c-4a97-86a9-c7933d5b0252";
       fsType = "ext4";
     };
 
@@ -33,16 +28,12 @@
       fsType = "vfat";
     };
 
-  fileSystems."/data" =
-    { device = "/dev/disk/by-uuid/E68CD0738CD0402B";
-      fsType = "ntfs";
-      options = ["rw" "uid=1000" "gid=1000" "exec" "umask=000"];
-    };
-
   swapDevices =
-    [ { device = "/dev/disk/by-uuid/daddec15-1691-4efc-b783-9d683b44a05c"; }
+    [ { device = "/dev/disk/by-uuid/6f1a2aca-f22d-4ecd-88ba-1c3d3e47917c"; }
     ];
 
   nix.maxJobs = lib.mkDefault 8;
   powerManagement.cpuFreqGovernor = lib.mkDefault "performance";
+  # High-DPI console
+  console.font = lib.mkDefault "${pkgs.terminus_font}/share/consolefonts/ter-u28n.psf.gz";
 }

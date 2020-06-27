@@ -3,20 +3,20 @@ let
   sources = import ../../nix/sources.nix;
   pkgs = import sources.nixpkgs-unstable { };
   nixos-unstable = import sources.nixos-unstable { };
-  powerlevel10k = pkgs.fetchFromGitHub {
-    owner = "romkatv";
-    repo = "powerlevel10k";
-    # nixos-unstable as of 2017-11-13T08:53:10-00:00
-    rev = "b7d90c84671183797bdec17035fc2d36b5d12292";
-    sha256 = "0nzvshv3g559mqrlf4906c9iw4jw8j83dxjax275b2wi8ix0wgmj";
-  };
+  # powerlevel10k = pkgs.fetchFromGitHub {
+  #   owner = "romkatv";
+  #   repo = "powerlevel10k";
+  #   # nixos-unstable as of 2017-11-13T08:53:10-00:00
+  #   rev = "b7d90c84671183797bdec17035fc2d36b5d12292";
+  #   sha256 = "0nzvshv3g559mqrlf4906c9iw4jw8j83dxjax275b2wi8ix0wgmj";
+  # };
 in
 
 {
   # Let Home Manager install and manage itself.
   imports = [
     ../../modules/cli.nix
-    ../../modules/cuda.nix
+    #../../modules/cuda.nix
     ../../modules/editors.nix
     ../../modules/git.nix
     ../../modules/nix-utilities.nix
@@ -35,10 +35,10 @@ in
     initExtraBeforeCompInit = builtins.readFile ../../configs/zsh/fedora_zshrc.zsh;
     plugins = [{
       name = "powerlevel10k";
-      # src = pkgs.fetchFromGitHub {
-      #   inherit (sources.powerlevel10k) owner repo rev sha256;
-      # };
-      src = powerlevel10k;
+      src = pkgs.fetchFromGitHub {
+        inherit (sources.powerlevel10k) owner repo rev sha256;
+      };
+      # src = powerlevel10k;
     }];
   };
 

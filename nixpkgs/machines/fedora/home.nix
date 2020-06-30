@@ -29,6 +29,9 @@ in
       isync
     ];
 
+  programs.man.enable = false;
+  home.extraOutputsToInstall = [ "man" ];
+
   programs.zsh = {
     enable = true;
     enableCompletion = false;

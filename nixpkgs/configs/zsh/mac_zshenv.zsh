@@ -3,6 +3,7 @@ path=($HOME/go/bin
       $HOME/.cargo/bin
       $HOME/.poetry/bin
       $HOME/.config/emacs/bin
+      /Library/TeX/texbin
       /usr/local/bin
       /usr/local/sbin
       /usr/local/go/bin

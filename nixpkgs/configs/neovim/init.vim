@@ -317,6 +317,12 @@ onoremap <expr> N  'nN'[v:searchforward]
 let g:python3_host_prog=$HOME.'/.virtualenvs/neovim3/bin/python'
 let g:loaded_python_provider = 0
 
+" Highlight on yank
+au TextYankPost * silent! lua vim.highlight.on_yank()
+
+" Y yank until the end of line
+noremap Y y$
+
 " Clear white space on empty lines and end of line
 nnoremap <silent> <F6> :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>
 

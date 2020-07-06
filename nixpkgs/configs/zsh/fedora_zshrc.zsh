@@ -231,7 +231,7 @@ home-upgrade () {
   home-manager switch
   nvim +PlugUpdate +qall &> /dev/null
   git -C ~/.emacs.d pull --rebase origin develop
-  (( $+commands[doom] )) && doom update && doom sync
+  (( $+commands[doom] )) && doom sync -u
 
   # (( $+commands[doom] )) && doom -y upgrade
 }

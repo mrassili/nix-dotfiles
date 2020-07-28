@@ -27,6 +27,10 @@ in
   home.packages = with pkgs; [
       mu
       isync
+      languagetool
+      haskellPackages.ghc
+      haskellPackages.ghcide
+      rust-analyzer
     ];
 
   programs.man.enable = false;
@@ -48,7 +52,7 @@ in
   programs.emacs = {
     enable = true;
     package = nixos-unstable.emacsGcc;
-    extraPackages = (epkgs: [ epkgs.vterm] );
+    extraPackages = (epkgs: [ epkgs.vterm ] );
   };
 
   xdg.configFile."alacritty/alacritty.yml".source = ../../configs/terminal/alacritty.yml;

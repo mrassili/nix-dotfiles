@@ -230,8 +230,5 @@ home-upgrade () {
   nix-channel --update
   home-manager switch
   nvim +PlugUpdate +qall &> /dev/null
-  git -C ~/.emacs.d pull --rebase origin develop
-  (( $+commands[doom] )) && doom sync -u
-
-  # (( $+commands[doom] )) && doom -y upgrade
+  (( $+commands[doom] )) && doom -y upgrade
 }

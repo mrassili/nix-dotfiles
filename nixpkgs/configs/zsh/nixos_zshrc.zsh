@@ -224,7 +224,7 @@ home-upgrade () {
   niv -s ~/.config/nixpkgs/nix/sources.json update && \
   home-manager switch
   nvim +PlugUpdate +qall &> /dev/null && \
-  $HOME/.emacs.d/bin/doom --yes upgrade
+  (( $+commands[doom] )) && doom -y upgrade
 }
 
 system-upgrade () {

@@ -1,7 +1,6 @@
-{ config, pkgs, libs, ... }:
+{ pkgs, ... }:
 let
   sources = import ../../nix/sources.nix;
-  pkgs = import sources.nixpkgs-unstable { };
 in
 {
   imports = [
@@ -11,7 +10,11 @@ in
     ../../modules/nix-utilities.nix
     ../../modules/ssh.nix
   ];
-  # Let Home Manager install and manage itself.
+
+  home.username = builtins.getEnv "USER";
+  home.homeDirectory = builtins.getEnv "HOME";
+  home.stateVersion = "20.09";
+
   home.packages = with pkgs; [
       mu
       isync
@@ -30,5 +33,5 @@ in
   };
 
   home.file.".zshenv".source = ../../configs/zsh/mac_zshenv.zsh;
-  programs.home-manager.enable = true;
+
 }

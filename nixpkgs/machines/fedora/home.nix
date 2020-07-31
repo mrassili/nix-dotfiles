@@ -1,32 +1,25 @@
 { pkgs, ... }:
+
 let
   sources = import ../../nix/sources.nix;
-  nixos-unstable = import sources.nixos-unstable { };
 in
 
 {
-  # Let Home Manager install and manage itself.
   imports = [
     ../../modules/cli.nix
     #../../modules/cuda.nix
-    ../../modules/editors.nix
     ../../modules/git.nix
     ../../modules/nix-utilities.nix
     # ../../modules/python.nix
+    ../../modules/neovim.nix
+    ../../modules/languages.nix
+    ../../modules/emacs.nix
     ../../modules/ssh.nix
   ];
 
-  home.username = "michael";
-  home.homeDirectory = "/home/michael";
-
-  home.packages = with pkgs; [
-      mu
-      isync
-      languagetool
-      haskellPackages.ghc
-      haskellPackages.ghcide
-      rust-analyzer
-    ];
+  home.username = builtins.getEnv "USER";
+  home.homeDirectory = builtins.getEnv "HOME";
+  home.stateVersion = "20.09";
 
   programs.man.enable = false;
   home.extraOutputsToInstall = [ "man" ];
@@ -40,29 +33,10 @@ in
       src = pkgs.fetchFromGitHub {
         inherit (sources.powerlevel10k) owner repo rev sha256;
       };
-      # src = powerlevel10k;
     }];
-  };
-
-  programs.emacs = {
-    enable = true;
-    package = nixos-unstable.emacsGcc;
-    extraPackages = (epkgs: [ epkgs.vterm ] );
   };
 
   xdg.configFile."alacritty/alacritty.yml".source = ../../configs/terminal/alacritty.yml;
   services.lorri.enable = true;
-  programs.home-manager.enable = true;
-  programs.bash.enable = true;
 
-  # services.emacs.client.enable = true;
-  # This value determines the Home Manager release that your
-  # configuration is compatible with. This helps avoid breakage
-  # when a new Home Manager release introduces backwards
-  # incompatible changes.
-  #
-  # You can update Home Manager without changing this value. See
-  # the Home Manager release notes for a list of state version
-  # changes in each release.
-  home.stateVersion = "20.09";
 }

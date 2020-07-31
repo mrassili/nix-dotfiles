@@ -4,6 +4,21 @@ nixos contains my nixos configuration, and is symlinked to /etc/nixos
 
 nixpkgs contains my userland nix configuration, and is symlinked to $HOME/.config/nixpkgs via the install script
 
-# To install
+# To install nix
 
-run `bash install.sh {fedora, macos, cluster, nixos}` in the nixpkgs subdirectory
+```bash
+curl -L https://nixos.org/nix/install | sh
+```
+
+# To install my home-manager configuration
+
+```
+https://github.com/mjlbach/nix-dotfiles.git
+cd nix-dotfiles/nixpkgs
+bash install.sh {fedora, macos, cluster, nixos}`
+bash switch.sh
+```
+
+# To install my NixOS configuration
+
+Coming soon...

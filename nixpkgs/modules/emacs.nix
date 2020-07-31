@@ -1,7 +1,7 @@
 { config, pkgs, libs, ... }:
 
 let
-  sources = import ../../nix/sources.nix;
+  sources = import ../nix/sources.nix;
   nixos-unstable = import sources.nixos-unstable { };
 in
 

@@ -1,15 +1,7 @@
-{ config, pkgs, libs, ... }:
+{ pkgs, ... }:
 let
   sources = import ../../nix/sources.nix;
-  pkgs = import sources.nixpkgs-unstable { };
   nixos-unstable = import sources.nixos-unstable { };
-  # powerlevel10k = pkgs.fetchFromGitHub {
-  #   owner = "romkatv";
-  #   repo = "powerlevel10k";
-  #   # nixos-unstable as of 2017-11-13T08:53:10-00:00
-  #   rev = "b7d90c84671183797bdec17035fc2d36b5d12292";
-  #   sha256 = "0nzvshv3g559mqrlf4906c9iw4jw8j83dxjax275b2wi8ix0wgmj";
-  # };
 in
 
 {
@@ -23,6 +15,9 @@ in
     # ../../modules/python.nix
     ../../modules/ssh.nix
   ];
+
+  home.username = "michael";
+  home.homeDirectory = "/home/michael";
 
   home.packages = with pkgs; [
       mu
@@ -69,5 +64,5 @@ in
   # You can update Home Manager without changing this value. See
   # the Home Manager release notes for a list of state version
   # changes in each release.
-  home.stateVersion = "20.03";
+  home.stateVersion = "20.09";
 }

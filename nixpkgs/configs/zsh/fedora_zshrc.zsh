@@ -225,10 +225,17 @@ aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceType, 
 # Set environmental variables
 export EDITOR="nvim"
 
+home-manager () {
+  case $1 in
+    "switch") $HOME/.config/nixpkgs/switch.sh;;
+      *) echo "Sorry, command not implemented";
+  esac
+}
+
+
 home-upgrade () {
-  niv -s $HOME/.config/nixpkgs/nix/sources.json update
-  nix-channel --update
-  home-manager switch
+  $HOME/.config/nixpkgs/update-dependencies.sh
+  $HOME/.config/nixpkgs/switch.sh
   nvim +PlugUpdate +qall &> /dev/null
   (( $+commands[doom] )) && doom -y upgrade
 }

@@ -1,7 +1,6 @@
-{ config, pkgs, libs, ... }:
+{ pkgs, ... }:
 let
   sources = import ../../nix/sources.nix;
-  pkgs = import sources.nixpkgs-unstable { };
 in
 {
   # Let Home Manager install and manage itself.
@@ -11,6 +10,9 @@ in
     ../../modules/git.nix
     ../../modules/nix-utilities.nix
   ];
+
+  home.username = "michael";
+  home.homeDirectory = "/home/michael";
 
   programs.zsh = {
     enable = true;

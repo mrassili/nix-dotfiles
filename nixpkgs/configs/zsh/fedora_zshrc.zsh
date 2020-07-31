@@ -232,7 +232,6 @@ home-manager () {
   esac
 }
 
-
 home-upgrade () {
   $HOME/.config/nixpkgs/update-dependencies.sh
   $HOME/.config/nixpkgs/switch.sh

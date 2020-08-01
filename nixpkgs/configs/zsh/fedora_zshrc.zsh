@@ -185,6 +185,7 @@ alias ll="ls -alh --color=auto"
 alias l="ls --color=auto"
 
 alias open="xdg-open"
+alias pag="ps aux | grep"
 
 # Useful docker commands
 # Can also append --filter="ancestor=tdw:bp-1.4.5a" to ignore running container

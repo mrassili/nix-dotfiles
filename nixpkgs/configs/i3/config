@@ -34,10 +34,19 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 exec --no-startup-id nm-applet
 
 # Start picom
-exec --no-startup-id picom --experimental-backends --xrender-sync-fence
+exec --no-startup-id picom -b --experimental-backends
+
+# Hack to fix screen tearing
+exec --no-startup-id nvidia-settings --assign CurrentMetaMode="nvidia-auto-select +0+0 { ForceCompositionPipeline = On }"
 
 # Set background
 exec --no-startup-id feh --bg-scale /home/michael/Pictures/Wallpapers/a8ooenc6xnt01.jpg
+
+# Start nextcloud
+exec --no-startup-id nextcloud
+
+# Start gnome settings daemon (Fedora)
+exec --no-startup-id /usr/libexec/gsd-xsettings
 
 # Printscreen
 bindsym Print exec maim -s | xclip -selection clipboard -t image/png

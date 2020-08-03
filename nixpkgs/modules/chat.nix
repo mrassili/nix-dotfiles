@@ -3,7 +3,7 @@
 {
   home.packages = with pkgs; [
     discord
-    riot-desktop
+    element-desktop
     slack
     signal-desktop
   ];

@@ -12,7 +12,7 @@
     gwenview
     latte-dock
     libreoffice-qt
-    nerdfonts
+    (nerdfonts.override { fonts = [ "Meslo"]; })
     nextcloud-client
     okular
     openssh

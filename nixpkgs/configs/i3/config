@@ -36,6 +36,9 @@ exec --no-startup-id nm-applet
 # Set up notifications
 exec --no-startup-id dunst
 
+# Set up notifications
+exec --no-startup-id redshift
+
 # Start picom
 # exec --no-startup-id picom -b --experimental-backends
 

@@ -34,10 +34,12 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 exec --no-startup-id nm-applet
 
 # Start picom
-exec --no-startup-id picom -b --experimental-backends
+# exec --no-startup-id picom -b --experimental-backends
 
 # Hack to fix screen tearing
-exec --no-startup-id nvidia-settings --assign CurrentMetaMode="nvidia-auto-select +0+0 { ForceCompositionPipeline = On }"
+# exec --no-startup-id nvidia-settings --assign CurrentMetaMode="nvidia-auto-select +0+0 { ForceFullCompositionPipeline = On }"
+# exec --no-startup-id nvidia-settings --assign CurrentMetaMode="2560x1440_144 +0+0 { ForceCompositionPipeline = On }"
+exec --no-startup-id nvidia-settings --assign CurrentMetaMode="2560x1440_144 +0+0"
 
 # Set background
 exec --no-startup-id feh --bg-scale /home/michael/Pictures/Wallpapers/a8ooenc6xnt01.jpg

@@ -33,6 +33,9 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id nm-applet
 
+# Set up notifications
+exec --no-startup-id dunst
+
 # Start picom
 # exec --no-startup-id picom -b --experimental-backends
 
@@ -74,8 +77,6 @@ bindsym $mod+comma workspace back_and_forth
 # Use mod + tab to switch through workspaces
 bindsym $mod+Tab workspace next
 bindsym $mod+Shift+Tab workspace prev
-
-bindsym $mod+n exec --no-startup-id i3-msg workspace $(($(i3-msg -t get_workspaces | jq '.[-1].num')+1)
 
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
@@ -140,7 +141,7 @@ bindsym $mod+space focus mode_toggle
 bindsym $mod+a focus parent
 
 # focus the child container
-#bindsym $mod+d focus child
+# bindsym $mod+d focus child
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.

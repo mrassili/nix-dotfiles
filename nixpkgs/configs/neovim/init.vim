@@ -159,6 +159,7 @@ set rtp+=/usr/local/opt/fzf
 " let g:vimtex_compiler_progname = 'nvr'
 let g:vimtex_compiler_progname = $HOME.'/.virtualenvs/neovim3/bin/nvr'
 let g:vimtex_compiler_progname = $HOME.'/.virtualenvs/neovim3/bin/nvr'
+let g:tex_flavor = 'latex'
 
 "Add leader shortcuts
 "nnoremap <silent> <leader>f :Files<CR>

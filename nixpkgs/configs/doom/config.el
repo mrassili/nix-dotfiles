@@ -9,21 +9,6 @@
 (setq user-full-name "Michael Lingelbach"
       user-mail-address "m.j.lbach@gmail.com")
 
-;; Settings for hydra
-(setq ivy-read-action-function #'ivy-hydra-read-action)
-
-(remove-hook 'doom-first-buffer-hook #'smartparens-global-mode)
-
-;; Settings for mail
-(setq mu4e-view-use-gnus t)
-
-(when (fboundp 'imagemagick-register-types)
-  (imagemagick-register-types))
-
-;; Set bindings for copy and paste
-(global-set-key (kbd "C-S-c") #'clipboard-kill-ring-save)
-(global-set-key (kbd "C-S-v") #'clipboard-yank)
-
 ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
 ;; are the three important ones:
 ;;
@@ -44,37 +29,91 @@
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/org/")
-(setq org-agenda-files (doom-files-in "~/org" :match "\\.org$" :depth 3))
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type t)
 
+;; Set org agenda files
+(setq org-agenda-files (doom-files-in "~/org" :match "\\.org$" :depth 3))
+
+;; Settings for hydra
+(setq ivy-read-action-function #'ivy-hydra-read-action)
+
+;; Get rid of smartparens
+(remove-hook 'doom-first-buffer-hook #'smartparens-global-mode)
+
+;; Settings for mail
+(setq mu4e-view-use-gnus t)
+
+;; Use imagemagick for email
+(when (fboundp 'imagemagick-register-types)
+  (imagemagick-register-types))
+
+;; Set bindings for copy and paste
+(global-set-key (kbd "C-S-c") #'clipboard-kill-ring-save)
+(global-set-key (kbd "C-S-v") #'clipboard-yank)
+
+;; Add langtool to emacs
+(setq langtool-language-tool-server-jar "/nix/store/76h6kmnrksnxp1f9q8ivnkcxs5kqv6sp-LanguageTool-5.0/share/languagetool-server.jar")
+
+;; Fix bug with emacs28 and latex
+(when EMACS28+
+  (add-hook 'latex-mode-hook #'TeX-latex-mode))
+
+;; Set default pdflatex command to be latexmk to compile bibliograph
+(setq pdf-latex-command "latexmk")
+
 ;; Don't override dumb terminal
 (setq tramp-terminal-type "tramp")
 
-(after! tramp (add-to-list 'tramp-remote-path 'tramp-own-remote-path))
+;; Add remote path to tramp to acess local files
+(after! tramp
+  (add-to-list 'tramp-remote-path 'tramp-own-remote-path)
+  (add-to-list 'backup-directory-alist
+               (cons "." "~/.emacs.d/backups/"))
+  ;; (setq tramp-verbose 10)
+  (customize-set-variable
+   'tramp-backup-directory-alist backup-directory-alist)
+  )
 
-(after! lsp-python-ms
-  (setq lsp-python-ms-executable (executable-find "python-language-server"))
-  (set-lsp-priority! 'mspyls 1))
+;; Fix native compilation in nix
+(setq comp-async-env-modifier-form "")
 
-
+;; Add pyright remote with ability to get remote virtualenv
 (after! lsp-mode
+  ;; (setq lsp-log-io t)
+  (setq lsp-pyright-use-library-code-for-types t)
+  (setq lsp-pyright-diagnostic-mode "workspace")
   (lsp-register-client
-    (make-lsp-client :new-connection (lsp-tramp-connection "python-language-server")
-                      :major-modes '(python-mode)
-                      :remote? t
-                      :notification-handlers (lsp-ht ("python/languageServerStarted" 'lsp-python-ms--language-server-started-callback)
-                                                    ("telemetry/event" 'ignore)
-                                                    ("python/reportProgress" 'lsp-python-ms--report-progress-callback)
-                                                    ("python/beginProgress" 'lsp-python-ms--begin-progress-callback)
-                                                    ("python/endProgress" 'lsp-python-ms--end-progress-callback))
-                      :initialization-options 'lsp-python-ms--extra-init-params
-                      :initialized-fn (lambda (workspace)
-                                        (with-lsp-workspace workspace
-                                          (lsp--set-configuration (lsp-configuration-section "python"))))
-                      :server-id 'pyls-remote)))
+   (make-lsp-client
+    :new-connection (lsp-tramp-connection (lambda ()
+                                            (cons "pyright-langserver"
+                                                  lsp-pyright-langserver-command-args)))
+    :major-modes '(python-mode)
+    :remote? t
+    :server-id 'pyright-remote
+    :multi-root t
+    :priority 3
+    :initialization-options (lambda () (let* ((pyright_hash (lsp-configuration-section "pyright"))
+                                              (python_hash (lsp-configuration-section "python"))
+                                              (_ (puthash "pythonPath" (concat (replace-regexp-in-string (file-remote-p default-directory) "" pyvenv-virtual-env) "bin/python") (gethash "python" python_hash))))
+                                         (ht-merge pyright_hash
+                                                   python_hash)))
+    :initialized-fn (lambda (workspace)
+                      (with-lsp-workspace workspace
+                                          (lsp--set-configuration
+                                           (let* ((pyright_hash (lsp-configuration-section "pyright"))
+                                                  (python_hash (lsp-configuration-section "python"))
+                                                  (_ (puthash "pythonPath" (concat (replace-regexp-in-string (file-remote-p default-directory) "" pyvenv-virtual-env) "bin/python") (gethash "python" python_hash))))
+                                             (ht-merge pyright_hash
+                                                       python_hash)))))
+    :download-server-fn (lambda (_client callback error-callback _update?)
+                          (lsp-package-ensure 'pyright callback error-callback))
+    :notification-handlers (lsp-ht ("pyright/beginProgress" 'lsp-pyright--begin-progress-callback)
+                                   ("pyright/reportProgress" 'lsp-pyright--report-progress-callback)
+                                   ("pyright/endProgress" 'lsp-pyright--end-progress-callback))))
+  )
 
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
@@ -101,4 +140,3 @@
 ;;         org-gcal-client-secret "your-secret"
 ;;         org-gcal-file-alist '(("your-mail@gmail.com" .  "~/schedule.org")
 ;;                               ("another-mail@gmail.com" .  "~/task.org"))))
-

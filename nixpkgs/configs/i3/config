@@ -43,9 +43,9 @@ exec --no-startup-id redshift -l 37:-122
 # exec --no-startup-id picom -b --experimental-backends
 
 # Hack to fix screen tearing
-# exec --no-startup-id nvidia-settings --assign CurrentMetaMode="nvidia-auto-select +0+0 { ForceFullCompositionPipeline = On }"
+exec --no-startup-id nvidia-settings --assign CurrentMetaMode="2560x1440_144 +0+0 { ForceFullCompositionPipeline = On }"
 # exec --no-startup-id nvidia-settings --assign CurrentMetaMode="2560x1440_144 +0+0 { ForceCompositionPipeline = On }"
-exec --no-startup-id nvidia-settings --assign CurrentMetaMode="2560x1440_144 +0+0"
+# exec --no-startup-id nvidia-settings --assign CurrentMetaMode="2560x1440_144 +0+0"
 
 # Set background
 exec --no-startup-id feh --bg-scale /home/michael/Pictures/Wallpapers/a8ooenc6xnt01.jpg
@@ -93,6 +93,8 @@ bindsym $mod+Shift+q kill
 # bindsym $mod+d exec dmenu_run
 # start rofi (a program launcher)
 bindsym $mod+d exec --no-startup-id "rofi -show-icons -show combi -combi-modi window,drun -modi combi"
+# bindsym $mod+g exec --no-startup-id "rofi -show-icons -show window -window-command 'i3-msg [ id={window} ] move container to workspace current'"
+bindsym $mod+g exec --no-startup-id /home/michael/.config/rofi/move_window_to_current.sh
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
@@ -127,6 +129,9 @@ bindsym $mod+h split h
 
 # split in vertical orientation
 bindsym $mod+v split v
+
+# toggle split
+bindsym $mod+t split toggle
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle

@@ -10,6 +10,8 @@ in
       languagetool
       mu
       isync
+      sqlite
+      ispell
     ];
 
   programs.emacs = {

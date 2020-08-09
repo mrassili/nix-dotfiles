@@ -120,30 +120,36 @@
 
   # Enable sound.
   sound.enable = true;
-  hardware.pulseaudio.enable = true;
-  hardware.pulseaudio.support32Bit = true;
+  hardware.pulseaudio = {
+    enable = true;
+    support32Bit = true;
+  };
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
   services.xserver.layout = "us";
-  # services.xserver.xkbOptions = "eurosign:e";
   services.xserver.screenSection = ''
     Option "NoFlip" "true"
   '';
   # Old but deprecated settings
-  #Option "metamodes" "nvidia-auto-select +0+0 { ForceCompositionPipeline = On }"
-  #Option         "AllowIndirectGLXProtocol" "off"
+  # Option "metamodes" "nvidia-auto-select +0+0 { ForceCompositionPipeline = On }"
+  # Option         "AllowIndirectGLXProtocol" "off"
   # Option         "TripleBuffer" "on"
 
   # Enable touchpad support.
   # services.xserver.libinput.enable = true;
 
   # Enable the KDE Desktop Environment.
-  services.xserver.displayManager.sddm.enable = true;
+  services.xserver.displayManager.sddm = {
+    enable = true;
+    enableHidpi = true;
+  };
   services.xserver.desktopManager.plasma5.enable = true;
-  services.xserver.videoDrivers = [ "modesetting" "nvidia" ];
-  # services.xserver.startDbusSession = false;
-  # services.dbus.socketActivated = true;
+  services.xserver.videoDrivers = [ "nvidia" ];
+
+  hardware.nvidia = {
+    modesetting.enable = true;
+  };
 
   # Enable OpenGL
   hardware.opengl = {
@@ -189,6 +195,7 @@
     autoOptimiseStore = true;
     trustedUsers = [ "root" "mjlbach" "@wheel" ];
   };
+
   nixpkgs.config.allowUnfree = true;
 
   system.stateVersion = "20.03"; # Did you read the comment?

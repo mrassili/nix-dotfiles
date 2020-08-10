@@ -17,7 +17,7 @@ in
   programs.emacs = {
     enable = true;
     package = nixos-unstable.emacsGccWrapped;
-    extraPackages = (epkgs: [ epkgs.vterm ] );
+    # extraPackages = (epkgs: [ epkgs.vterm ] );
   };
 
 }

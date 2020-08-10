@@ -41,10 +41,11 @@ exec --no-startup-id redshift -l 37:-122
 
 # Start picom
 # exec --no-startup-id picom -b --experimental-backends
+# exec --no-startup-id picom -b
 
 # Hack to fix screen tearing
-exec --no-startup-id nvidia-settings --assign CurrentMetaMode="2560x1440_144 +0+0 { ForceFullCompositionPipeline = On }"
-# exec --no-startup-id nvidia-settings --assign CurrentMetaMode="2560x1440_144 +0+0 { ForceCompositionPipeline = On }"
+# exec --no-startup-id nvidia-settings --assign CurrentMetaMode="2560x1440_144 +0+0 { ForceFullCompositionPipeline = On }"
+exec --no-startup-id nvidia-settings --assign CurrentMetaMode="2560x1440_144 +0+0 { ForceCompositionPipeline = On }"
 # exec --no-startup-id nvidia-settings --assign CurrentMetaMode="2560x1440_144 +0+0"
 
 # Set background
@@ -100,6 +101,9 @@ bindsym $mod+g exec --no-startup-id /home/michael/.config/rofi/move_window_to_cu
 # installed.
 # bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
+# Netflix resize
+bindsym $mod+n resize set height 720
+
 # change focus
 bindsym $mod+j focus left
 bindsym $mod+k focus down
@@ -152,6 +156,16 @@ bindsym $mod+a focus parent
 
 # focus the child container
 # bindsym $mod+d focus child
+#
+#
+focus_on_window_activation focus
+
+# # move the currently focused window to the scratchpad
+bindsym $mod+Shift+minus move scratchpad
+
+# Show the next scratchpad window or hide the focused scratchpad window.
+# If there are multiple scratchpad windows, this command cycles through them.
+bindsym $mod+minus scratchpad show
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.

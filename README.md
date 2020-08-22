@@ -13,7 +13,7 @@ curl -L https://nixos.org/nix/install | sh
 # To install my home-manager configuration
 
 ```
-cit clone https://github.com/mjlbach/nix-dotfiles.git
+git clone https://github.com/mjlbach/nix-dotfiles.git
 cd nix-dotfiles/nixpkgs
 bash install.sh {fedora, macos, cluster, nixos}`
 bash switch.sh

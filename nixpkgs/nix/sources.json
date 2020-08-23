@@ -17,10 +17,10 @@
         "homepage": "",
         "owner": "nix-community",
         "repo": "emacs-overlay",
-        "rev": "6c356c75afda71e1bd7e675dc58738e5ff52ca8e",
-        "sha256": "03xcffz22cpy103c1mw72l1fnyw13xyrmf13dmk52ci1kdblnpqh",
+        "rev": "5d1077b8d739cd9b9214c0ed36c8a9a81d707c7b",
+        "sha256": "063a93bz6yvcqkyqchgnh65fqks4i9855bp5dzpr2a55zyzxw7xa",
         "type": "tarball",
-        "url": "https://github.com/nix-community/emacs-overlay/archive/6c356c75afda71e1bd7e675dc58738e5ff52ca8e.tar.gz",
+        "url": "https://github.com/nix-community/emacs-overlay/archive/5d1077b8d739cd9b9214c0ed36c8a9a81d707c7b.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "home-manager": {
@@ -41,10 +41,10 @@
         "homepage": "https://neovim.io",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "161cdba1e3b8b53f474b2e76655c8c1a5217802f",
-        "sha256": "1g6krk871i7xvbwz4apifpgfi4h6ac6mpfmf8i8gxa855cma6r0v",
+        "rev": "8c49e3d50959e24dadd688f56a18f104bd5fd934",
+        "sha256": "1qqmfys8hm60j4hgw861yad2x94jadd7247jjgqsxl4ij123hgdg",
         "type": "tarball",
-        "url": "https://github.com/neovim/neovim/archive/161cdba1e3b8b53f474b2e76655c8c1a5217802f.tar.gz",
+        "url": "https://github.com/neovim/neovim/archive/8c49e3d50959e24dadd688f56a18f104bd5fd934.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "niv": {
@@ -53,10 +53,10 @@
         "homepage": "https://github.com/nmattia/niv",
         "owner": "nmattia",
         "repo": "niv",
-        "rev": "d13bf5ff11850f49f4282d59b25661c45a851936",
-        "sha256": "06hg0i173dia99bcv8si8qqwdw0ymbngsilz2s182d4afsnylq5z",
+        "rev": "89ae775e9dfc2571f912156dd2f8627e14d4d507",
+        "sha256": "0ssw6byyn79fpyzswi28s5b85x66xh4xsfhmcfl5mkdxxpmyy0ns",
         "type": "tarball",
-        "url": "https://github.com/nmattia/niv/archive/d13bf5ff11850f49f4282d59b25661c45a851936.tar.gz",
+        "url": "https://github.com/nmattia/niv/archive/89ae775e9dfc2571f912156dd2f8627e14d4d507.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "nixos-unstable": {
@@ -65,10 +65,10 @@
         "homepage": "https://github.com/NixOS/nixpkgs",
         "owner": "NixOS",
         "repo": "nixpkgs-channels",
-        "rev": "bd0e645f02416acb1683e458b4ed3ef4f9b09da9",
-        "sha256": "0wccl5fizqh5k62vx7ylr98d9k5aa8iwhjj015f9svfffkclsznr",
+        "rev": "c59ea8b8a0e7f927e7291c14ea6cd1bd3a16ff38",
+        "sha256": "1ak7jqx94fjhc68xh1lh35kh3w3ndbadprrb762qgvcfb8351x8v",
         "type": "tarball",
-        "url": "https://github.com/NixOS/nixpkgs-channels/archive/bd0e645f02416acb1683e458b4ed3ef4f9b09da9.tar.gz",
+        "url": "https://github.com/NixOS/nixpkgs-channels/archive/c59ea8b8a0e7f927e7291c14ea6cd1bd3a16ff38.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "nixpkgs-unstable": {
@@ -77,10 +77,10 @@
         "homepage": "https://github.com/NixOS/nixpkgs",
         "owner": "NixOS",
         "repo": "nixpkgs-channels",
-        "rev": "54acf58040890cf9449bea55b5693b42c13844b9",
-        "sha256": "00a7x92j26r4mmlyp4hmhg13lxb6x47lv2dq029dd3p9l4bymrip",
+        "rev": "ddfa22167019726c015a5638e815d028031162e8",
+        "sha256": "03sa3h00k4qiy511gjxvpw78wdph9bn8hvfsjjq49297vavxh0cv",
         "type": "tarball",
-        "url": "https://github.com/NixOS/nixpkgs-channels/archive/54acf58040890cf9449bea55b5693b42c13844b9.tar.gz",
+        "url": "https://github.com/NixOS/nixpkgs-channels/archive/ddfa22167019726c015a5638e815d028031162e8.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "powerlevel10k": {
@@ -89,10 +89,10 @@
         "homepage": "",
         "owner": "romkatv",
         "repo": "powerlevel10k",
-        "rev": "525e2545db9470bad88b6365b97df80fcfa9aff4",
-        "sha256": "1prq73mg75hjajmdn9ij5qrgy1x5fb3mvzx09va06gssknc2lw2q",
+        "rev": "dca8774f1b79a31d3da6f07a841a754eccb2752b",
+        "sha256": "1i1nfsi85y7gy0v1bq62zn63v15a5j63yi6k0m4inks5hj3h85jm",
         "type": "tarball",
-        "url": "https://github.com/romkatv/powerlevel10k/archive/525e2545db9470bad88b6365b97df80fcfa9aff4.tar.gz",
+        "url": "https://github.com/romkatv/powerlevel10k/archive/dca8774f1b79a31d3da6f07a841a754eccb2752b.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     }
 }

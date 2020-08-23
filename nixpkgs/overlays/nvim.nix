@@ -1,11 +1,3 @@
-let
-  sources = import ../nix/sources.nix;
-in
-self: super: {
-  neovim-unwrapped = super.neovim-unwrapped.overrideAttrs (old: {
-    version = "master";
-    src = super.fetchFromGitHub {
-      inherit (sources.neovim) owner repo rev sha256;
-    };
-  });
-}
+import (builtins.fetchTarball {
+      url = https://github.com/mjlbach/neovim-nightly-overlay/archive/master.tar.gz;
+    })

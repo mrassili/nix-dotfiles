@@ -115,9 +115,6 @@ xmap ga <Plug>(EasyAlign)
 "Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
 
-"Add fzf
-set rtp+=/usr/local/opt/fzf
-
 " Add neovim remote for vimtex
 " let g:vimtex_compiler_progname = 'nvr'
 let g:vimtex_compiler_progname = $HOME.'/.virtualenvs/neovim3/bin/nvr'

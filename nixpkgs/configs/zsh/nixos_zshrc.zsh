@@ -229,7 +229,6 @@ home-manager () {
 home-upgrade () {
   $HOME/.config/nixpkgs/update-dependencies.sh
   $HOME/.config/nixpkgs/switch.sh
-  nvim +PlugUpdate +qall &> /dev/null
   (( $+commands[doom] )) && doom -y upgrade
 }
 

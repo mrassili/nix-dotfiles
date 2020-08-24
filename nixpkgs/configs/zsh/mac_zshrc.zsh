@@ -221,7 +221,6 @@ home-upgrade () {
   $HOME/.config/nixpkgs/update-dependencies.sh
   $HOME/.config/nixpkgs/switch.sh
   nix-channel --update
-  nvim +PlugUpdate +qall &> /dev/null
   (( $+commands[doom] )) && doom -y upgrade
   brew upgrade
   brew cask upgrade

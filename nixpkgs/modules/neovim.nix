@@ -20,9 +20,11 @@
             vim-eunuch
             vim-unimpaired
             vim-commentary
+            vim-polyglot
             splitjoin-vim
             vim-gutentags
             vim-easy-align
+            vim
             fzf-vim
             fzfWrapper
             vim-dirvish

@@ -6,7 +6,7 @@ in
   imports = [
     ../../modules/cli.nix
     ../../modules/git.nix
-    ../../modules/editors.nix
+    ../../modules/neovim.nix
     ../../modules/nix-utilities.nix
     ../../modules/ssh.nix
   ];

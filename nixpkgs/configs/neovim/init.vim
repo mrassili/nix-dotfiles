@@ -1,41 +1,3 @@
-call plug#begin($HOME.'/.neovim/plugged')
-
-Plug 'tpope/vim-vinegar'
-Plug 'tpope/vim-sensible'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-rhubarb'
-Plug 'tpope/vim-dispatch'
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-sleuth'
-Plug 'tpope/vim-eunuch'
-Plug 'tpope/vim-unimpaired'
-Plug 'tpope/vim-commentary'
-Plug 'AndrewRadev/splitjoin.vim'
-Plug 'ludovicchabant/vim-gutentags'
-Plug 'junegunn/vim-easy-align'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
-Plug 'justinmk/vim-dirvish'
-Plug 'joshdick/onedark.vim'
-Plug 'itchyny/lightline.vim'
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'lervag/vimtex'
-Plug 'mhinz/neovim-remote'
-Plug 'Yggdroot/indentLine'
-Plug 'sheerun/vim-polyglot'
-Plug 'jpalardy/vim-slime'
-Plug 'airblade/vim-gitgutter'
-Plug 'bfredl/nvim-luadev'
-Plug 'dstein64/vim-startuptime'
-Plug 'puremourning/vimspector'
-Plug 'neovim/nvim-lsp'
-Plug 'haorenW1025/diagnostic-nvim'
-Plug 'haorenW1025/completion-nvim'
-Plug 'sbdchd/neoformat'
-
-call plug#end()
-
 "Allow filetype plugins and syntax highlighting
 set autoindent
 filetype plugin indent on
@@ -87,6 +49,7 @@ set updatetime=250
 set signcolumn=yes
 
 "Set colorscheme
+packadd! onedark-vim
 colorscheme onedark
 set termguicolors
 let g:onedark_terminal_italics=1
@@ -372,6 +335,9 @@ augroup end
 
 " Vim polyglot language specific settings
 let g:python_highlight_space_errors = 0
+
+# Add nvim_lsp plugin
+packadd! nvim-lsp
 
 " LSP settings
 " log file location: /Users/michael/.local/share/nvim/vim-lsp.log

@@ -336,7 +336,7 @@ augroup end
 " Vim polyglot language specific settings
 let g:python_highlight_space_errors = 0
 
-# Add nvim_lsp plugin
+" Add nvim_lsp plugin
 packadd! nvim-lsp
 
 " LSP settings

@@ -24,7 +24,6 @@
             splitjoin-vim
             vim-gutentags
             vim-easy-align
-            vim
             fzf-vim
             fzfWrapper
             vim-dirvish

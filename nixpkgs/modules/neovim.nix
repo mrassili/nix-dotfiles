@@ -10,38 +10,37 @@
       package = pkgs.neovim-nightly;
       extraConfig = builtins.readFile ../configs/neovim/init.vim;
       plugins = with pkgs.vimPlugins; [
-            vim-vinegar
-            vim-sensible
-            vim-surround
-            vim-fugitive
-            vim-rhubarb
-            vim-dispatch
-            vim-repeat
-            vim-sleuth
-            vim-eunuch
-            vim-unimpaired
-            vim-commentary
-            vim-polyglot
-            splitjoin-vim
-            vim-gutentags
-            vim-easy-align
-            fzf-vim
-            fzfWrapper
-            vim-dirvish
-            onedark-vim
-            lightline-vim
-            vim-tmux-navigator
-            vimtex
-            # neovim-remote
-            indentLine
-            vim-slime
-            vim-gitgutter
             # nvim-luadev
             # vimspector
-            nvim-lsp
-            diagnostic-nvim
             completion-nvim
+            diagnostic-nvim
+            fzf-vim
+            fzfWrapper
+            indentLine
+            lightline-vim
             neoformat
+            nvim-lsp
+            onedark-vim
+            splitjoin-vim
+            vim-commentary
+            vim-dirvish
+            vim-dispatch
+            vim-easy-align
+            vim-eunuch
+            vim-fugitive
+            vim-gitgutter
+            vim-gutentags
+            vim-polyglot
+            vim-repeat
+            vim-rhubarb
+            vim-sensible
+            vim-sleuth
+            vim-slime
+            vim-surround
+            vim-tmux-navigator
+            vim-unimpaired
+            vim-vinegar
+            vimtex
           ];
     };
 }

@@ -2,6 +2,7 @@
 set autoindent
 filetype plugin indent on
 syntax on
+
 " set synmaxcol=120
 set expandtab
 
@@ -34,10 +35,7 @@ set breakindent
 "Set show command
 set showcmd
 
-"Keep swap and undo files in same location
-set backupdir=$HOME/.vim/backup//
-set directory=$HOME/.vim/swap//
-set undodir=$HOME/.vim/undo//
+"Save undo history
 set undofile
 
 "Case insensitive searching UNLESS /C or capital in search
@@ -170,15 +168,6 @@ function! s:find_git_root()
   return system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
 endfunction
 
-"Add preview to Rg togglable with question mark and add shellescape find git
-"root for searching top level git directory
-" command! -bang -nargs=* Rg
-"   \ call fzf#vim#grep(
-"   \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>).' '.shellescape(s:find_git_root()), 1,
-"   \   <bang>0 ? fzf#vim#with_preview('up:60%')
-"   \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-"   \   <bang>0)
-
 function! RipgrepFzf(query, fullscreen)
   let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case %s || true'
   let initial_command = printf(command_fmt, shellescape(a:query))
@@ -241,19 +230,6 @@ let g:slime_target = "tmux"
 let g:slime_python_ipython = 1
 let g:slime_dont_ask_default = 1
 let g:slime_default_config = {"socket_name": "default", "target_pane": "{right-of}"}
-
-"Set vim dispatch filetype options
-nnoremap <F9> :Dispatch<CR>
-augroup Dispatch
-  autocmd!
-  autocmd FileType python let b:dispatch = 'flake8 $(git rev-parse --show-toplevel)/**/*.py'
-  autocmd FileType cpp let b:dispatch = 'make ./build'
-  autocmd FileType rust let b:dispatch = 'rustc %'
-augroup end
-
-augroup Python
-  autocmd FileType python setlocal makeprg=flake8
-augroup end
 
 "Change preview window location
 set splitbelow
@@ -370,68 +346,6 @@ packadd! nvim-lsp
     on_attach = on_attach,
     cmd = {"python-language-server"}
   }
-  nvim_lsp['diagnosticls'].setup {
-    on_attach = on_attach,
-    filetypes={"sh"},
-    init_options = {
-        linters= {
-          shellcheck= {
-            command= "shellcheck",
-            debounce= 100,
-            args= { "--format=gcc", "-" },
-            offsetLine= 0,
-            offsetColumn= 0,
-            sourceName= "shellcheck",
-            formatLines= 1,
-	    formatPattern= { 
-	      "^[^:]+:(\\d+):(\\d+):\\s+([^:]+):\\s+(.*)$",
-	      {
-	        line= 1,
-	        column= 2,
-	        message= 4,
-	        security= 3
-	      }
-	    },
-            securities= {
-              error= "error",
-              warning= "warning",
-              note= "info"
-            }
-          },
-          languagetool= {
-            command= "languagetool",
-            debounce= 200,
-            args= {"-"},
-            offsetLine= 0,
-            offsetColumn= 0,
-            sourceName= "languagetool",
-            formatLines= 2,
-	    formatPattern= { 
-	    "^\\d+?\\.\\)\\s+Line\\s+(\\d+),\\s+column\\s+(\\d+),\\s+([^\\n]+)\nMessage:\\s+(.*)$",
-	    {
-	    line= 1,
-	    column= 2,
-	    message= { 4, 3 }
-	    }
-	    },
-          }
-        },
-        formatters= {
-          dartfmt= {
-            command= "dartfmt",
-            args= { "--fix" },
-          }
-        },
-        filetypes= {
-          sh= "shellcheck",
-          email= "languagetool"
-        },
-        formatFiletypes= {
-          dart= "dartfmt"
-        }
-      }
-
-    }
 EOF
 
 command! -buffer -nargs=0 LspShowLineDiagnostics lua require'jumpLoc'.openLineDiagnostics()

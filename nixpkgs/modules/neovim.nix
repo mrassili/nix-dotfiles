@@ -3,6 +3,7 @@
 {
   home.packages = with pkgs;  with stdenv.lib; [
     rnix-lsp
+    neovim-remote
   ] ++ optionals stdenv.isLinux [ python-language-server ] ;
   programs.neovim = {
       enable = true;

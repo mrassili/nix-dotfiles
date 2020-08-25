@@ -116,9 +116,7 @@ xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
 " Add neovim remote for vimtex
-" let g:vimtex_compiler_progname = 'nvr'
-let g:vimtex_compiler_progname = $HOME.'/.virtualenvs/neovim3/bin/nvr'
-let g:vimtex_compiler_progname = $HOME.'/.virtualenvs/neovim3/bin/nvr'
+let g:vimtex_compiler_progname = 'nvr'
 let g:tex_flavor = 'latex'
 
 "Add leader shortcuts
@@ -276,7 +274,6 @@ xnoremap <expr> N  'nN'[v:searchforward]
 onoremap <expr> N  'nN'[v:searchforward]
 
 "Neovim python support
-let g:python3_host_prog=$HOME.'/.virtualenvs/neovim3/bin/python'
 let g:loaded_python_provider = 0
 
 " Highlight on yank

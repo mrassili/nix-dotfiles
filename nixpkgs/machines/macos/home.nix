@@ -20,6 +20,10 @@ in
       isync
     ];
 
+  programs.emacs = {
+    enable = true;
+    package = pkgs.emacsMacport;
+  };
   programs.zsh = {
     enable = true;
     enableCompletion = false;

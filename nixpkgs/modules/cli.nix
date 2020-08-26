@@ -9,7 +9,6 @@ in
     bat
     coreutils
     curl
-    direnv
     du-dust
     exa
     fd
@@ -45,9 +44,15 @@ in
     zsh-powerlevel10k
   ];
 
+
+  programs.direnv = {
+      enable = true;
+      enableNixDirenvIntegration = true;
+  };
+
   home.file.".gitconfig".source = ../configs/git/gitconfig;
   home.file.".aws/config".source = ../configs/aws/aws_config;
   home.file.".dircolors".source = sources.LS_COLORS.outPath + "/LS_COLORS";
   home.file.".tmux.conf".source = ../configs/tmux/tmux.conf;
-  xdg.configFile."direnv/direnvrc".source = ../configs/direnv/direnvrc;
+  xdg.configFile."direnv/lib/poetry.sh".source = ../configs/direnv/poetry.sh;
 }

@@ -2,6 +2,7 @@
 
 {
   home.packages = with pkgs; [
+    hydra-check
     nix-du
     niv
     nix-index

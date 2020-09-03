@@ -307,7 +307,7 @@ augroup end
 let g:python_highlight_space_errors = 0
 
 " Add nvim_lsp plugin
-packadd! nvim-lspconfig
+packadd! nvim-lsp
 
 " LSP settings
 " log file location: /Users/michael/.local/share/nvim/vim-lsp.log

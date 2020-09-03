@@ -9,7 +9,7 @@ in
     ../../modules/neovim.nix
     ../../modules/nix-utilities.nix
     ../../modules/ssh.nix
-    #../../modules/weechat.nix
+    ../../modules/weechat.nix
   ];
 
   home.username = builtins.getEnv "USER";

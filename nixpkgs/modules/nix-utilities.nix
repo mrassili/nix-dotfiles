@@ -3,7 +3,7 @@
 {
   home.packages = with pkgs; [
     hydra-check
-    nix-du
+    #nix-du
     niv
     nix-index
     nix-prefetch

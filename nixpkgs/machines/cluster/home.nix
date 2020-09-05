@@ -13,6 +13,11 @@ in
   home.username = builtins.getEnv "USER";
   home.homeDirectory = builtins.getEnv "HOME";
   home.stateVersion = "20.09";
+  home.sessionVariables = {
+    LOCALE_ARCHIVE = "${pkgs.glibcLocales}/lib/locale/locale-archive";
+  };
+
+  programs.bash.enable = true;
 
   programs.zsh = {
     enable = true;

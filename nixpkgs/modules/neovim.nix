@@ -19,7 +19,7 @@
             indentLine
             lightline-vim
             neoformat
-            nvim-lsp
+            nvim-lspconfig
             onedark-vim
             splitjoin-vim
             vim-commentary

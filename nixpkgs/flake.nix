@@ -2,14 +2,10 @@
   description = "A flake for home-manager-template";
 
   inputs.flake-utils.url = "github:numtide/flake-utils";
-
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-
+  inputs.nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
   inputs.home-manager = {
-    type = "github";
-    owner = "rycee";
-    repo = "home-manager";
-    flake = false;
+    url = "github:rycee/home-manager";
+    inputs.nixpkgs.follows = "";
   };
 
   outputs = { self, flake-utils, nixpkgs, home-manager }:

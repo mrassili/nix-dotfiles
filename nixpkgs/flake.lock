@@ -1,52 +1,5 @@
 {
   "nodes": {
-    "LS_COLORS": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1592232184,
-        "narHash": "sha256-Atw6FlDgGm/jueItl0CxkgUZsvgKNIS0ILMa8aMlK/8=",
-        "owner": "trapd00r",
-        "repo": "LS_COLORS",
-        "rev": "8256268e688d23892cab1785a8b0ea6e4353c3f4",
-        "type": "github"
-      },
-      "original": {
-        "owner": "trapd00r",
-        "repo": "LS_COLORS",
-        "type": "github"
-      }
-    },
-    "emacs-overlay": {
-      "locked": {
-        "lastModified": 1599438225,
-        "narHash": "sha256-i5Z1FaCKX/wevwadbPKKX6Olt+p3t5sDhk2fJV+SKis=",
-        "owner": "nix-community",
-        "repo": "emacs-overlay",
-        "rev": "cc95c58f98c1aabcd1390e8370e763a267041f28",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "emacs-overlay",
-        "type": "github"
-      }
-    },
-    "emacs-pgtk-overlay": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1599315397,
-        "narHash": "sha256-YvNMq6pjGEEx8L4natMLsch4S0gO30mjaDOQ51wzGfE=",
-        "owner": "mjlbach",
-        "repo": "emacs-pgtk-nativecomp-overlay",
-        "rev": "471871634d54a0462e01035542d1c9c48211ad6c",
-        "type": "github"
-      },
-      "original": {
-        "owner": "mjlbach",
-        "repo": "emacs-pgtk-nativecomp-overlay",
-        "type": "github"
-      }
-    },
     "flake-utils": {
       "locked": {
         "lastModified": 1598466101,
@@ -80,22 +33,6 @@
         "type": "github"
       }
     },
-    "neovim-nightly-overlay": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1599403527,
-        "narHash": "sha256-qGn6/eZZgweHRIygxkkyPA+h5pBYjinHppx/AsOiNec=",
-        "owner": "mjlbach",
-        "repo": "neovim-nightly-overlay",
-        "rev": "70fc0155899d80423f1a1ee61c41b22e92c3139a",
-        "type": "github"
-      },
-      "original": {
-        "owner": "mjlbach",
-        "repo": "neovim-nightly-overlay",
-        "type": "github"
-      }
-    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1599238267,
@@ -112,32 +49,11 @@
         "type": "github"
       }
     },
-    "powerlevel10k": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1599123199,
-        "narHash": "sha256-lUyYr7kqgxfuZfRST0UA8mBPIpPUtXYIVQm5xVJ1br4=",
-        "owner": "romkatv",
-        "repo": "powerlevel10k",
-        "rev": "622130980c0785df8f76b53074c6743456eebe53",
-        "type": "github"
-      },
-      "original": {
-        "owner": "romkatv",
-        "repo": "powerlevel10k",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
-        "LS_COLORS": "LS_COLORS",
-        "emacs-overlay": "emacs-overlay",
-        "emacs-pgtk-overlay": "emacs-pgtk-overlay",
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
-        "neovim-nightly-overlay": "neovim-nightly-overlay",
-        "nixpkgs": "nixpkgs",
-        "powerlevel10k": "powerlevel10k"
+        "nixpkgs": "nixpkgs"
       }
     }
   },

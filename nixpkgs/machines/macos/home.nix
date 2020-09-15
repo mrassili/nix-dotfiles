@@ -37,6 +37,6 @@ in
     }];
   };
 
-  #home.file.".zshenv".source = ../../configs/zsh/mac_zshenv.zsh;
+  home.file.".zshenv".source = ../../configs/zsh/mac_zshenv.zsh;
 
 }

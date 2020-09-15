@@ -12,9 +12,10 @@ path=($HOME/go/bin
       $path)
 
 #nix
-if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
-  . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
-fi
+# if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+#   . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+# fi
 
+ test -r /Users/michael/.opam/opam-init/init.zsh && . /Users/michael/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
 export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH

@@ -1,5 +1,6 @@
 typeset -U path
 path=($HOME/go/bin
+      $HOME/.nix-profile/bin
       $HOME/.cargo/bin
       $HOME/.poetry/bin
       $HOME/.config/emacs/bin
@@ -8,6 +9,7 @@ path=($HOME/go/bin
       /usr/local/sbin
       /usr/local/go/bin
       /Users/michael/.npm-packages/bin
+      /Applications/VMware Fusion.app/Contents/Public
       /usr/bin
       $path)
 

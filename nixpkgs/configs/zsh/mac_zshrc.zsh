@@ -223,5 +223,4 @@ home-upgrade () {
   nix-channel --update
   (( $+commands[doom] )) && doom -y upgrade
   brew upgrade
-  brew cask upgrade
 }

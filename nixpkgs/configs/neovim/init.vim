@@ -317,7 +317,7 @@ packadd! nvim-lspconfig
 
   local on_attach = function(_, bufnr)
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-    -- require'diagnostic'.on_attach()
+    require'diagnostic'.on_attach()
     require'completion'.on_attach()
 
     -- Mappings.
@@ -336,7 +336,7 @@ packadd! nvim-lspconfig
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>e', '<cmd>lua vim.lsp.util.show_line_diagnostics()<CR>', opts)
   end
 
-  local servers = {'gopls', 'rust_analyzer', 'sumneko_lua', 'tsserver', 'vimls', 'jsonls', 'html', 'ghcide', 'rnix'}
+  local servers = {'gopls', 'rust_analyzer', 'sumneko_lua', 'tsserver', 'vimls', 'jsonls', 'html', 'ghcide', 'rnix', 'ocamllsp'}
   for _, lsp in ipairs(servers) do
     nvim_lsp[lsp].setup {
       on_attach = on_attach,

@@ -40,6 +40,7 @@
           ];
       extraPackages = with pkgs; [
         rnix-lsp
+        gopls
         neovim-remote
         nodePackages.pyright
       ];

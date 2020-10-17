@@ -344,10 +344,28 @@ packadd! nvim-lspconfig
       on_attach = on_attach,
     }
   end
-  nvim_lsp['pyls_ms'].setup {
-    on_attach = on_attach,
-    cmd = {"python-language-server"}
+  local configs = require('nvim_lsp/configs')
+  --if not configs.pyright then
+  configs.pyright = {
+    default_config = {
+      cmd = {"pyright-langserver", "--stdio"};
+      filetypes = {"python"};
+      root_dir = nvim_lsp.util.root_pattern(".git", "setup.py",  "setup.cfg", "pyproject.toml", "requirements.txt");
+      settings = {
+        analysis = { autoSearchPaths= true; };
+        pyright = { useLibraryCodeForTypes = true; };
+      };
+      -- The following before_init function can be removed once https://github.com/neovim/neovim/pull/12638 is merged
+      before_init = function(initialize_params)
+        initialize_params['workspaceFolders'] = {{
+          name = 'workspace',
+          uri = initialize_params['rootUri']
+        }}
+      end
+      };
   }
+  --end
+  nvim_lsp.pyright.setup{}
 EOF
 
 command! -buffer -nargs=0 LspShowLineDiagnostics lua require'jumpLoc'.openLineDiagnostics()

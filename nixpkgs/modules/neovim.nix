@@ -1,10 +1,6 @@
 { config, pkgs, libs, ... }:
 
 {
-  home.packages = with pkgs;  with stdenv.lib; [
-    rnix-lsp
-    neovim-remote
-  ] ++ optionals stdenv.isLinux [ python-language-server ] ;
   programs.neovim = {
       enable = true;
       package = pkgs.neovim-nightly;
@@ -42,5 +38,10 @@
             vim-vinegar
             vimtex
           ];
+      extraPackages = with pkgs; [
+        rnix-lsp
+        neovim-remote
+        nodePackages.pyright
+      ];
     };
 }

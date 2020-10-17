@@ -44,7 +44,7 @@
         gopls
         neovim-remote
         luajitPackages.lua-lsp
-        nodePackages.pyright
+        nodePackages_latest.pyright
       ];
     };
 }

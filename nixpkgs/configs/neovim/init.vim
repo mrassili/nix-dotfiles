@@ -313,7 +313,7 @@ packadd! nvim-lspconfig
 " log file location: /Users/michael/.local/share/nvim/vim-lsp.log
 :lua << EOF
   local nvim_lsp = require('nvim_lsp')
-  vim.lsp.set_log_level("debug")
+  -- vim.lsp.set_log_level("debug")
 
   local on_attach = function(_, bufnr)
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
@@ -338,12 +338,6 @@ packadd! nvim-lspconfig
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '[d', '<cmd>lua vim.api.nvim_command("PrevDiagnosticCycle")<CR>', opts)
   end
 
-  local servers = {'gopls', 'rust_analyzer', 'sumneko_lua', 'tsserver', 'vimls', 'jsonls', 'html', 'ghcide', 'rnix', 'ocamllsp'}
-  for _, lsp in ipairs(servers) do
-    nvim_lsp[lsp].setup {
-      on_attach = on_attach,
-    }
-  end
   local configs = require('nvim_lsp/configs')
   --if not configs.pyright then
   configs.pyright = {
@@ -365,7 +359,13 @@ packadd! nvim-lspconfig
       };
   }
   --end
-  nvim_lsp.pyright.setup{}
+
+  local servers = {'gopls', 'rust_analyzer', 'sumneko_lua', 'tsserver', 'vimls', 'jsonls', 'html', 'ghcide', 'rnix', 'ocamllsp', 'pyright'}
+  for _, lsp in ipairs(servers) do
+    nvim_lsp[lsp].setup {
+      on_attach = on_attach,
+    }
+  end
 EOF
 
 command! -buffer -nargs=0 LspShowLineDiagnostics lua require'jumpLoc'.openLineDiagnostics()

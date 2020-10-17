@@ -16,7 +16,7 @@ in
 
   programs.emacs = {
     enable = true;
-    package = nixos-unstable.emacsGccPgtkWrapped;
+    package = nixos-unstable.emacsGccPgtk;
     # extraPackages = (epkgs: [ epkgs.vterm ] );
   };
 

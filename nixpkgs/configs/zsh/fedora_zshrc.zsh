@@ -2,7 +2,7 @@
 [[ $TERM == "tramp" ]] && \
   unsetopt zle && \
   PS1='$ ' && \
-  . $HOME/.nix-profile/etc/profile.d/nix.sh && \
+  # . $HOME/.nix-profile/etc/profile.d/nix.sh && \
   return
 
 # initialize keychain: This can go below instant prompt so long as -q is enabled and --eval is disabled
@@ -16,7 +16,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-. $HOME/.nix-profile/etc/profile.d/nix.sh
+# . $HOME/.nix-profile/etc/profile.d/nix.sh
 
 # Enable direnv
 emulate zsh -c "$(direnv hook zsh)"

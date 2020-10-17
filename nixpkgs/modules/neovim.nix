@@ -42,6 +42,7 @@
         rnix-lsp
         gopls
         neovim-remote
+        luajitPackages.lua-lsp
         nodePackages.pyright
       ];
     };

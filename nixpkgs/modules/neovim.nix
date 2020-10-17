@@ -5,6 +5,7 @@
       enable = true;
       package = pkgs.neovim-nightly;
       extraConfig = builtins.readFile ../configs/neovim/init.vim;
+      withNodeJs = true;
       plugins = with pkgs.vimPlugins; [
             # nvim-luadev
             # vimspector

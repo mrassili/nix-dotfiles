@@ -356,8 +356,8 @@ let g:diagnostic_auto_popup_while_jump = 1
 command! Format  execute 'lua vim.lsp.buf.formatting()'
 
 " Use <Tab> and <S-Tab> to navigate through popup menu
-nmap <tab> <Plug>(completion_smart_tab)
-nmap <s-tab> <Plug>(completion_smart_s_tab)
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " Set completeopt to have a better completion experience
 set completeopt=menuone,noinsert,noselect

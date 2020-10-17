@@ -3,20 +3,20 @@ set autoindent
 filetype plugin indent on
 syntax on
 
-" set synmaxcol=120
+"Exapnd tab to spaces
 set expandtab
 
-"" Incremental live completion
+"Incremental live completion
 set inccommand=nosplit
 
-""Change backspace to behave more intuitively
+"Change backspace to behave more intuitively
 set backspace=indent,eol,start
 
-""Set tab options for vim
+"Set tab options for vim
 set tabstop=8
 set softtabstop=4
 
-""Set highlight on search
+"Set highlight on search
 set nohlsearch
 set incsearch
 
@@ -356,28 +356,14 @@ let g:diagnostic_auto_popup_while_jump = 1
 command! Format  execute 'lua vim.lsp.buf.formatting()'
 
 " Use <Tab> and <S-Tab> to navigate through popup menu
-inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+nmap <tab> <Plug>(completion_smart_tab)
+nmap <s-tab> <Plug>(completion_smart_s_tab)
 
 " Set completeopt to have a better completion experience
 set completeopt=menuone,noinsert,noselect
 
 " Avoid showing message extra message when using completion
 set shortmess+=c
-
-" Auto close popup menu when finish completion
-" autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
-
-" Use tab as trigger key
-function! s:check_back_space() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~ '\s'
-endfunction
-
-inoremap <silent><expr> <TAB>
-  \ pumvisible() ? "\<C-n>" :
-  \ <SID>check_back_space() ? "\<TAB>" :
-  \ completion#trigger_completion()
 
 " Chain completion list
 let g:completion_chain_complete_list = {

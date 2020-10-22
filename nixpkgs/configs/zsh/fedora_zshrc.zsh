@@ -1,9 +1,5 @@
 # Emacs tramp mode compatibility
-[[ $TERM == "tramp" ]] && \
-  unsetopt zle && \
-  PS1='$ ' && \
-  # . $HOME/.nix-profile/etc/profile.d/nix.sh && \
-  return
+[[ $TERM == "tramp" ]] && unsetopt zle && PS1='$ ' && return
 
 # initialize keychain: This can go below instant prompt so long as -q is enabled and --eval is disabled
 eval $(keychain -q --eval)
@@ -16,12 +12,10 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# . $HOME/.nix-profile/etc/profile.d/nix.sh
-
 # Enable direnv
 emulate zsh -c "$(direnv hook zsh)"
 
-# Set dircolors
+# Colorize terminal
 export CLICOLOR=1
 export COLORTERM="truecolor"
 eval $( dircolors -b $HOME/.dircolors )
@@ -63,9 +57,6 @@ zstyle ':completion:*:hosts' hosts $hosts
 
 # Glob settings
 setopt extendedglob
-
-# Correction
-# setopt correctall
 
 # History
 export HISTSIZE=2000
@@ -176,13 +167,13 @@ autoload edit-command-line
 zle -N edit-command-line
 bindkey '^x^e' edit-command-line
 
+# Prompt aliases
 alias ls="ls --color=auto"
 alias ll="ls -alh --color=auto"
 alias l="ls --color=auto"
 
 alias open="xdg-open"
 alias pag="ps aux | grep"
-
 # Useful docker commands
 # Can also append --filter="ancestor=tdw:bp-1.4.5a" to ignore running container
 das () {

@@ -15,7 +15,7 @@ fi
 # Enable direnv
 emulate zsh -c "$(direnv hook zsh)"
 
-# Dircolors and LS_colors
+# Colorize terminal
 export CLICOLOR=1
 export COLORTERM="truecolor"
 eval $( dircolors -b $HOME/.dircolors )
@@ -57,9 +57,6 @@ zstyle ':completion:*:hosts' hosts $hosts
 
 # Glob settings
 setopt extendedglob
-
-# Correction
-# setopt correctall
 
 # History
 export HISTSIZE=2000
@@ -128,6 +125,9 @@ key[Control-Right]="${terminfo[kRIT5]}"
 key[Alt-Left]="${terminfo[kLFT3]}"
 key[Alt-Right]="${terminfo[kRIT3]}"
 
+key[Alt-Left]="^[[1;3D"
+key[Alt-Right]="^[[1;3C"
+
 [[ -n "${key[Alt-Left]}"  ]] && bindkey -- "${key[Alt-Left]}"  beginning-of-line
 [[ -n "${key[Alt-Right]}" ]] && bindkey -- "${key[Alt-Right]}" end-of-line
 
@@ -138,7 +138,6 @@ zle -N down-line-or-beginning-search
 
 [[ -n "${key[Up]}"   ]] && bindkey -- "${key[Up]}"   up-line-or-beginning-search
 [[ -n "${key[Down]}" ]] && bindkey -- "${key[Down]}" down-line-or-beginning-search
-
 
 # Rationalize dot (... -> ../..)
 rationalise-dot() {
@@ -168,14 +167,13 @@ autoload edit-command-line
 zle -N edit-command-line
 bindkey '^x^e' edit-command-line
 
-# Prompt configuration
+# Prompt aliases
 alias ls="ls --color=auto"
 alias ll="ls -alh --color=auto"
 alias l="ls --color=auto"
 
-em () {
-  emacsclient $1 > /dev/null 2>&1 || emacs $1 &
-}
+alias open="xdg-open"
+alias pag="ps aux | grep"
 # Useful docker commands
 # Can also append --filter="ancestor=tdw:bp-1.4.5a" to ignore running container
 das () {
@@ -192,7 +190,6 @@ function _dsh(){
 }
 
 compdef _dsh dsh
-
 
 em () {
   emacsclient $1 > /dev/null 2>&1 || emacs $1 &

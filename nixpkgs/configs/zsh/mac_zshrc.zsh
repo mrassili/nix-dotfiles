@@ -1,3 +1,5 @@
+
+# Hook direnv
 emulate zsh -c "$(direnv export zsh)"
 
 # Enable Powerlevel10k instant prompt. Should stay at the top of ~/.zshrc.
@@ -8,7 +10,7 @@ fi
 # Enable direnv
 emulate zsh -c "$(direnv hook zsh)"
 
-# Set dircolors
+# Colorize terminal
 export CLICOLOR=1
 export COLORTERM="truecolor"
 eval $( dircolors -b $HOME/.dircolors )
@@ -50,9 +52,6 @@ zstyle ':completion:*:hosts' hosts $hosts
 
 # Glob settings
 setopt extendedglob
-
-# Correction
-# setopt correctall
 
 # History
 export HISTSIZE=2000
@@ -163,6 +162,7 @@ autoload edit-command-line
 zle -N edit-command-line
 bindkey '^x^e' edit-command-line
 
+# Prompt aliases
 alias ls="ls --color=auto"
 alias ll="ls -alh --color=auto"
 alias l="ls --color=auto"
@@ -215,7 +215,6 @@ home-manager () {
 home-upgrade () {
   $HOME/.config/nixpkgs/update-dependencies.sh
   $HOME/.config/nixpkgs/switch.sh
-  nix-channel --update
   (( $+commands[doom] )) && doom -y upgrade
   brew upgrade
 }

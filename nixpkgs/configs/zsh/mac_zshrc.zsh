@@ -163,10 +163,6 @@ autoload edit-command-line
 zle -N edit-command-line
 bindkey '^x^e' edit-command-line
 
-# Prompt configuration
-source ~/.zsh/plugins/powerlevel10k/powerlevel10k.zsh-theme
-source ~/.zsh/plugins/powerlevel10k/config/p10k-lean.zsh
-
 alias ls="ls --color=auto"
 alias ll="ls -alh --color=auto"
 alias l="ls --color=auto"
@@ -195,7 +191,6 @@ em () {
 # FZF
 export FZF_DEFAULT_COMMAND='fd --type f'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # Enable zoxide
 eval "$(zoxide init zsh)"

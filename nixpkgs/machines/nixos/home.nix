@@ -27,12 +27,10 @@ in
     enable = true;
     enableCompletion = false;
     initExtraBeforeCompInit = builtins.readFile ../../configs/zsh/nixos_zshrc.zsh;
-    plugins = [{
-      name = "powerlevel10k";
-      src = pkgs.fetchFromGitHub {
-        inherit (sources.powerlevel10k) owner repo rev sha256;
-      };
-    }];
+    initExtra = ''
+      source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
+      source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/config/p10k-lean.zsh
+    '';
   };
 
   services.lorri.enable = true;

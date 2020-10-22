@@ -50,6 +50,8 @@ in
       enableNixDirenvIntegration = true;
   };
 
+  programs.fzf.enable = true; 
+
   home.file.".gitconfig".source = ../configs/git/gitconfig;
   home.file.".aws/config".source = ../configs/aws/aws_config;
   home.file.".dircolors".source = sources.LS_COLORS.outPath + "/LS_COLORS";

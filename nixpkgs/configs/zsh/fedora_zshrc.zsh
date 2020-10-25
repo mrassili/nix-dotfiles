@@ -213,10 +213,9 @@ aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceType, 
 export EDITOR="nvim"
 
 home-manager () {
-  case $1 in
-    "switch") $HOME/.config/nixpkgs/switch.sh;;
-      *) echo "Sorry, command not implemented";
-  esac
+  cd $HOME/.config/nixpkgs
+  nix-shell $HOME/.config/nixpkgs/shell.nix --run "home-manager $1"
+  cd -
 }
 
 home-upgrade () {

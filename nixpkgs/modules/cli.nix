@@ -7,6 +7,7 @@ in
   home.packages = with pkgs; [
     awscli
     bat
+    bottom
     coreutils
     curl
     du-dust
@@ -38,7 +39,6 @@ in
     watch
     watchman
     xsv
-    ytop
     zoxide
     zsh
     zsh-powerlevel10k

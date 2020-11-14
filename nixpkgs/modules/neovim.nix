@@ -10,7 +10,6 @@
             # nvim-luadev
             # vimspector
             completion-nvim
-            diagnostic-nvim
             fzf-vim
             fzfWrapper
             indentLine

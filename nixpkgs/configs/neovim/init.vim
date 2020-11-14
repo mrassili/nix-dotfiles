@@ -317,7 +317,18 @@ packadd! nvim-lspconfig
 
   local on_attach = function(_, bufnr)
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-    require'diagnostic'.on_attach()
+    vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+      vim.lsp.diagnostic.on_publish_diagnostics, {
+        -- disable virtual text
+        virtual_text = false,
+
+        -- show signs
+        signs = true,
+
+        -- delay update diagnostics
+        update_in_insert = false,
+      }
+    )
     require'completion'.on_attach()
 
     -- Mappings.
@@ -334,8 +345,9 @@ packadd! nvim-lspconfig
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>e', '<cmd>lua vim.lsp.util.show_line_diagnostics()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', ']d', '<cmd>lua vim.api.nvim_command("NextDiagnosticCycle")<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '[d', '<cmd>lua vim.api.nvim_command("PrevDiagnosticCycle")<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
   end
 
   local configs = require('nvim_lsp/configs')
@@ -367,11 +379,6 @@ packadd! nvim-lspconfig
     }
   end
 EOF
-
-command! -buffer -nargs=0 LspShowLineDiagnostics lua require'jumpLoc'.openLineDiagnostics()
-nnoremap <buffer><silent> <C-h> <Cmd>LspShowLineDiagnostics<CR>
-
-let g:diagnostic_auto_popup_while_jump = 1
 
 command! Format  execute 'lua vim.lsp.buf.formatting()'
 

@@ -23,7 +23,7 @@ in
 
   programs.emacs = {
     enable = true;
-    package = pkgs.emacsMacport;
+    package = pkgs.emacsGcc;
   };
   programs.zsh = {
     enable = true;

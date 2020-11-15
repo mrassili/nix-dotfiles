@@ -2,8 +2,8 @@
 
 {
   home.packages = with pkgs; [
-      haskellPackages.ghc
-      haskellPackages.ghcide
-      rust-analyzer
-    ];
+    haskellPackages.ghc
+    haskellPackages.ghcide
+    rust-analyzer
+  ];
 }

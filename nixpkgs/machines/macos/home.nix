@@ -12,9 +12,9 @@
   ];
 
   home.packages = with pkgs; [
-      mu
-      isync
-    ];
+    mu
+    isync
+  ];
 
   programs.emacs = {
     enable = true;

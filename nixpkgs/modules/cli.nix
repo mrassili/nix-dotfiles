@@ -1,5 +1,4 @@
 { config, pkgs, libs, ... }:
-
 let
   sources = import ../nix/sources.nix;
 in
@@ -46,11 +45,11 @@ in
 
 
   programs.direnv = {
-      enable = true;
-      enableNixDirenvIntegration = true;
+    enable = true;
+    enableNixDirenvIntegration = true;
   };
 
-  programs.fzf.enable = true; 
+  programs.fzf.enable = true;
 
   home.file.".gitconfig".source = ../configs/git/gitconfig;
   home.file.".aws/config".source = ../configs/aws/aws_config;

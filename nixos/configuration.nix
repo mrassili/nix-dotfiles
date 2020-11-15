@@ -73,8 +73,8 @@
       fira-code-symbols
     ];
     fontconfig.defaultFonts = {
-      sansSerif = ["Ubuntu"];
-      monospace = ["Fira Code"];
+      sansSerif = [ "Ubuntu" ];
+      monospace = [ "Fira Code" ];
     };
   };
   # Set your time zone.

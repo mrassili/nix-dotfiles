@@ -1,5 +1,5 @@
 let
-  pkgs = import <nixpkgs> {};
+  pkgs = import <nixpkgs> { };
   lib = pkgs.lib;
 
   emacsOverlay = import ((import ./nixos/nix/sources.nix).emacs-overlay);
@@ -40,4 +40,3 @@ pkgs.stdenv.mkDerivation {
     popd >/dev/null
   '';
 }
-

@@ -1,9 +1,8 @@
 { pkgs, ... }:
-let
-  sources = import ../../nix/sources.nix;
-in
+
 {
   imports = [
+    ../../modules/home-manager.nix
     ../../modules/cli.nix
     ../../modules/git.nix
     ../../modules/neovim.nix
@@ -11,10 +10,6 @@ in
     ../../modules/ssh.nix
     ../../modules/weechat.nix
   ];
-
-  home.username = builtins.getEnv "USER";
-  home.homeDirectory = builtins.getEnv "HOME";
-  home.stateVersion = "20.09";
 
   home.packages = with pkgs; [
       mu
@@ -25,6 +20,7 @@ in
     enable = true;
     package = pkgs.emacsGcc;
   };
+
   programs.zsh = {
     enable = true;
     enableCompletion = false;
@@ -34,7 +30,5 @@ in
       source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/config/p10k-lean.zsh
     '';
   };
-
-  home.file.".zshenv".source = ../../configs/zsh/mac_zshenv.zsh;
 
 }

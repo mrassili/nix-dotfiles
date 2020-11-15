@@ -1,9 +1,8 @@
 { pkgs, ... }:
-let
-  sources = import ../../nix/sources.nix;
-in
+
 {
   imports = [
+    ../../modules/home-manager.nix
     ../../modules/alacritty.nix
     ../../modules/chat.nix
     ../../modules/cli.nix
@@ -19,10 +18,6 @@ in
     ../../modules/emacs.nix
   ];
 
-  home.username = builtins.getEnv "USER";
-  home.homeDirectory = builtins.getEnv "HOME";
-  home.stateVersion = "20.09";
-
   programs.zsh = {
     enable = true;
     enableCompletion = false;
@@ -32,7 +27,5 @@ in
       source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/config/p10k-lean.zsh
     '';
   };
-
-  services.lorri.enable = true;
 
 }

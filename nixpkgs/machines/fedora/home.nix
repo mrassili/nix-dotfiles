@@ -6,6 +6,7 @@ in
 
 {
   imports = [
+    ../../modules/home-manager.nix
     ../../modules/cli.nix
     #../../modules/cuda.nix
     ../../modules/git.nix
@@ -16,13 +17,6 @@ in
     ../../modules/emacs.nix
     ../../modules/ssh.nix
   ];
-
-  home.username = builtins.getEnv "USER";
-  home.homeDirectory = builtins.getEnv "HOME";
-  home.stateVersion = "20.09";
-
-  programs.man.enable = false;
-  home.extraOutputsToInstall = [ "man" ];
 
   programs.zsh = {
     enable = true;
@@ -35,6 +29,4 @@ in
   };
 
   xdg.configFile."alacritty/alacritty.yml".source = ../../configs/terminal/alacritty.yml;
-  services.lorri.enable = true;
-
 }

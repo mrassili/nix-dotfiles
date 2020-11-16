@@ -132,4 +132,10 @@ tags
 # Ignore symlinks
 nixpkgs/home.nix
 nixpkgs/config.nix
+
+# macOS
 **/.DS_Store
+
+# direnv
+.envrc
+.direnv

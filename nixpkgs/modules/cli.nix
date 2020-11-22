@@ -4,7 +4,7 @@ let
 in
 {
   home.packages = with pkgs; [
-    awscli
+    #awscli
     bat
     bottom
     coreutils

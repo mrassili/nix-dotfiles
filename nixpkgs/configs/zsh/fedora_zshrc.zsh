@@ -213,13 +213,11 @@ aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceType, 
 export EDITOR="nvim"
 
 home-manager () {
-  cd $HOME/.config/nixpkgs
-  nix-shell $HOME/.config/nixpkgs/shell.nix --run "home-manager $1"
-  cd -
+  nix develop $HOME/.config/nixpkgs -c "home-manager" "$1"
 }
 
 home-upgrade () {
-  $HOME/.config/nixpkgs/update-dependencies.sh
-  $HOME/.config/nixpkgs/switch.sh
+  nix flake update $HOME/.config/nixpkgs --recreate-lock-file
+  nix develop $HOME/.config/nixpkgs -c "home-manager" "switch"
   (( $+commands[doom] )) && doom -y upgrade
 }

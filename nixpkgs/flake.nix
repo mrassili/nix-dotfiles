@@ -36,7 +36,7 @@
         packages = pkgs;
         devShell = pkgs.mkShell rec {
 
-          name = "home-manager-template-shell";
+          name = "home-manager-shell";
 
           buildInputs = with pkgs; [
             (import home-manager { inherit pkgs; }).home-manager

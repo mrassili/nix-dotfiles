@@ -213,8 +213,8 @@ home-manager () {
 
 home-upgrade () {
   cd $HOME/.config/nixpkgs
-  nix flake update --recreate-lock-file
-  nix develop -c "home-manager switch"
+  nix flake update $HOME/.config/nixpkgs --recreate-lock-file
+  nix develop $HOME/.config/nixpkgs -c "home-manager" "switch"
   cd --
   (( $+commands[doom] )) && doom -y upgrade
   brew upgrade

@@ -44,7 +44,7 @@
 
           shellHook = ''
             export NIX_PATH="nixpkgs=${nixpkgs}:home-manager=${home-manager}"
-            export HOME_MANAGER_CONFIG="./home.nix"
+            export HOME_MANAGER_CONFIG="$HOME/.config/nixpkgs/home.nix"
             PS1="${name}> "
           '';
         };

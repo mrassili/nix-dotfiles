@@ -1,12 +1,13 @@
 { config, pkgs, libs, ... }:
 let
   sources = import ../nix/sources.nix;
+  pkgs = (import ../default.nix).packages.${builtins.currentSystem}; 
 in
 {
   home.packages = with pkgs; [
     #awscli
     bat
-    bottom
+    # bottom
     coreutils
     curl
     du-dust

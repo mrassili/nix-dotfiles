@@ -1,5 +1,7 @@
 { config, pkgs, libs, ... }:
-
+let
+  pkgs = (import ../default.nix).packages.${builtins.currentSystem}; 
+in
 {
   programs.neovim = {
     enable = true;
@@ -38,12 +40,12 @@
       vim-vinegar
       vimtex
     ];
-    extraPackages = with pkgs; [
-      rnix-lsp
-      gopls
-      neovim-remote
-      luajitPackages.lua-lsp
-      nodePackages.pyright
-    ];
+    # extraPackages = with pkgs; [
+    #   rnix-lsp
+    #   gopls
+    #   neovim-remote
+    #   luajitPackages.lua-lsp
+    #   nodePackages.pyright
+    # ];
   };
 }

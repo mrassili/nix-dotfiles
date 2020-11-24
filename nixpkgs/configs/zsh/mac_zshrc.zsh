@@ -206,15 +206,16 @@ aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceType, 
 export EDITOR="nvim"
 
 home-manager () {
-  case $1 in
-    "switch") $HOME/.config/nixpkgs/switch.sh;;
-      *) echo "Sorry, command not implemented";
-  esac
+  cd $HOME/.config/nixpkgs
+  nix develop -c "home-manager $1"
+  cd --
 }
 
 home-upgrade () {
-  $HOME/.config/nixpkgs/update-dependencies.sh
-  $HOME/.config/nixpkgs/switch.sh
+  cd $HOME/.config/nixpkgs
+  nix flake update --recreate-lock-file
+  nix develop -c "home-manager switch"
+  cd --
   (( $+commands[doom] )) && doom -y upgrade
   brew upgrade
 }

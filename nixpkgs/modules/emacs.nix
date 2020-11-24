@@ -1,7 +1,6 @@
 { config, pkgs, libs, ... }:
 let
-  sources = import ../nix/sources.nix;
-  nixos-unstable = import sources.nixos-unstable { };
+  pkgs = (import ../default.nix).packages.${builtins.currentSystem}; 
 in
 {
   home.packages = with pkgs; [
@@ -14,7 +13,7 @@ in
 
   programs.emacs = {
     enable = true;
-    package = nixos-unstable.emacsGccPgtk;
+    package = pkgs.emacsGccPgtk;
     # extraPackages = (epkgs: [ epkgs.vterm ] );
   };
 

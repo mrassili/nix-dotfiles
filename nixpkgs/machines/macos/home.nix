@@ -1,7 +1,5 @@
-{ ... }:
-
 let
-  pkgs = (import ../../default.nix).packages.x86_64-darwin;
+  pkgs = (import ../../default.nix).packages.${builtins.currentSystem}; 
 in
 {
   imports = [

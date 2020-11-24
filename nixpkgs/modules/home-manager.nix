@@ -1,5 +1,7 @@
 { config, pkgs, libs, ... }:
-
+let
+  pkgs = (import ../default.nix).packages.${builtins.currentSystem}; 
+in
 {
   home.username = builtins.getEnv "USER";
   home.homeDirectory = builtins.getEnv "HOME";

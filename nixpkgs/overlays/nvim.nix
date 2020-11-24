@@ -1,3 +1,4 @@
-import (builtins.fetchTarball {
-  url = https://github.com/mjlbach/neovim-nightly-overlay/archive/master.tar.gz;
-})
+let
+  flake = import ../default.nix;
+in
+import flake.inputs.neovim-nightly-overlay.outPath

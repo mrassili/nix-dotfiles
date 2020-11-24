@@ -207,7 +207,6 @@ export EDITOR="nvim"
 
 home-manager () {
   nix develop $HOME/.config/nixpkgs -c "home-manager" "$1"
-  cd --
 }
 
 home-upgrade () {

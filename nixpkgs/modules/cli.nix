@@ -1,6 +1,6 @@
 { config, pkgs, libs, ... }:
 let
-  sources = import ../nix/sources.nix;
+  flake = (import ../default.nix);
   pkgs = (import ../default.nix).packages.${builtins.currentSystem}; 
 in
 {
@@ -29,7 +29,7 @@ in
     rsync
     sd
     socat
-    sources.LS_COLORS
+    flake.inputs.LS_COLORS
     termshark
     tldr
     tmux
@@ -54,7 +54,7 @@ in
 
   home.file.".gitconfig".source = ../configs/git/gitconfig;
   home.file.".aws/config".source = ../configs/aws/aws_config;
-  home.file.".dircolors".source = sources.LS_COLORS.outPath + "/LS_COLORS";
+  home.file.".dircolors".source = flake.inputs.LS_COLORS.outPath + "/LS_COLORS";
   home.file.".tmux.conf".source = ../configs/tmux/tmux.conf;
   xdg.configFile."direnv/lib/poetry.sh".source = ../configs/direnv/poetry.sh;
 }

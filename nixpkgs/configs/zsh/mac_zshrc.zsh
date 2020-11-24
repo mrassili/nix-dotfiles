@@ -206,16 +206,13 @@ aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceType, 
 export EDITOR="nvim"
 
 home-manager () {
-  cd $HOME/.config/nixpkgs
-  nix develop -c "home-manager $1"
+  nix develop $HOME/.config/nixpkgs -c "home-manager" "$1"
   cd --
 }
 
 home-upgrade () {
-  cd $HOME/.config/nixpkgs
   nix flake update $HOME/.config/nixpkgs --recreate-lock-file
   nix develop $HOME/.config/nixpkgs -c "home-manager" "switch"
-  cd --
   (( $+commands[doom] )) && doom -y upgrade
   brew upgrade
 }

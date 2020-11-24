@@ -1,5 +1,4 @@
 { config, pkgs, libs, ... }:
-
 {
   programs.neovim = {
     enable = true;
@@ -8,7 +7,6 @@
     withNodeJs = true;
     plugins = with pkgs.vimPlugins; [
       # nvim-luadev
-      # vimspector
       completion-nvim
       fzf-vim
       fzfWrapper

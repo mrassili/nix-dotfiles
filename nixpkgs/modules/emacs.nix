@@ -1,8 +1,4 @@
 { config, pkgs, libs, ... }:
-let
-  sources = import ../nix/sources.nix;
-  nixos-unstable = import sources.nixos-unstable { };
-in
 {
   home.packages = with pkgs; [
     languagetool
@@ -14,7 +10,7 @@ in
 
   programs.emacs = {
     enable = true;
-    package = nixos-unstable.emacsGccPgtk;
+    package = if pkgs.stdenv.isDarwin then pkgs.nixos-unstable.emacsGcc else pkgs.nixos-unstable.emacsPgtkGcc;
     # extraPackages = (epkgs: [ epkgs.vterm ] );
   };
 

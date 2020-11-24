@@ -205,16 +205,15 @@ aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceType, 
 # Set environmental variables
 export EDITOR="nvim"
 
-home-manager () {
-  case $1 in
-    "switch") $HOME/.config/nixpkgs/switch.sh;;
-      *) echo "Sorry, command not implemented";
-  esac
-}
-
 home-upgrade () {
-  $HOME/.config/nixpkgs/update-dependencies.sh
-  $HOME/.config/nixpkgs/switch.sh
+  nix flake update $HOME/.config/nixpkgs --recreate-lock-file
+  nix build "$HOME/.config/nixpkgs#macbook-pro"
+  zsh "$HOME/.config/nixpkgs/result/activate"
   (( $+commands[doom] )) && doom -y upgrade
   brew upgrade
+}
+
+system-upgrade () {
+   nix flake update --recreate-lock-file $HOME/.config/darwin
+   darwin-rebuild switch --flake $HOME/.config/darwin
 }

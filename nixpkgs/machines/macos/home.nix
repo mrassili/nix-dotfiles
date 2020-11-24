@@ -5,21 +5,12 @@
     ../../modules/home-manager.nix
     ../../modules/cli.nix
     ../../modules/git.nix
+    ../../modules/emacs.nix
     ../../modules/neovim.nix
     ../../modules/nix-utilities.nix
     ../../modules/ssh.nix
     ../../modules/weechat.nix
   ];
-
-  home.packages = with pkgs; [
-    mu
-    isync
-  ];
-
-  programs.emacs = {
-    enable = true;
-    package = pkgs.emacsGcc;
-  };
 
   programs.zsh = {
     enable = true;

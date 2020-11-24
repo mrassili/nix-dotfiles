@@ -306,13 +306,13 @@ augroup end
 " Vim polyglot language specific settings
 let g:python_highlight_space_errors = 0
 
-" Add nvim_lsp plugin
-packadd! nvim-lspconfig
-
 " LSP settings
 " log file location: /Users/michael/.local/share/nvim/vim-lsp.log
 :lua << EOF
-  local nvim_lsp = require('nvim_lsp')
+  -- Add nvim-lspconfig plugin
+  vim.cmd('packadd nvim-lspconfig')
+
+  local nvim_lsp = require('lspconfig')
   -- vim.lsp.set_log_level("debug")
 
   local on_attach = function(_, bufnr)
@@ -349,28 +349,6 @@ packadd! nvim-lspconfig
     vim.api.nvim_buf_set_keymap(bufnr, 'n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
   end
-
-  local configs = require('nvim_lsp/configs')
-  --if not configs.pyright then
-  configs.pyright = {
-    default_config = {
-      cmd = {"pyright-langserver", "--stdio"};
-      filetypes = {"python"};
-      root_dir = nvim_lsp.util.root_pattern(".git", "setup.py",  "setup.cfg", "pyproject.toml", "requirements.txt");
-      settings = {
-        analysis = { autoSearchPaths= true; };
-        pyright = { useLibraryCodeForTypes = true; };
-      };
-      -- The following before_init function can be removed once https://github.com/neovim/neovim/pull/12638 is merged
-      before_init = function(initialize_params)
-        initialize_params['workspaceFolders'] = {{
-          name = 'workspace',
-          uri = initialize_params['rootUri']
-        }}
-      end
-      };
-  }
-  --end
 
   local servers = {'gopls', 'rust_analyzer', 'sumneko_lua', 'tsserver', 'vimls', 'jsonls', 'html', 'ghcide', 'rnix', 'ocamllsp', 'pyright'}
   for _, lsp in ipairs(servers) do

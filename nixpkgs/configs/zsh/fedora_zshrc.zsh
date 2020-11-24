@@ -212,14 +212,8 @@ aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceType, 
 # Set environmental variables
 export EDITOR="nvim"
 
-home-manager () {
-  cd $HOME/.config/nixpkgs
-  nix-shell $HOME/.config/nixpkgs/shell.nix --run "home-manager $1"
-  cd -
-}
-
 home-upgrade () {
-  $HOME/.config/nixpkgs/update-dependencies.sh
-  $HOME/.config/nixpkgs/switch.sh
+  nix flake update $HOME/.config/nixpkgs --recreate-lock-file
+  nix build "$HOME/.config/nixpkgs#linux"
   (( $+commands[doom] )) && doom -y upgrade
 }

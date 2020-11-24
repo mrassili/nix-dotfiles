@@ -218,3 +218,8 @@ home-upgrade () {
   (( $+commands[doom] )) && doom -y upgrade
   brew upgrade
 }
+
+system-upgrade () {
+   nix flake update --recreate-lock-file $HOME/.config/darwin
+   darwin-rebuild switch --flake $HOME/.config/darwin
+}

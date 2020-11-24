@@ -12,6 +12,8 @@ pkgs.mkShell rec {
 
   buildInputs = with pkgs; [
     niv
+    cachix
+    nixUnstable
     (import sources.home-manager { inherit pkgs; }).home-manager
   ];
 

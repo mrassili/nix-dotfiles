@@ -7,6 +7,10 @@
     url = "github:rycee/home-manager";
     inputs.nixpkgs.follows = "";
   };
+  inputs.flake-compat = {
+    url = "github:edolstra/flake-compat";
+    flake = false;
+  };
   # inputs.emacs-overlay.url = "github:nix-community/emacs-overlay";
   # inputs.powerlevel10k = {
   #   url = "github:romkatv/powerlevel10k";
@@ -29,6 +33,7 @@
     flake-utils.lib.eachDefaultSystem (system:
       let pkgs = nixpkgs.legacyPackages.${system}; in
       {
+        packages = pkgs;
         devShell = pkgs.mkShell rec {
 
           name = "home-manager-template-shell";

@@ -1,5 +1,8 @@
-{ pkgs, ... }:
+{ ... }:
 
+let
+  pkgs = (import ../../default.nix).packages.x86_64-darwin;
+in
 {
   imports = [
     ../../modules/home-manager.nix
@@ -16,10 +19,10 @@
     isync
   ];
 
-  programs.emacs = {
-    enable = true;
-    package = pkgs.emacsGcc;
-  };
+  # programs.emacs = {
+  #   enable = true;
+  #   package = pkgs.emacsGcc;
+  # };
 
   programs.zsh = {
     enable = true;

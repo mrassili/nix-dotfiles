@@ -3,6 +3,7 @@
 
   inputs.flake-utils.url = "github:numtide/flake-utils";
   inputs.nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+  inputs.nixos-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
   inputs.home-manager = {
     url = "github:rycee/home-manager";
     inputs.nixpkgs.follows = "";
@@ -29,16 +30,21 @@
     flake = false;
   };
 
-  outputs = inputs@{ self, flake-utils, nixpkgs, home-manager, ... }: with inputs;
+  outputs = inputs@{ self, flake-utils, nixpkgs, nixos-unstable, home-manager, ... }: with inputs;
     flake-utils.lib.eachDefaultSystem (system:
-      let pkgs = nixpkgs.legacyPackages.${system}; in
+    let 
+      pkgs = nixpkgs.legacyPackages.${system}; 
+      pkgs-nixos-unstable = nixos-unstable.legacyPackages.${system}; 
+    in
       {
-        packages = pkgs;
+        packages.stable = pkgs;
+        packages.nixos-unstable = pkgs-nixos-unstable;
         devShell = pkgs.mkShell rec {
 
           name = "home-manager-shell";
 
           buildInputs = with pkgs; [
+            cachix
             (import home-manager { inherit pkgs; }).home-manager
           ];
 

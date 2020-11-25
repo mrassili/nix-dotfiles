@@ -1,4 +1,7 @@
 { config, pkgs, libs, ... }:
+let
+  pkgs = (import ../default.nix).packages.${builtins.currentSystem}.nixos-unstable; 
+in
 {
   home.packages = with pkgs; [
     languagetool
@@ -10,7 +13,7 @@
 
   programs.emacs = {
     enable = true;
-    package = pkgs.emacsGccPgtk;
+    package = pkgs.emacsPgtkGcc;
     # extraPackages = (epkgs: [ epkgs.vterm ] );
   };
 

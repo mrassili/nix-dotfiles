@@ -1,8 +1,5 @@
 { pkgs, config, ... }:
 let
-  pkgs = (import ../default.nix).packages.${builtins.currentSystem}; 
-in
-let
   weechat = pkgs.weechat.override {
     configure = { availablePlugins, ... }: with pkgs.weechatScripts;
       {

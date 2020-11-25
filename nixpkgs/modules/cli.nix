@@ -1,13 +1,12 @@
 { config, pkgs, libs, ... }:
 let
   flake = (import ../default.nix);
-  pkgs = (import ../default.nix).packages.${builtins.currentSystem}; 
 in
 {
   home.packages = with pkgs; [
     #awscli
     bat
-    # bottom
+    bottom
     coreutils
     curl
     du-dust

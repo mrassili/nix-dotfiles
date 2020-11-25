@@ -1,7 +1,4 @@
 { config, pkgs, libs, ... }:
-let
-  pkgs = (import ../default.nix).packages.${builtins.currentSystem}; 
-in
 {
   programs.neovim = {
     enable = true;

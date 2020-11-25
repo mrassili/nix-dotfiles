@@ -1,5 +1,5 @@
 let
-  pkgs = (import ../../default.nix).packages.${builtins.currentSystem}; 
+  pkgs = (import ../../default.nix).packages.${builtins.currentSystem}.nixpkgs-unstable; 
 in
 {
   imports = [

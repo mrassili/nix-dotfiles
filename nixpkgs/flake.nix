@@ -37,7 +37,7 @@
       pkgs-nixos-unstable = nixos-unstable.legacyPackages.${system}; 
     in
       {
-        packages.stable = pkgs;
+        packages.nixpkgs-unstable = pkgs;
         packages.nixos-unstable = pkgs-nixos-unstable;
         devShell = pkgs.mkShell rec {
 

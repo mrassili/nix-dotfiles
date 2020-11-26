@@ -18,11 +18,11 @@
     },
     "emacs-overlay": {
       "locked": {
-        "lastModified": 1606335596,
-        "narHash": "sha256-9A3UqbPh40K4OYYTX5Df/sl++pLim3XgwpbHXPUqACk=",
+        "lastModified": 1606407905,
+        "narHash": "sha256-AwvhVxRjBFO2nkzIHtJPk/0cZGGs1olEqORN/ToKt4U=",
         "owner": "nix-community",
         "repo": "emacs-overlay",
-        "rev": "f425f78d4062ea1006393e87d058cd2da2d441c5",
+        "rev": "c7701f202d7292a37574c918944037149ecb1f8c",
         "type": "github"
       },
       "original": {
@@ -34,11 +34,11 @@
     "emacs-pgtk-overlay": {
       "flake": false,
       "locked": {
-        "lastModified": 1606213466,
-        "narHash": "sha256-ex+fwscYyX9Wbps5tj0mj5n44QPwAIQRMXkDlWbCMz8=",
+        "lastModified": 1606342852,
+        "narHash": "sha256-gWaiWVcdR5zc8NFMi5Z4lGxCJqEkbgGqem8cUZ4vt+k=",
         "owner": "mjlbach",
         "repo": "emacs-pgtk-nativecomp-overlay",
-        "rev": "5a1cb4b3d104c8c4027f628b5de37307ab36a96a",
+        "rev": "2aa62d670b232bc449ed1a01bd5bb920ba1e8eb1",
         "type": "github"
       },
       "original": {
@@ -99,11 +99,11 @@
     "neovim-nightly-overlay": {
       "flake": false,
       "locked": {
-        "lastModified": 1606270814,
-        "narHash": "sha256-O7uwD4UEca68qym93ZOyR3U0koU0Tip6EX+bC5fm7PQ=",
+        "lastModified": 1606342872,
+        "narHash": "sha256-w+S1LbwGeqi1I+ef5OYWa7m3lDto2F+ZI5XhwQEs4x0=",
         "owner": "mjlbach",
         "repo": "neovim-nightly-overlay",
-        "rev": "2abd19b4964d1f15617d04b4fba6bdc0db39d27e",
+        "rev": "7cd525ecca413b0f6ba813678c9311f856212587",
         "type": "github"
       },
       "original": {
@@ -147,11 +147,11 @@
     "powerlevel10k": {
       "flake": false,
       "locked": {
-        "lastModified": 1606323301,
-        "narHash": "sha256-jQl4Ikdmibt50bmKxuFll1HjTy67xeNKFF8ptmIAnFI=",
+        "lastModified": 1606393317,
+        "narHash": "sha256-+CCPYKKNIsU7FdjFpuBvUqY57+cHBsbH2TGaA4QYVSs=",
         "owner": "romkatv",
         "repo": "powerlevel10k",
-        "rev": "7cb7ee07be1bd2912af4773643d1ebc1d2520ae6",
+        "rev": "c7914c051d98492185d7c4f997b4f06c18f99d54",
         "type": "github"
       },
       "original": {

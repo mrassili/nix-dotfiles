@@ -32,10 +32,10 @@
 
   outputs = inputs@{ self, flake-utils, nixpkgs, nixos-unstable, home-manager, ... }: with inputs;
     flake-utils.lib.eachDefaultSystem (system:
-    let 
-      pkgs = nixpkgs.legacyPackages.${system}; 
-      pkgs-nixos-unstable = nixos-unstable.legacyPackages.${system}; 
-    in
+      let
+        pkgs = nixpkgs.legacyPackages.${system};
+        pkgs-nixos-unstable = nixos-unstable.legacyPackages.${system};
+      in
       {
         packages.nixpkgs-unstable = pkgs;
         packages.nixos-unstable = pkgs-nixos-unstable;
@@ -44,7 +44,6 @@
           name = "home-manager-shell";
 
           buildInputs = with pkgs; [
-            cachix
             (import home-manager { inherit pkgs; }).home-manager
           ];
 
@@ -54,5 +53,20 @@
             PS1="${name}> "
           '';
         };
-      });
+      }) // 
+      { homeManagerConfigurations = {
+        michael = home-manager.lib.homeManagerConfiguration {
+          configuration = { pkgs, lib, ... }: {
+            imports = [ ./home.nix ];
+            nixpkgs = {
+              overlays = [ emacs.overlay ];
+              config = { allowUnfree = true; };
+            };
+          };
+          system = "x86_64-darwin";
+          homeDirectory = "/Users/michael";
+          username = "michael";
+        };
+      };};
+      
 }

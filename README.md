@@ -9,6 +9,11 @@ nixpkgs contains my userland nix configuration, and is symlinked to $HOME/.confi
 ```bash
 curl -L https://nixos.org/nix/install | sh
 ```
+# To install cachix
+
+```nix
+nix-env -iA cachix -f https://cachix.org/api/v1/install
+```
 
 # To install my home-manager configuration
 

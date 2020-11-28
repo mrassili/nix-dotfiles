@@ -7,7 +7,6 @@
     withNodeJs = true;
     plugins = with pkgs.vimPlugins; [
       # nvim-luadev
-      # vimspector
       completion-nvim
       fzf-vim
       fzfWrapper

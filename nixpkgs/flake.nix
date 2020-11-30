@@ -32,7 +32,7 @@
     let
       nixos-unstable-overlay = final: prev: {
         nixos-unstable = import inputs.nixos-unstable {
-          system = "x86_64-darwin";
+          system = prev.system;
           # config.allowUnfree = true;
           overlays = [ inputs.emacs-overlay.overlay ];
         };

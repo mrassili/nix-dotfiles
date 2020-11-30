@@ -63,11 +63,11 @@
         "xelb": "xelb"
       },
       "locked": {
-        "lastModified": 1606697235,
-        "narHash": "sha256-aAR2Fq4UBaCVaep1p6JDO2rZRCd438PYugSmg+WKYxs=",
+        "lastModified": 1606725003,
+        "narHash": "sha256-IzeBaHZ7gyTJCYeoI4EiPYUWUUsijbgJYvU8eQrp0Q4=",
         "owner": "mjlbach",
         "repo": "emacs-overlay",
-        "rev": "862d88072f13ea590f285f31880e527a664a7a81",
+        "rev": "dec89a09794159ee7ea1bc93e0d8183dce4e19ef",
         "type": "github"
       },
       "original": {
@@ -299,11 +299,11 @@
         "pre-commit-hooks": "pre-commit-hooks"
       },
       "locked": {
-        "lastModified": 1606616187,
-        "narHash": "sha256-0UFgO7pBDUAL2M71TnsAiJ1V8SskcMWB0wVJf8mjHTA=",
+        "lastModified": 1606724952,
+        "narHash": "sha256-MngWqgn6FEWbQICmioQqrP5ACwjWBBElphgWaKnncIE=",
         "owner": "mjlbach",
         "repo": "neovim-nightly-overlay",
-        "rev": "6d209a817f1e226cf4efe68fb2243bd3dac28ad6",
+        "rev": "7a443ee9d0706a32808cd68cddff1f90fbdcf3b1",
         "type": "github"
       },
       "original": {
@@ -363,11 +363,11 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1606435565,
-        "narHash": "sha256-N/pKh6n5p3wXNXD7NXGzylFVerT9JIUwTQxZB/0iUXA=",
+        "lastModified": 1606681687,
+        "narHash": "sha256-hY9Dq8fIK/sDmLgXzhoQnqvwEV2jK2Yv6anjJBeAfZs=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "1121b2259b7d66e8c7c5131d1588a48c80ef9e58",
+        "rev": "752b6a95db93f03d6901304f760bd452b4b7db41",
         "type": "github"
       },
       "original": {

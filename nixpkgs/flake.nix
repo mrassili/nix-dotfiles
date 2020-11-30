@@ -32,7 +32,7 @@
     let
       nixos-unstable-overlay = final: prev: {
         nixos-unstable = import inputs.nixos-unstable {
-          system = "x86_64-darwin";
+          system = "x86_64-linux";
           # config.allowUnfree = true;
           overlays = [ inputs.emacs-overlay.overlay ];
         };
@@ -75,8 +75,8 @@
               ];
             };
           system = "x86_64-linux";
-          homeDirectory = "/Users/mjlbach";
-          username = "mjlbach";
+          homeDirectory = "/home/michael";
+          username = "michael";
         };
         nixos = inputs.home-manager.lib.homeManagerConfiguration {
           configuration = { pkgs, ... }:
@@ -92,7 +92,7 @@
               ];
             };
           system = "x86_64-linux";
-          homeDirectory = "/Users/mjlbach";
+          homeDirectory = "/home/mjlbach";
           username = "mjlbach";
         };
       };

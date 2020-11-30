@@ -75,8 +75,8 @@
               ];
             };
           system = "x86_64-linux";
-          homeDirectory = "/Users/mjlbach";
-          username = "mjlbach";
+          homeDirectory = "/home/michael";
+          username = "michael";
         };
         nixos = inputs.home-manager.lib.homeManagerConfiguration {
           configuration = { pkgs, ... }:
@@ -92,7 +92,7 @@
               ];
             };
           system = "x86_64-linux";
-          homeDirectory = "/Users/mjlbach";
+          homeDirectory = "/home/mjlbach";
           username = "mjlbach";
         };
       };

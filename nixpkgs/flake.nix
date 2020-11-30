@@ -11,10 +11,11 @@
   };
 
   inputs.neovim-nightly-overlay.url = "github:mjlbach/neovim-nightly-overlay/flakes";
-  inputs.emacs-overlay.url = "github:nix-community/emacs-overlay";
-  inputs.emacs-pgtk-overlay = {
-    url = "github:mjlbach/emacs-pgtk-nativecomp-overlay";
-    flake = false;
+  inputs.emacs-overlay = {
+    type = "github";
+    owner = "mjlbach";
+    repo = "emacs-overlay";
+    ref = "feature/version_nixpkgs_flake_limited";
   };
 
   inputs.home-manager = {
@@ -32,7 +33,7 @@
       nixos-unstable-overlay = final: prev: {
         nixos-unstable = import inputs.nixos-unstable {
           system = "x86_64-darwin";
-          config.allowUnfree = true;
+          # config.allowUnfree = true;
           overlays = [ inputs.emacs-overlay.overlay ];
         };
       };

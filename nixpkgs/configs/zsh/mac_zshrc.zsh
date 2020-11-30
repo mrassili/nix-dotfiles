@@ -207,10 +207,9 @@ export EDITOR="nvim"
 
 home-upgrade () {
   nix flake update $HOME/.config/nixpkgs --recreate-lock-file
-  nix build "$HOME/.config/nixpkgs#macbook-pro"
+  nix build "$HOME/.config/nixpkgs#macbook-pro" -o "$HOME/.config/nixpkgs/result"
   zsh "$HOME/.config/nixpkgs/result/activate"
   (( $+commands[doom] )) && doom -y upgrade
-  brew upgrade
 }
 
 system-upgrade () {

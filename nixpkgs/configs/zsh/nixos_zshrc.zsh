@@ -214,7 +214,7 @@ export EDITOR="nvim"
 
 home-upgrade () {
   nix flake update $HOME/.config/nixpkgs --recreate-lock-file
-  nix build "$HOME/.config/nixpkgs#nixos"
+  nix build "$HOME/.config/nixpkgs#nixos" -o "$HOME/.config/nixpkgs/result"
   (( $+commands[doom] )) && doom -y upgrade
 }
 

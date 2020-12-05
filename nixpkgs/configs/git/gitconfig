@@ -19,19 +19,23 @@
   reviewone = !nvim -p +\"tabdo Gdiff $REVIEW_BASE\" +\"let g:gitgutter_diff_base = '$REVIEW_BASE'\"
 
 [pull]
-	rebase = false
+  rebase = false
 
 [core]
-    pager = delta --theme='TwoDark'
+  pager = delta --theme='TwoDark'
 
 [interactive]
-    diffFilter = delta --color-only
+  diffFilter = delta --color-only
 
 [filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true
+
 [user]
-	name = Michael Lingelbach
-	email = m.j.lbach@gmail.com
+  name = Michael Lingelbach
+  email = m.j.lbach@gmail.com
+
+[http] 
+  postBuffer = 524288000

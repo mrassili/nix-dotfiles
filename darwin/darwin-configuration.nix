@@ -6,6 +6,7 @@
   environment.systemPackages =
     with pkgs;
     [
+      gimp
       vim
     ];
 

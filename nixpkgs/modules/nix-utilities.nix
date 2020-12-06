@@ -8,6 +8,7 @@
     nix-prefetch
     nix-prefetch-github
     nix-prefetch-git
+    nix-top
     nixpkgs-fmt
   ];
 }

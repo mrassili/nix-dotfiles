@@ -78,17 +78,22 @@
           homeDirectory = "/home/michael";
           username = "michael";
         };
-        nixos = inputs.home-manager.lib.homeManagerConfiguration {
+        nixos-desktop = inputs.home-manager.lib.homeManagerConfiguration {
           configuration = { pkgs, ... }:
             {
               nixpkgs.overlays = [
                 nixos-unstable-overlay
+                (self: super: {
+                    opencv4 = super.opencv4.override { enableUnfree = false; enableCuda = false; };
+                    blender = super.blender.override { cudaSupport = false; };
+                  })
                 inputs.emacs-overlay.overlay
                 inputs.neovim-nightly-overlay.overlay
                 additional-package-overlay
               ];
+              nixpkgs.config = import ./machines/nixos/config.nix;
               imports = [
-                ./machines/linux/home.nix
+                ./machines/nixos/home.nix
               ];
             };
           system = "x86_64-linux";
@@ -98,6 +103,6 @@
       };
       macbook-pro = self.homeConfigurations.macbook-pro.activationPackage;
       linux = self.homeConfigurations.linux.activationPackage;
-      nixos = self.homeConfigurations.nixos.activationPackage;
+      nixos-desktop = self.homeConfigurations.nixos-desktop.activationPackage;
     };
 }

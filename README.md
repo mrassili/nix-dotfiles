@@ -25,5 +25,9 @@ bash switch.sh
 ```
 
 # To install my NixOS configuration
-
-Coming soon...
+```
+git clone https://github.com/mjlbach/nix-dotfiles.git
+cd nix-dotfiles/nixos
+nix-shell -p nixFlakes
+bash install.sh`
+```

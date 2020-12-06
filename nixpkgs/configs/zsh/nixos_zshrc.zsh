@@ -218,7 +218,16 @@ home-upgrade () {
   (( $+commands[doom] )) && doom -y upgrade
 }
 
+home-switch () {
+  nix build "$HOME/.config/nixpkgs#nixos" -o "$HOME/.config/nixpkgs/result"
+}
+
 system-upgrade () {
+  nix flake update /etc/nixos --recreate-lock-file
+  sudo nixos-rebuild switch --flake '/etc/nixos#nixos-desktop'
+}
+
+system-switch () {
   nix flake update /etc/nixos --recreate-lock-file
   sudo nixos-rebuild switch --flake '/etc/nixos#nixos-desktop'
 }

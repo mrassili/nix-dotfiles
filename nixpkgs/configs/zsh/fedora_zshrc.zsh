@@ -218,3 +218,8 @@ home-upgrade () {
   zsh "$HOME/.config/nixpkgs/result/activate"
   (( $+commands[doom] )) && doom -y upgrade
 }
+
+home-switch () {
+  nix build "$HOME/.config/nixpkgs#linux" -o "$HOME/.config/nixpkgs/result"
+  zsh "$HOME/.config/nixpkgs/result/activate"
+}

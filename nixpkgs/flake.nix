@@ -10,7 +10,7 @@
     flake = false;
   };
 
-  inputs.neovim-nightly-overlay.url = "github:mjlbach/neovim-nightly-overlay/flakes";
+  inputs.neovim-nightly-overlay.url = "github:mjlbach/neovim-nightly-overlay";
   inputs.emacs-overlay = {
     type = "github";
     owner = "mjlbach";

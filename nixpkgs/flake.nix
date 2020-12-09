@@ -38,15 +38,15 @@
       #   };
       # };
       overlays = [
-                  # nixos-unstable-overlay
-                (self: super: {
-                    opencv4 = super.opencv4.override { enableUnfree = false; enableCuda = false; };
-                    blender = super.blender.override { cudaSupport = false; };
-                  })
-                inputs.emacs-overlay.overlay
-                inputs.neovim-nightly-overlay.overlay
-                additional-package-overlay
-              ] ;
+        # nixos-unstable-overlay
+        (self: super: {
+          opencv4 = super.opencv4.override { enableUnfree = false; enableCuda = false; };
+          blender = super.blender.override { cudaSupport = false; };
+        })
+        inputs.emacs-overlay.overlay
+        inputs.neovim-nightly-overlay.overlay
+        additional-package-overlay
+      ];
       additional-package-overlay = final: prev: {
         LS_COLORS = inputs.LS_COLORS;
       };

@@ -2,7 +2,7 @@
   description = "Example home-manager from non-nixos system";
 
   inputs.nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-  inputs.nixos-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+  # inputs.nixos-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
   inputs.flake-utils.url = "github:numtide/flake-utils";
   inputs.flake-compat = {
@@ -30,13 +30,23 @@
 
   outputs = { self, ... }@inputs:
     let
-      nixos-unstable-overlay = final: prev: {
-        nixos-unstable = import inputs.nixos-unstable {
-          system = prev.system;
-          # config.allowUnfree = true;
-          overlays = [ inputs.emacs-overlay.overlay ];
-        };
-      };
+      # nixos-unstable-overlay = final: prev: {
+      #   nixos-unstable = import inputs.nixos-unstable {
+      #     system = prev.system;
+      #     # config.allowUnfree = true;
+      #     overlays = [ inputs.emacs-overlay.overlay ];
+      #   };
+      # };
+      overlays = [
+                  # nixos-unstable-overlay
+                (self: super: {
+                    opencv4 = super.opencv4.override { enableUnfree = false; enableCuda = false; };
+                    blender = super.blender.override { cudaSupport = false; };
+                  })
+                inputs.emacs-overlay.overlay
+                inputs.neovim-nightly-overlay.overlay
+                additional-package-overlay
+              ] ;
       additional-package-overlay = final: prev: {
         LS_COLORS = inputs.LS_COLORS;
       };
@@ -47,31 +57,21 @@
           configuration = { pkgs, ... }:
 
             {
-              nixpkgs.overlays = [
-                nixos-unstable-overlay
-                inputs.emacs-overlay.overlay
-                inputs.neovim-nightly-overlay.overlay
-                additional-package-overlay
-              ];
+              nixpkgs.overlays = overlays;
               imports = [
-                ./machines/macos/home.nix
+                ./machines/macbook-pro/home.nix
               ];
             };
           system = "x86_64-darwin";
           homeDirectory = "/Users/michael";
           username = "michael";
         };
-        linux = inputs.home-manager.lib.homeManagerConfiguration {
+        linux-desktop = inputs.home-manager.lib.homeManagerConfiguration {
           configuration = { pkgs, ... }:
             {
-              nixpkgs.overlays = [
-                nixos-unstable-overlay
-                inputs.emacs-overlay.overlay
-                inputs.neovim-nightly-overlay.overlay
-                additional-package-overlay
-              ];
+              nixpkgs.overlays = overlays;
               imports = [
-                ./machines/linux/home.nix
+                ./machines/linux-desktop/home.nix
               ];
             };
           system = "x86_64-linux";
@@ -81,19 +81,10 @@
         nixos-desktop = inputs.home-manager.lib.homeManagerConfiguration {
           configuration = { pkgs, ... }:
             {
-              nixpkgs.overlays = [
-                nixos-unstable-overlay
-                (self: super: {
-                    opencv4 = super.opencv4.override { enableUnfree = false; enableCuda = false; };
-                    blender = super.blender.override { cudaSupport = false; };
-                  })
-                inputs.emacs-overlay.overlay
-                inputs.neovim-nightly-overlay.overlay
-                additional-package-overlay
-              ];
-              nixpkgs.config = import ./machines/nixos/config.nix;
+              nixpkgs.overlays = overlays;
+              nixpkgs.config = import ./machines/nixos-desktop/config.nix;
               imports = [
-                ./machines/nixos/home.nix
+                ./machines/nixos-desktop/home.nix
               ];
             };
           system = "x86_64-linux";
@@ -102,7 +93,8 @@
         };
       };
       macbook-pro = self.homeConfigurations.macbook-pro.activationPackage;
-      linux = self.homeConfigurations.linux.activationPackage;
+      linux-server = self.homeConfigurations.linux-server.activationPackage;
+      linux-desktop = self.homeConfigurations.linux-desktop.activationPackage;
       nixos-desktop = self.homeConfigurations.nixos-desktop.activationPackage;
     };
 }

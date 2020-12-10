@@ -20,8 +20,7 @@ nix-env -iA cachix -f https://cachix.org/api/v1/install
 ```
 git clone https://github.com/mjlbach/nix-dotfiles.git
 cd nix-dotfiles/nixpkgs
-bash install.sh {fedora, macos, cluster, nixos}`
-bash switch.sh
+bash install.sh {linux-desktop, macbook-pro, linux-server, nixos-desktop}`
 ```
 
 # To install my NixOS configuration
@@ -29,5 +28,5 @@ bash switch.sh
 git clone https://github.com/mjlbach/nix-dotfiles.git
 cd nix-dotfiles/nixos
 nix-shell -p nixFlakes
-bash install.sh`
+bash install.sh
 ```

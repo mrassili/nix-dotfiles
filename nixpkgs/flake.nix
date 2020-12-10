@@ -78,6 +78,18 @@
           homeDirectory = "/home/michael";
           username = "michael";
         };
+        linux-server = inputs.home-manager.lib.homeManagerConfiguration {
+          configuration = { pkgs, ... }:
+            {
+              nixpkgs.overlays = overlays;
+              imports = [
+                ./machines/linux-server/home.nix
+              ];
+            };
+          system = "x86_64-linux";
+          homeDirectory = "/home/mjlbach";
+          username = "mjlbach";
+        };
         nixos-desktop = inputs.home-manager.lib.homeManagerConfiguration {
           configuration = { pkgs, ... }:
             {

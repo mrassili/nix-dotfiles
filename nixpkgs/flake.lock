@@ -299,16 +299,15 @@
         "pre-commit-hooks": "pre-commit-hooks"
       },
       "locked": {
-        "lastModified": 1607127393,
-        "narHash": "sha256-LZBWvOQo6YiKmeJ+T4BrJkmtU+fWEnQbGqCABjt5S0s=",
+        "lastModified": 1607551263,
+        "narHash": "sha256-97LbGPbBp3muXhplq2BV4pBj2wD5L33+i49+utEBkOY=",
         "owner": "mjlbach",
         "repo": "neovim-nightly-overlay",
-        "rev": "cfa855f2f75dc8700f2ab72ca649a50258b9d15f",
+        "rev": "2507e0ba04a70c8d76487f22e17a216e2d01c1a0",
         "type": "github"
       },
       "original": {
         "owner": "mjlbach",
-        "ref": "flakes",
         "repo": "neovim-nightly-overlay",
         "type": "github"
       }

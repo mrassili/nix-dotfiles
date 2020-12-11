@@ -42,7 +42,35 @@
 
   programs.direnv = {
     enable = true;
+    enableZshIntegration = false;
     enableNixDirenvIntegration = true;
+  };
+
+  programs.zsh = {
+    enable = true;
+    enableCompletion = false;
+    initExtraFirst = ''
+      # Emacs tramp mode compatibility
+      [[ $TERM == "tramp" ]] && unsetopt zle && PS1='$ ' && return
+
+      # Hook direnv
+      emulate zsh -c "$(direnv export zsh)"
+
+      # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+      # Initialization code that may require console input (password prompts, [y/n]
+      # confirmations, etc.) must go above this block; everything else may go below.
+      if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
+        source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
+      fi
+
+      # Enable direnv
+      emulate zsh -c "$(direnv hook zsh)"
+    '';
+    initExtraBeforeCompInit = builtins.readFile ../configs/zsh/zshrc.zsh + ''
+      source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
+      source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/config/p10k-lean.zsh
+    '';
+
   };
 
   programs.fzf.enable = true;

@@ -53,16 +53,21 @@
         })
         inputs.emacs-overlay.overlay
         inputs.neovim-nightly-overlay.overlay
-       (final: prev: {LS_COLORS = inputs.LS_COLORS; })
+        (final: prev: { LS_COLORS = inputs.LS_COLORS; })
       ];
     in
     {
       homeConfigurations = {
         macbook-pro = inputs.home-manager.lib.homeManagerConfiguration {
           configuration = { pkgs, ... }:
-
             {
-              nixpkgs.config = config;
+              nixpkgs.config = {
+                allowUnfree = true;
+                experimental-features = "nix-command flakes";
+                keep-derivations = true;
+                keep-outputs = true;
+              };
+
               nixpkgs.overlays = overlays;
               imports = [
                 ./modules/cli.nix
@@ -74,16 +79,7 @@
                 ./modules/ssh.nix
                 ./modules/weechat.nix
               ];
-
-              programs.zsh = {
-                enable = true;
-                enableCompletion = false;
-                initExtraBeforeCompInit = builtins.readFile ./configs/zsh/macbook-pro_zshrc.zsh;
-                initExtra = ''
-                  source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
-                  source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/config/p10k-lean.zsh
-                '';
-              };
+              programs.zsh.initExtra = builtins.readFile ./configs/zsh/macbook-pro_zshrc.zsh;
             };
           system = "x86_64-darwin";
           homeDirectory = "/Users/michael";
@@ -105,16 +101,7 @@
                 ./modules/ssh.nix
               ];
 
-              programs.zsh = {
-                enable = true;
-                enableCompletion = false;
-                initExtraBeforeCompInit = builtins.readFile ./configs/zsh/linux-desktop_zshrc.zsh;
-                initExtra = ''
-                  source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
-                  source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/config/p10k-lean.zsh
-                '';
-              };
-
+              programs.zsh.initExtra = builtins.readFile ./configs/zsh/linux-desktop_zshrc.zsh;
               xdg.configFile."alacritty/alacritty.yml".source = ./configs/terminal/alacritty.yml;
             };
           system = "x86_64-linux";
@@ -133,17 +120,8 @@
                 ./modules/git.nix
                 ./modules/nix-utilities.nix
               ];
-
-              programs.zsh = {
-                enable = true;
-                enableCompletion = false;
-                initExtraBeforeCompInit = builtins.readFile ./configs/zsh/linux-desktop_zshrc.zsh;
-                initExtra = ''
-                  source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
-                  source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/config/p10k-lean.zsh
-                '';
-              };
-          };
+              programs.zsh.initExtra = builtins.readFile ./configs/zsh/linux-server_zshrc.zsh;
+            };
           system = "x86_64-linux";
           homeDirectory = "/home/mjlbach";
           username = "mjlbach";
@@ -169,17 +147,7 @@
                 ./modules/neovim.nix
                 ./modules/emacs.nix
               ];
-
-              programs.zsh = {
-                enable = true;
-                enableCompletion = false;
-                initExtraBeforeCompInit = builtins.readFile ./configs/zsh/nixos-desktop_zshrc.zsh;
-                initExtra = ''
-                  source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
-                  source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/config/p10k-lean.zsh
-                '';
-              };
-
+              programs.zsh.initExtra = builtins.readFile ./configs/zsh/nixos-desktop_zshrc.zsh;
             };
           system = "x86_64-linux";
           homeDirectory = "/home/mjlbach";

@@ -4,13 +4,8 @@
   inputs.nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
   # inputs.nixos-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
-  inputs.flake-utils.url = "github:numtide/flake-utils";
-  inputs.flake-compat = {
-    url = "github:edolstra/flake-compat";
-    flake = false;
-  };
-
   inputs.neovim-nightly-overlay.url = "github:mjlbach/neovim-nightly-overlay";
+
   inputs.emacs-overlay = {
     type = "github";
     owner = "mjlbach";

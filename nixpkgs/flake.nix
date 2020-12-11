@@ -32,14 +32,6 @@
       #     overlays = [ inputs.emacs-overlay.overlay ];
       #   };
       # };
-      config = {
-        allowUnfree = true;
-        cudaSupport = true;
-        experimental-features = "nix-command flakes";
-        keep-derivations = true;
-        keep-outputs = true;
-        firefox.enablePlasmaBrowserIntegration = true;
-      };
       overlays = [
         # nixos-unstable-overlay
         (self: super: {
@@ -56,13 +48,7 @@
         macbook-pro = inputs.home-manager.lib.homeManagerConfiguration {
           configuration = { pkgs, ... }:
             {
-              nixpkgs.config = {
-                allowUnfree = true;
-                experimental-features = "nix-command flakes";
-                keep-derivations = true;
-                keep-outputs = true;
-              };
-
+              xdg.configFile."nixpkgs/config.nix".source = ./configs/nix/config.nix;
               nixpkgs.overlays = overlays;
               imports = [
                 ./modules/cli.nix
@@ -83,7 +69,7 @@
         linux-desktop = inputs.home-manager.lib.homeManagerConfiguration {
           configuration = { pkgs, ... }:
             {
-              nixpkgs.config = config;
+              xdg.configFile."nixpkgs/config.nix".source = ./configs/nix/nvidia_config.nix;
               nixpkgs.overlays = overlays;
               imports = [
                 ./modules/cli.nix
@@ -106,7 +92,7 @@
         linux-server = inputs.home-manager.lib.homeManagerConfiguration {
           configuration = { pkgs, ... }:
             {
-              nixpkgs.config = config;
+              xdg.configFile."nixpkgs/config.nix".source = ./configs/nix/nvidia_config.nix;
               nixpkgs.overlays = overlays;
               imports = [
                 ./modules/home-manager.nix
@@ -124,7 +110,7 @@
         nixos-desktop = inputs.home-manager.lib.homeManagerConfiguration {
           configuration = { pkgs, ... }:
             {
-              nixpkgs.config = config;
+              xdg.configFile."nixpkgs/config.nix".source = ./configs/nix/nvidia_config.nix;
               nixpkgs.overlays = overlays;
               imports = [
                 ./modules/home-manager.nix

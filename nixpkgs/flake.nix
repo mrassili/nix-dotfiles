@@ -10,7 +10,7 @@
     type = "github";
     owner = "mjlbach";
     repo = "emacs-overlay";
-    ref = "feature/version_nixpkgs_flake_limited";
+    ref = "feature/flakes";
   };
 
   inputs.home-manager = {

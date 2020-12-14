@@ -1,3 +1,6 @@
+# Use keychain to manage ssh keys
+eval $(keychain -q --eval)
+
 # Colorize terminal
 export CLICOLOR=1
 export COLORTERM="truecolor"

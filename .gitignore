@@ -129,9 +129,8 @@ dmypy.json
 .pyre/
 tags
 
-# Ignore symlinks
-nixpkgs/home.nix
-nixpkgs/config.nix
+# Ignore build
+nixpkgs/result
 
 # macOS
 **/.DS_Store

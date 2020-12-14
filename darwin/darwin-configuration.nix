@@ -15,6 +15,9 @@
   # $ darwin-rebuild switch -I darwin-config=$HOME/.config/nixpkgs/darwin/configuration.nix
   # environment.darwinConfig = "$HOME/.config/nixpkgs/darwin/configuration.nix";
 
+  # Save some nix space
+  nix.gc.automatic = true;
+
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;
   nix.package = pkgs.nixFlakes;
@@ -24,6 +27,7 @@
     gc-keep-derivations = true
     gc-keep-outputs = true
     experimental-features = nix-command flakes
+    auto-optimise-store = true
   '';
 
   # Create /etc/bashrc that loads the nix-darwin environment.

@@ -48,7 +48,6 @@
         macbook-pro = inputs.home-manager.lib.homeManagerConfiguration {
           configuration = { pkgs, ... }:
             {
-              xdg.configFile."nix/config.nix".source = ./configs/nix/config.nix;
               xdg.configFile."nix/nix.conf".source = ./configs/nix/nix.conf;
               nixpkgs.config = import ./configs/nix/config.nix;
               nixpkgs.overlays = overlays;
@@ -71,7 +70,6 @@
         linux-desktop = inputs.home-manager.lib.homeManagerConfiguration {
           configuration = { pkgs, ... }:
             {
-              xdg.configFile."nix/config.nix".source = ./configs/nix/nvidia_config.nix;
               xdg.configFile."nix/nix.conf".source = ./configs/nix/nix.conf;
               nixpkgs.config = import ./configs/nix/config.nix;
               nixpkgs.overlays = overlays;
@@ -96,7 +94,6 @@
         linux-server = inputs.home-manager.lib.homeManagerConfiguration {
           configuration = { pkgs, ... }:
             {
-              xdg.configFile."nix/config.nix".source = ./configs/nix/nvidia_config.nix;
               xdg.configFile."nix/nix.conf".source = ./configs/nix/nix.conf;
               nixpkgs.config = import ./configs/nix/config.nix;
               nixpkgs.overlays = overlays;
@@ -116,7 +113,6 @@
         nixos-desktop = inputs.home-manager.lib.homeManagerConfiguration {
           configuration = { pkgs, ... }:
             {
-              xdg.configFile."nix/config.nix".source = ./configs/nix/nvidia_config.nix;
               xdg.configFile."nix/nix.conf".source = ./configs/nix/nix.conf;
               nixpkgs.config = import ./configs/nix/config.nix;
               nixpkgs.overlays = overlays;

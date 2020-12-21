@@ -87,7 +87,6 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     git
-    ntfs3g
     kdeApplications.knotes
     os-prober
     plasma-browser-integration

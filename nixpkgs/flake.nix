@@ -50,6 +50,7 @@
             {
               xdg.configFile."nix/config.nix".source = ./configs/nix/config.nix;
               xdg.configFile."nix/nix.conf".source = ./configs/nix/nix.conf;
+              nixpkgs.config = import ./configs/nix/config.nix;
               nixpkgs.overlays = overlays;
               imports = [
                 ./modules/cli.nix
@@ -72,6 +73,7 @@
             {
               xdg.configFile."nix/config.nix".source = ./configs/nix/nvidia_config.nix;
               xdg.configFile."nix/nix.conf".source = ./configs/nix/nix.conf;
+              nixpkgs.config = import ./configs/nix/config.nix;
               nixpkgs.overlays = overlays;
               imports = [
                 ./modules/cli.nix
@@ -96,6 +98,7 @@
             {
               xdg.configFile."nix/config.nix".source = ./configs/nix/nvidia_config.nix;
               xdg.configFile."nix/nix.conf".source = ./configs/nix/nix.conf;
+              nixpkgs.config = import ./configs/nix/config.nix;
               nixpkgs.overlays = overlays;
               imports = [
                 ./modules/home-manager.nix
@@ -115,6 +118,7 @@
             {
               xdg.configFile."nix/config.nix".source = ./configs/nix/nvidia_config.nix;
               xdg.configFile."nix/nix.conf".source = ./configs/nix/nix.conf;
+              nixpkgs.config = import ./configs/nix/config.nix;
               nixpkgs.overlays = overlays;
               imports = [
                 ./modules/home-manager.nix

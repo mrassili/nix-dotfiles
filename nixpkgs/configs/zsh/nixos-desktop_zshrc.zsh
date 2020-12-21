@@ -12,11 +12,10 @@ home-switch () {
 }
 
 system-upgrade () {
-  nix flake update /etc/nixos --recreate-lock-file
+  sudo nix flake update /etc/nixos --recreate-lock-file
   sudo nixos-rebuild switch --flake '/etc/nixos#nixos-desktop'
 }
 
 system-switch () {
-  nix flake update /etc/nixos --recreate-lock-file
   sudo nixos-rebuild switch --flake '/etc/nixos#nixos-desktop'
 }

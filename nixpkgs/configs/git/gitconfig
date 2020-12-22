@@ -18,6 +18,8 @@
   # git reviewone foo.js bar.js
   reviewone = !nvim -p +\"tabdo Gdiff $REVIEW_BASE\" +\"let g:gitgutter_diff_base = '$REVIEW_BASE'\"
 
+  upstream = !git push -u origin HEAD
+
 [pull]
   rebase = false
 

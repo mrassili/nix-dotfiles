@@ -143,28 +143,24 @@ vim.cmd [[
 --Add map to enter paste mode
 vim.o.pastetoggle="<F3>"
 
-
--- TODO: Broken, replace with lua
-vim.cmd([[
-function! ToggleMouse()
-  if &mouse == 'a'
-    IndentLinesDisable
-    set signcolumn=no
-    set mouse=v
-    set nonu
-    echo "Mouse usage Visual"
+-- Toggle to disable mouse mode and indentlines for easier paste
+toggleMouse = function() 
+  if vim.o.mouse == 'a' then
+    vim.cmd([[IndentLinesDisable]])
+    vim.wo.signcolumn='no'
+    vim.o.mouse = 'v'
+    vim.wo.number = false
+    print("Mouse disabled")
   else
-    IndentLinesEnable
-    set signcolumn=yes
-    set mouse=a
-    set nu
-    echo "Mouse usage All"
-  endif
-endfunction
+    vim.cmd([[IndentLinesEnable]])
+    vim.wo.signcolumn='yes'
+    vim.o.mouse = 'a'
+    vim.wo.number = true
+    print("Mouse enabled")
+  end
+end
 
-"Allow copy and paste to clipboard
-nnoremap <F10> :call ToggleMouse()<CR>
-]])
+vim.api.nvim_set_keymap('n', '<F10>', ':lua toggleMouse()<cr>', { noremap = true })
 
 --Start interactive EasyAlign in visual mode (e.g. vipga)
 vim.api.nvim_set_keymap('x', 'ga', '<Plug>(EasyAlign)', {})
@@ -248,24 +244,12 @@ vim.api.nvim_set_keymap('n', '<A-x>', '<C-x>', { noremap = true})
 vim.api.nvim_set_keymap('v', '<A-x>', '<C-x>', { noremap = true})
 
 -- n always goes forward
--- TODO: Broken
--- vim.api.nvim_set_keymap('n', '<expr> n', "'Nn'[v:searchforward]", { noremap = true})
--- vim.api.nvim_set_keymap('x', '<expr> n', "'Nn'[v:searchforward]", { noremap = true})
--- vim.api.nvim_set_keymap('o', '<expr> n', "'Nn'[v:searchforward]", { noremap = true})
--- vim.api.nvim_set_keymap('n', '<expr> N', "'nN'[v:searchforward]", { noremap = true})
--- vim.api.nvim_set_keymap('x', '<expr> N', "'nN'[v:searchforward]", { noremap = true})
--- vim.api.nvim_set_keymap('o', '<expr> N', "'nN'[v:searchforward]", { noremap = true})
-
-vim.cmd([[
-  nnoremap <expr> n  'Nn'[v:searchforward]
-  xnoremap <expr> n  'Nn'[v:searchforward]
-  onoremap <expr> n  'Nn'[v:searchforward]
-
-  nnoremap <expr> N  'nN'[v:searchforward]
-  xnoremap <expr> N  'nN'[v:searchforward]
-  onoremap <expr> N  'nN'[v:searchforward]
-]])
-
+vim.api.nvim_set_keymap('n', 'n', "'Nn'[v:searchforward]", { noremap = true, expr = true})
+vim.api.nvim_set_keymap('x', 'n', "'Nn'[v:searchforward]", { noremap = true, expr = true})
+vim.api.nvim_set_keymap('o', 'n', "'Nn'[v:searchforward]", { noremap = true, expr = true})
+vim.api.nvim_set_keymap('n', 'N', "'nN'[v:searchforward]", { noremap = true, expr = true})
+vim.api.nvim_set_keymap('x', 'N', "'nN'[v:searchforward]", { noremap = true, expr = true})
+vim.api.nvim_set_keymap('o', 'N', "'nN'[v:searchforward]", { noremap = true, expr = true})
 
 -- Neovim python support
 vim.g.loaded_python_provider = 0
@@ -297,8 +281,9 @@ vim.g.NetrwIsOpen = 0
 -- Lexplore toggle function
 -- TODO: replace with lua
 -- local ToggleNetrw = function()
---   if vim.g.NetrwIsOpen:
+--   if vim.g.NetrwIsOpen == 1:
 --     local i = vim
+-- end
 vim.cmd([[
 function! ToggleNetrw()
 
@@ -387,11 +372,8 @@ command! Format  execute 'lua vim.lsp.buf.formatting()'
 ]])
 
 -- Use <Tab> and <S-Tab> to navigate through popup menu
--- TODO: replace with lua
-vim.cmd([[
-inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-]])
+vim.api.nvim_set_keymap('i', '<Tab>', 'pumvisible() ? "\\<C-n>" : "\\<Tab>"', {expr = true})
+vim.api.nvim_set_keymap('i', '<S-Tab>', 'pumvisible() ? "\\<C-p>" : "\\<Tab>"', {expr = true})
 
 -- Set completeopt to have a better completion experience
 vim.o.completeopt="menuone,noinsert,noselect"

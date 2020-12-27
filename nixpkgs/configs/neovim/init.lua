@@ -286,7 +286,7 @@ toggleNetrw = function()
       if vim.bo.filetype == "netrw" then
         vim.cmd([[ silent exe "bwipeout " . ]] .. i )
       end
-      local i = i - 1
+      i = i - 1
     end
     vim.g.NetrwIsOpen = 0
     vim.g.netrw_liststyle = 0

@@ -279,34 +279,26 @@ vim.g.netrw_banner = 0
 vim.g.NetrwIsOpen = 0
 
 -- Lexplore toggle function
--- TODO: replace with lua
--- local ToggleNetrw = function()
---   if vim.g.NetrwIsOpen == 1:
---     local i = vim
--- end
-vim.cmd([[
-function! ToggleNetrw()
+toggleNetrw = function()
+  if vim.g.NetrwIsOpen == 1 then
+    local i = vim.api.nvim_get_current_buf()
+    while i >= 1 do
+      if vim.bo.filetype == "netrw" then
+        vim.cmd([[ silent exe "bwipeout " . ]] .. i )
+      end
+      local i = i - 1
+    end
+    vim.g.NetrwIsOpen = 0
+    vim.g.netrw_liststyle = 0
+    vim.g.netrw_chgwin = -1
+  else
+    vim.g.NetrwIsOpen = 1
+    vim.g.netrw_liststyle = 3
+    vim.cmd([[silent Lexplore]])
+  end
+end
 
-    if g:NetrwIsOpen
-        let i = bufnr("$")
-        while (i >= 1)
-            if (getbufvar(i, "&filetype") == "netrw")
-                silent exe "bwipeout " . i
-            endif
-            let i-=1
-        endwhile
-        let g:NetrwIsOpen=0
-        let g:netrw_liststyle = 0
-        let g:netrw_chgwin=-1
-    else
-        let g:NetrwIsOpen=1
-        let g:netrw_liststyle = 3
-        silent Lexplore
-    endif
-endfunction
-
-noremap <silent> <leader>d :call ToggleNetrw()<CR><Paste>
-]])
+vim.api.nvim_set_keymap('n', '<leader>d', ':lua toggleNetrw()<cr><paste>', { noremap = true, silent = true })
 
 -- Function to open preview of file under netrw
 -- TODO: replace with lua
@@ -390,7 +382,6 @@ vim.g.completion_chain_complete_list = {
                   { mode = '<c-n>'}},
               comment = {},
               string = { { complete_items = { 'path' }} }}}
-
 
 -- Formatters 
 vim.g.neoformat_enabled_python = { 'black' }

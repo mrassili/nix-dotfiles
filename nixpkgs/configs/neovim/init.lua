@@ -1,39 +1,54 @@
-vim.cmd([[
-call plug#begin($HOME.'/.neovim/plugged')
+-- Install packer
+local execute = vim.api.nvim_command
+local fn = vim.fn
 
-Plug 'tpope/vim-vinegar'
-Plug 'tpope/vim-sensible'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-rhubarb'
-Plug 'tpope/vim-dispatch'
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-sleuth'
-Plug 'tpope/vim-eunuch'
-Plug 'tpope/vim-unimpaired'
-Plug 'tpope/vim-commentary'
-Plug 'AndrewRadev/splitjoin.vim'
-Plug 'ludovicchabant/vim-gutentags'
-Plug 'junegunn/vim-easy-align'
-Plug 'nvim-lua/popup.nvim'
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim'
-Plug 'justinmk/vim-dirvish'
-Plug 'joshdick/onedark.vim'
-Plug 'itchyny/lightline.vim'
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'lervag/vimtex'
-Plug 'mhinz/neovim-remote'
-Plug 'Yggdroot/indentLine'
-Plug 'sheerun/vim-polyglot'
-Plug 'jpalardy/vim-slime'
-Plug 'airblade/vim-gitgutter'
-Plug 'neovim/nvim-lspconfig'
-Plug 'haorenW1025/completion-nvim'
-Plug 'sbdchd/neoformat'
+local install_path = fn.stdpath('data')..'/site/pack/packer/opt/packer.nvim'
 
-call plug#end()
-]])
+if fn.empty(fn.glob(install_path)) > 0 then
+	execute('!git clone https://github.com/wbthomason/packer.nvim '..install_path)
+    execute 'packadd packer.nvim'
+end
+
+-- Only required if you have packer in your `opt` pack
+vim.cmd [[packadd packer.nvim]]
+vim.cmd [[autocmd BufWritePost plugins.lua PackerCompile]]
+
+require('packer').startup(function()
+  -- Packer can manage itself as an optional plugin
+  use {'wbthomason/packer.nvim', opt = true}
+
+  use 'tpope/vim-vinegar'
+  use 'tpope/vim-sensible'
+  use 'tpope/vim-surround'
+  use 'tpope/vim-fugitive'
+  use 'tpope/vim-rhubarb'
+  use 'tpope/vim-dispatch'
+  use 'tpope/vim-repeat'
+  use 'tpope/vim-sleuth'
+  use 'tpope/vim-eunuch'
+  use 'tpope/vim-unimpaired'
+  use 'tpope/vim-commentary'
+  use 'AndrewRadev/splitjoin.vim'
+  use 'ludovicchabant/vim-gutentags'
+  use 'junegunn/vim-easy-align'
+  use 'nvim-lua/popup.nvim'
+  use 'nvim-lua/plenary.nvim'
+  use 'nvim-telescope/telescope.nvim'
+  use 'justinmk/vim-dirvish'
+  use 'joshdick/onedark.vim'
+  use 'itchyny/lightline.vim'
+  use 'christoomey/vim-tmux-navigator'
+  use 'lervag/vimtex'
+  use 'mhinz/neovim-remote'
+  use 'Yggdroot/indentLine'
+  use 'sheerun/vim-polyglot'
+  use 'jpalardy/vim-slime'
+  use 'airblade/vim-gitgutter'
+  use 'neovim/nvim-lspconfig'
+  use 'haorenW1025/completion-nvim'
+  use 'sbdchd/neoformat'
+
+end)
 
 --Allow filetype plugins and syntax highlighting
 vim.o.autoindent = true
@@ -281,6 +296,9 @@ vim.g.NetrwIsOpen = 0
 
 -- Lexplore toggle function
 -- TODO: replace with lua
+-- local ToggleNetrw = function()
+--   if vim.g.NetrwIsOpen:
+--     local i = vim
 vim.cmd([[
 function! ToggleNetrw()
 

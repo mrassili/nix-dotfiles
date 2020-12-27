@@ -15,8 +15,9 @@ Plug 'tpope/vim-commentary'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'junegunn/vim-easy-align'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
 Plug 'justinmk/vim-dirvish'
 Plug 'joshdick/onedark.vim'
 Plug 'itchyny/lightline.vim'
@@ -37,8 +38,8 @@ call plug#end()
 --Allow filetype plugins and syntax highlighting
 vim.o.autoindent = true
 -- TODO: replace with lua
-vim.cmd('filetype plugin indent on')
-vim.cmd('syntax on')
+vim.cmd([[ filetype plugin indent on ]])
+vim.cmd([[ syntax on ]])
 
 --Expand tab to spaces
 vim.o.expandtab = true
@@ -119,10 +120,9 @@ vim.api.nvim_set_keymap('v', '<A-k>', ':m \'<-2<CR>gv=gv', { noremap = true})
 
 --Remap escape to leave terminal mode
 vim.cmd [[
-        augroup Terminal
-          au TermOpen * tnoremap <buffer> <Esc> <c-\><c-n>
-          au FileType fzf tunmap <buffer> <Esc>
-        augroup end
+  augroup Terminal
+    au TermOpen * tnoremap <buffer> <Esc> <c-\><c-n>
+  augroup end
 ]]
 
 --Add map to enter paste mode
@@ -131,9 +131,6 @@ vim.o.pastetoggle="<F3>"
 
 -- TODO: Broken, replace with lua
 vim.cmd([[
-"Allow copy and paste to clipboard
-nnoremap <F10> :call ToggleMouse()<CR>
-
 function! ToggleMouse()
   if &mouse == 'a'
     IndentLinesDisable
@@ -149,6 +146,9 @@ function! ToggleMouse()
     echo "Mouse usage All"
   endif
 endfunction
+
+"Allow copy and paste to clipboard
+nnoremap <F10> :call ToggleMouse()<CR>
 ]])
 
 --Start interactive EasyAlign in visual mode (e.g. vipga)
@@ -161,92 +161,31 @@ vim.api.nvim_set_keymap('n', 'ga', '<Plug>(EasyAlign)', {})
 vim.g.vimtex_compiler_progname = 'nvr'
 vim.g.tex_flavor = 'latex'
 
--- Intelligent switching of branches
--- TODO: Broken, replace with lua
-vim.cmd([[
-function! GitCheckoutRef(ref)
-    execute('Git checkout ' . a:ref)
-    call feedkeys("i")
-endfunction
-
-function! GitListRefs()
-   let l:refs = execute("Git for-each-ref --format='\\%(refname:short)'")
-   return split(l:refs,'\r\n*')[1:] "jump past the first line which is the git command
-endfunction
-
-command! -bang Gbranch call fzf#run({ 'source': gitListRefs(), 'sink': function('GitCheckoutRef'), 'dir':expand('%:p:h') })
-]])
-
--- Search project root
--- Add command for searching files within current git directory structure
--- TODO: Broken, replace with lua
-vim.cmd([[
-function! Find_git_root()
-  return system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
-endfunction
-
-function! RipgrepFzf(query, fullscreen)
-  let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case %s || true'
-  let initial_command = printf(command_fmt, shellescape(a:query))
-  let reload_command = printf(command_fmt, '{q}')
-  let options = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
-  call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(options), a:fullscreen)
-endfunction
-
-command! -nargs=* -bang Rg call RipgrepFzf(<q-args>, <bang>0)
-
-command! ProjectFiles execute 'Files' Find_git_root()
-]])
-
--- Projects implementation
--- TODO: Broken, replace with lua
-vim.cmd([[
-function! Switch_projects(path)
-  let cmd = get({'ctrl-x': 'split',
-               \ 'ctrl-v': 'vertical split',
-               \ 'ctrl-t': 'tabe'}, a:path[0], 'e')
-
-  execute cmd escape(a:path[1], ' %#\')
-  execute('lcd ' . a:path[1])
-endfunction
-
-command! -nargs=* Projects call fzf#run({
-\ 'source':  'fd -H -t d --maxdepth 4 .git ' . $HOME . "/Repositories" . ' | sed -En "s/\/.git//p"',
-\ 'sink*':    function('Switch_projects'),
-\ 'options': '--ansi --expect=ctrl-t,ctrl-v,ctrl-x --delimiter : '.
-\            '--color hl:68,hl+:110',
-\ 'down':    '50%'})
-]])
-
 --Add leader shortcuts
-vim.api.nvim_set_keymap('n', '<leader>f', ':ProjectFiles<CR>', { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader><space>', ':Buffers<CR>', { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>A', ':Windows<CR>', { noremap = true, silent = true})
--- TODO: Broken
-vim.api.nvim_set_keymap('n', '<leader>l', ':BLines<CR>', { noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>f', [[ <cmd>lua require('telescope.builtin').find_files()<cr>]], { noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader><space>', [[<cmd>lua require('telescope.builtin').buffers()<cr>]], { noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>l', [[<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<cr>]], { noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>t', [[<cmd>lua require('telescope.builtin').tags()<cr>]], { noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>?', [[<cmd>lua require('telescope.builtin').oldfiles()<cr>]], { noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>s', [[<cmd>lua require('telescope.builtin').live_grep()<cr>]], { noremap = true, silent = true})
 
-vim.api.nvim_set_keymap('n', '<leader>o', ':BTags<CR>', { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>t', ':Tags<CR>', { noremap = true, silent = true})
--- TODO: Broken
-vim.api.nvim_set_keymap('n', '<leader>?', ':History<CR>', { noremap = true, silent = true})
+-- TODO: convert to telescope
+-- vim.api.nvim_set_keymap('n', '<leader>A', ':Windows<CR>', { noremap = true, silent = true})
+-- vim.api.nvim_set_keymap('n', '<leader>p', ':Projects<CR>', { noremap = true, silent = true})
+-- vim.api.nvim_set_keymap('n', '<leader>o', ':BTags<CR>', { noremap = true, silent = true})
 
--- TODO: Broken
-vim.api.nvim_set_keymap('n', '<leader>s', ':Rg<CR>', { noremap = true, silent = true})
--- TODO: Broken
-vim.api.nvim_set_keymap('n', '<leader>p', ':Projects<CR>', { noremap = true, silent = true})
+-- Add git shortcuts
+vim.api.nvim_set_keymap('n', '<leader>gc', [[<cmd>lua require('telescope.builtin').git_commits()<cr>]], { noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>gb', [[<cmd>lua require('telescope.builtin').git_branches()<cr>]], { noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>gs', [[<cmd>lua require('telescope.builtin').git_status()<cr>]], { noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>gp', [[<cmd>lua require('telescope.builtin').git_bcommits()<cr>]], { noremap = true, silent = true})
 
--- Add Fugitive shortcuts
-vim.api.nvim_set_keymap('n', '<leader>gc', ':Commits<CR>', { noremap = true, silent = true})
--- TODO: Broken
-vim.api.nvim_set_keymap('n', '<leader>gb', ':Gbranch<CR>', { noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>ga', ':Git add %:p<CR><CR>', { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>gs', ':Gstatus<CR>', { noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>gd', ':Gdiff<CR>', { noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>ge', ':Gedit<CR>', { noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>gr', ':Gread<CR>', { noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>gw', ':Gwrite<CR><CR>', { noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>gl', ':silent! Glog<CR>:bot copen<CR>', { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>gp', ':Ggrep<Space>', { noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>gm', ':Gmove<Space>', { noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>go', ':Git checkout<Space>', { noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>gps', ':Dispatch! git push<CR>', { noremap = true, silent = true})
@@ -295,12 +234,12 @@ vim.api.nvim_set_keymap('v', '<A-x>', '<C-x>', { noremap = true})
 
 -- n always goes forward
 -- TODO: Broken
--- vim.api.nvim_set_keymap('n', '<expr> n', '\'Nn\'[v:searchforward]', { noremap = true})
--- vim.api.nvim_set_keymap('x', '<expr> n', '\'Nn\'[v:searchforward]', { noremap = true})
--- vim.api.nvim_set_keymap('o', '<expr> n', '\'Nn\'[v:searchforward]', { noremap = true})
--- vim.api.nvim_set_keymap('n', '<expr> N', '\'nN\'[v:searchforward]', { noremap = true})
--- vim.api.nvim_set_keymap('x', '<expr> N', '\'nN\'[v:searchforward]', { noremap = true})
--- vim.api.nvim_set_keymap('o', '<expr> N', '\'nN\'[v:searchforward]', { noremap = true})
+-- vim.api.nvim_set_keymap('n', '<expr> n', "'Nn'[v:searchforward]", { noremap = true})
+-- vim.api.nvim_set_keymap('x', '<expr> n', "'Nn'[v:searchforward]", { noremap = true})
+-- vim.api.nvim_set_keymap('o', '<expr> n', "'Nn'[v:searchforward]", { noremap = true})
+-- vim.api.nvim_set_keymap('n', '<expr> N', "'nN'[v:searchforward]", { noremap = true})
+-- vim.api.nvim_set_keymap('x', '<expr> N', "'nN'[v:searchforward]", { noremap = true})
+-- vim.api.nvim_set_keymap('o', '<expr> N', "'nN'[v:searchforward]", { noremap = true})
 
 vim.cmd([[
   nnoremap <expr> n  'Nn'[v:searchforward]
@@ -411,7 +350,7 @@ local on_attach = function(_, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>e', '<cmd>lua vim.lsp.util.show_line_diagnostics()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)

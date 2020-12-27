@@ -144,7 +144,7 @@ vim.cmd [[
 vim.o.pastetoggle="<F3>"
 
 -- Toggle to disable mouse mode and indentlines for easier paste
-toggleMouse = function() 
+ToggleMouse = function()
   if vim.o.mouse == 'a' then
     vim.cmd([[IndentLinesDisable]])
     vim.wo.signcolumn='no'
@@ -160,7 +160,7 @@ toggleMouse = function()
   end
 end
 
-vim.api.nvim_set_keymap('n', '<F10>', ':lua toggleMouse()<cr>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<F10>', ':lua ToggleMouse()<cr>', { noremap = true })
 
 --Start interactive EasyAlign in visual mode (e.g. vipga)
 vim.api.nvim_set_keymap('x', 'ga', '<Plug>(EasyAlign)', {})
@@ -256,7 +256,7 @@ vim.g.loaded_python_provider = 0
 
 -- Highlight on yank
 vim.cmd([[
-au TextYankPost * silent! lua vim.highlight.on_yank()
+  au TextYankPost * silent! lua vim.highlight.on_yank()
 ]])
 
 -- Y yank until the end of line
@@ -279,7 +279,7 @@ vim.g.netrw_banner = 0
 vim.g.NetrwIsOpen = 0
 
 -- Lexplore toggle function
-toggleNetrw = function()
+ToggleNetrw = function()
   if vim.g.NetrwIsOpen == 1 then
     local i = vim.api.nvim_get_current_buf()
     while i >= 1 do
@@ -303,9 +303,9 @@ vim.api.nvim_set_keymap('n', '<leader>d', ':lua toggleNetrw()<cr><paste>', { nor
 -- Function to open preview of file under netrw
 -- TODO: replace with lua
 vim.cmd([[
-augroup Netrw
-  autocmd filetype netrw nmap <leader>; <cr>:wincmd W<cr>
-augroup end
+  augroup Netrw
+    autocmd filetype netrw nmap <leader>; <cr>:wincmd W<cr>
+  augroup end
 ]])
 
 -- Vim polyglot language specific settings
@@ -358,9 +358,34 @@ for _, lsp in ipairs(servers) do
   }
 end
 
+nvim_lsp.sumneko_lua.setup {
+    on_attach = on_attach,
+    settings = {
+        Lua = {
+            runtime = {
+                -- Tell the language server which version of Lua you're using (LuaJIT in the case of Neovim)
+                version = 'LuaJIT',
+                -- Setup your lua path
+                path = vim.split(package.path, ';'),
+            },
+            diagnostics = {
+                -- Get the language server to recognize the `vim` global
+                globals = {'vim'},
+            },
+            workspace = {
+                -- Make the server aware of Neovim runtime files
+                library = {
+                    [vim.fn.expand('$VIMRUNTIME/lua')] = true,
+                    [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
+                },
+            },
+        },
+    },
+}
+
 -- TODO: replace with lua
 vim.cmd([[
-command! Format  execute 'lua vim.lsp.buf.formatting()'
+  command! Format  execute 'lua vim.lsp.buf.formatting()'
 ]])
 
 -- Use <Tab> and <S-Tab> to navigate through popup menu
@@ -383,5 +408,5 @@ vim.g.completion_chain_complete_list = {
               comment = {},
               string = { { complete_items = { 'path' }} }}}
 
--- Formatters 
+-- Formatters
 vim.g.neoformat_enabled_python = { 'black' }

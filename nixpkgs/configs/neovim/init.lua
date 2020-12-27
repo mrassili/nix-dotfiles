@@ -53,7 +53,6 @@ end)
 
 --Allow filetype plugins and syntax highlighting
 vim.o.autoindent = true
--- TODO: replace with lua
 vim.cmd([[ filetype plugin indent on ]])
 vim.cmd([[ syntax on ]])
 
@@ -102,7 +101,6 @@ vim.wo.signcolumn="yes"
 
 --Set colorscheme
 vim.o.termguicolors = true
--- TODO: replace with lua
 vim.cmd([[colorscheme onedark]])
 vim.g.onedark_terminal_italics = 2
 
@@ -302,7 +300,6 @@ end
 vim.api.nvim_set_keymap('n', '<leader>d', ':lua toggleNetrw()<cr><paste>', { noremap = true, silent = true })
 
 -- Function to open preview of file under netrw
--- TODO: replace with lua
 vim.cmd([[
   augroup Netrw
     autocmd filetype netrw nmap <leader>; <cr>:wincmd W<cr>
@@ -384,7 +381,6 @@ nvim_lsp.sumneko_lua.setup {
     },
 }
 
--- TODO: replace with lua
 vim.cmd([[
   command! Format  execute 'lua vim.lsp.buf.formatting()'
 ]])

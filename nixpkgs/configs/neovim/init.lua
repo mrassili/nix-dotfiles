@@ -18,6 +18,8 @@ require('packer').startup(function()
   -- Packer can manage itself as an optional plugin
   use {'wbthomason/packer.nvim', opt = true}
 
+  -- use {'nvim-treesitter/nvim-treesitter'}
+
   use 'tpope/vim-vinegar'
   use 'tpope/vim-sensible'
   use 'tpope/vim-surround'
@@ -48,6 +50,7 @@ require('packer').startup(function()
   use 'neovim/nvim-lspconfig'
   use 'haorenW1025/completion-nvim'
   use 'sbdchd/neoformat'
+  use 'dstein64/vim-startuptime'
 
 end)
 
@@ -405,5 +408,23 @@ vim.g.completion_chain_complete_list = {
               comment = {},
               string = { { complete_items = { 'path' }} }}}
 
+-- require'nvim-treesitter.configs'.setup {
+--   ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+--   highlight = {
+--     enable = true,              -- false will disable the whole extension
+--   },
+--   incremental_selection = {
+--     enable = true,
+--     keymaps = {
+--       init_selection = "gnn",
+--       node_incremental = "grn",
+--       scope_incremental = "grc",
+--       node_decremental = "grm",
+--     },
+--   },
+--   indent = {
+--     enable = true
+--   }
+-- }
 -- Formatters
 vim.g.neoformat_enabled_python = { 'black' }

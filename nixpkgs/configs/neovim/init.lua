@@ -139,6 +139,7 @@ vim.api.nvim_set_keymap('v', '<A-k>', ':m \'<-2<CR>gv=gv', { noremap = true})
 vim.cmd [[
   augroup Terminal
     au TermOpen * tnoremap <buffer> <Esc> <c-\><c-n>
+    au TermOpen * set nonu
   augroup end
 ]]
 
@@ -181,11 +182,11 @@ vim.api.nvim_set_keymap('n', '<leader>l', [[<cmd>lua require('telescope.builtin'
 vim.api.nvim_set_keymap('n', '<leader>t', [[<cmd>lua require('telescope.builtin').tags()<cr>]], { noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>?', [[<cmd>lua require('telescope.builtin').oldfiles()<cr>]], { noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>s', [[<cmd>lua require('telescope.builtin').live_grep()<cr>]], { noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>o', [[<cmd>lua require('telescope.builtin').tags{ only_current_buffer = true }<cr>]], { noremap = true, silent = true})
 
 -- TODO: convert to telescope
 -- vim.api.nvim_set_keymap('n', '<leader>A', ':Windows<CR>', { noremap = true, silent = true})
 -- vim.api.nvim_set_keymap('n', '<leader>p', ':Projects<CR>', { noremap = true, silent = true})
--- vim.api.nvim_set_keymap('n', '<leader>o', ':BTags<CR>', { noremap = true, silent = true})
 
 -- Add git shortcuts
 vim.api.nvim_set_keymap('n', '<leader>gc', [[<cmd>lua require('telescope.builtin').git_commits()<cr>]], { noremap = true, silent = true})
@@ -214,7 +215,7 @@ vim.api.nvim_set_keymap('n', '<leader>T', ':tjump *', { noremap = true})
 -- --exclude=build
 -- --exclude=dist
 vim.g.gutentags_file_list_command = 'fd'
-vim.g.gutentags_ctags_extra_args = { '-n', '-u', '--python-kinds=-iv' }
+vim.g.gutentags_ctags_extra_args = { '--python-kinds=-iv' }
 
 -- speed up indent line
 -- default ''.

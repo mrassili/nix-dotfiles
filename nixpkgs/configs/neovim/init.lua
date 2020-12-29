@@ -37,6 +37,7 @@ require('packer').startup(function()
   use 'nvim-lua/popup.nvim'
   use 'nvim-lua/plenary.nvim'
   use 'nvim-telescope/telescope.nvim'
+  use 'nvim-telescope/telescope-fzf-writer.nvim'
   use 'justinmk/vim-dirvish'
   use 'joshdick/onedark.vim'
   use 'itchyny/lightline.vim'
@@ -47,7 +48,8 @@ require('packer').startup(function()
   use 'sheerun/vim-polyglot'
   use 'jpalardy/vim-slime'
   use 'airblade/vim-gitgutter'
-  use 'neovim/nvim-lspconfig'
+  -- use 'neovim/nvim-lspconfig'
+  use {'~/Repositories/neovim_development/nvim-lspconfig'}
   use 'haorenW1025/completion-nvim'
   use 'sbdchd/neoformat'
   use 'dstein64/vim-startuptime'
@@ -175,13 +177,27 @@ vim.api.nvim_set_keymap('n', 'ga', '<Plug>(EasyAlign)', {})
 vim.g.vimtex_compiler_progname = 'nvr'
 vim.g.tex_flavor = 'latex'
 
+require('telescope').setup {
+    extensions = {
+        fzf_writer = {
+            minimum_grep_characters = 2,
+            minimum_files_characters = 2,
+
+            -- Disabled by default.
+            -- Will probably slow down some aspects of the sorter, but can make color highlights.
+            -- I will work on this more later.
+            use_highlighter = true,
+        }
+    }
+}
+
 --Add leader shortcuts
-vim.api.nvim_set_keymap('n', '<leader>f', [[ <cmd>lua require('telescope.builtin').find_files()<cr>]], { noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>f', [[ <cmd>lua require('telescope').extensions.fzf_writer.files()<cr>]], { noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader><space>', [[<cmd>lua require('telescope.builtin').buffers()<cr>]], { noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>l', [[<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<cr>]], { noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>t', [[<cmd>lua require('telescope.builtin').tags()<cr>]], { noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>?', [[<cmd>lua require('telescope.builtin').oldfiles()<cr>]], { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>s', [[<cmd>lua require('telescope.builtin').live_grep()<cr>]], { noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>s', [[<cmd>lua require('telescope').extensions.fzf_writer.grep()<cr>]], { noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>o', [[<cmd>lua require('telescope.builtin').tags{ only_current_buffer = true }<cr>]], { noremap = true, silent = true})
 
 -- TODO: convert to telescope

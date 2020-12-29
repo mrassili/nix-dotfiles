@@ -43,7 +43,7 @@
   programs.direnv = {
     enable = true;
     enableZshIntegration = false;
-    enableNixDirenvIntegration = true;
+    # enableNixDirenvIntegration = true;
   };
 
   programs.zsh = {

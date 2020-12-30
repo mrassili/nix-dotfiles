@@ -34,10 +34,9 @@ require('packer').startup(function()
   use 'AndrewRadev/splitjoin.vim'
   use 'ludovicchabant/vim-gutentags'
   use 'junegunn/vim-easy-align'
-  use 'nvim-lua/popup.nvim'
-  use 'nvim-lua/plenary.nvim'
-  use 'nvim-telescope/telescope.nvim'
-  use 'nvim-telescope/telescope-fzf-writer.nvim'
+  use {'nvim-telescope/telescope.nvim',
+  requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
+  }
   use 'justinmk/vim-dirvish'
   use 'joshdick/onedark.vim'
   use 'itchyny/lightline.vim'
@@ -192,12 +191,12 @@ require('telescope').setup {
 }
 
 --Add leader shortcuts
-vim.api.nvim_set_keymap('n', '<leader>f', [[ <cmd>lua require('telescope').extensions.fzf_writer.files()<cr>]], { noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>f', [[<cmd>lua require('telescope.builtin').find_files()<cr>]], { noremap = true})
 vim.api.nvim_set_keymap('n', '<leader><space>', [[<cmd>lua require('telescope.builtin').buffers()<cr>]], { noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>l', [[<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<cr>]], { noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>t', [[<cmd>lua require('telescope.builtin').tags()<cr>]], { noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>?', [[<cmd>lua require('telescope.builtin').oldfiles()<cr>]], { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>s', [[<cmd>lua require('telescope').extensions.fzf_writer.grep()<cr>]], { noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>s', [[<cmd>lua require('telescope.builtin').live_grep()<cr>]], { noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>o', [[<cmd>lua require('telescope.builtin').tags{ only_current_buffer = true }<cr>]], { noremap = true, silent = true})
 
 -- TODO: convert to telescope
@@ -330,10 +329,10 @@ vim.cmd([[
 vim.g.python_highlight_space_errors = 0
 
 -- LSP settings
--- log file location: /Users/michael/.local/share/nvim/vim-lsp.log
+-- log file location: /Users/michael/.local/share/nvim/lsp.log
 -- Add nvim-lspconfig plugin
 local nvim_lsp = require('lspconfig')
--- vim.lsp.set_log_level("debug")
+vim.lsp.set_log_level("debug")
 local on_attach = function(_, bufnr)
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
   vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
@@ -369,14 +368,38 @@ local on_attach = function(_, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
 end
 
-local servers = {'gopls', 'rust_analyzer', 'tsserver', 'jsonls', 'html', 'hls', 'rnix', 'ocamllsp', 'pyright'}
+local servers = {'gopls', 'rust_analyzer', 'vuels', 'jsonls', 'html', 'hls', 'rnix', 'ocamllsp'} -- 'pyright'}
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
   }
 end
+nvim_lsp.texlab.setup{
+  on_attach = on_attach;
+  settings = {
+    latex = {
+      rootDirectory = ".",
+      build = {
+        args = { "-pdf", "-interaction=nonstopmode", "-synctex=1", "-pvc" },
+        forwardSearchAfter = true,
+        onSave = true
+      },
+      forwardSearch = {
+        executable = "zathura",
+        args = {"--synctex-forward", "%l:1:%f", "%p"},
+        onSave = true
+      }
+    }
+  }
+}
 
+nvim_lsp.pyls.setup {
+  cmd = {"pyls"};
+  cmd_env = {VIRTUAL_ENV = "/Users/michael/.virtualenvs/test1"};
+  on_attach = on_attach;
+}
 nvim_lsp.sumneko_lua.setup {
+    cmd = {"lua-language-server"};
     on_attach = on_attach,
     settings = {
         Lua = {

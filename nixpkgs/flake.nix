@@ -4,7 +4,7 @@
   inputs.nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
   # inputs.nixos-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
-  inputs.neovim-nightly-overlay.url = "github:mjlbach/neovim-nightly-overlay";
+  inputs.neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
 
   inputs.emacs-overlay = {
     type = "github";
@@ -14,7 +14,7 @@
   };
 
   inputs.home-manager = {
-    url = "github:rycee/home-manager";
+    url = "github:nix-community/home-manager";
     inputs.nixpkgs.follows = "nixpkgs";
   };
 

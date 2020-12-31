@@ -368,7 +368,7 @@ local on_attach = function(_, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
 end
 
-local servers = {'gopls', 'rust_analyzer', 'vuels', 'jsonls', 'html', 'hls', 'rnix', 'ocamllsp'} -- 'pyright'}
+local servers = {'gopls', 'rust_analyzer', 'vuels', 'jsonls', 'html', 'hls', 'rnix', 'ocamllsp', 'pyright'}
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
@@ -393,11 +393,6 @@ nvim_lsp.texlab.setup{
   }
 }
 
-nvim_lsp.pyls.setup {
-  cmd = {"pyls"};
-  cmd_env = {VIRTUAL_ENV = "/Users/michael/.virtualenvs/test1"};
-  on_attach = on_attach;
-}
 nvim_lsp.sumneko_lua.setup {
     cmd = {"lua-language-server"};
     on_attach = on_attach,

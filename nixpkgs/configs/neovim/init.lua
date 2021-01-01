@@ -49,6 +49,7 @@ require('packer').startup(function()
   use 'airblade/vim-gitgutter'
   -- use 'neovim/nvim-lspconfig'
   use {'~/Repositories/neovim_development/nvim-lspconfig'}
+  use 'bfredl/nvim-luadev'
   use 'haorenW1025/completion-nvim'
   use 'sbdchd/neoformat'
   use 'dstein64/vim-startuptime'
@@ -322,6 +323,15 @@ vim.api.nvim_set_keymap('n', '<leader>d', ':lua toggleNetrw()<cr><paste>', { nor
 vim.cmd([[
   augroup Netrw
     autocmd filetype netrw nmap <leader>; <cr>:wincmd W<cr>
+  augroup end
+]])
+
+vim.cmd([[
+  augroup nvim-luadev
+    autocmd BufEnter \[nvim-lua\] nmap <buffer> <C-c><C-c> <Plug>(Luadev-RunLine)
+    autocmd BufEnter \[nvim-lua\] vmap <buffer> <C-c><C-c> <Plug>(Luadev-Run)
+    autocmd BufEnter \[nvim-lua\] nmap <buffer> <C-c><C-k> <Plug>(Luadev-RunWord)
+    autocmd BufEnter \[nvim-lua\] set omnifunc=<Plug>(Luadev-Complete)
   augroup end
 ]])
 

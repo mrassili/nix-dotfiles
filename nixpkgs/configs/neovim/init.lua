@@ -393,30 +393,36 @@ nvim_lsp.texlab.setup{
   }
 }
 
+nvim_lsp.elixirls.setup{
+  cmd = { "/Users/michael/.local/bin/elixir-ls/language_server.sh" };
+  on_attach = on_attach;
+}
+
+local sumneko_root_path = "/Users/michael/.local/bin/sumneko_lua"
 nvim_lsp.sumneko_lua.setup {
-    cmd = {"lua-language-server"};
-    on_attach = on_attach,
-    settings = {
-        Lua = {
-            runtime = {
-                -- Tell the language server which version of Lua you're using (LuaJIT in the case of Neovim)
-                version = 'LuaJIT',
-                -- Setup your lua path
-                path = vim.split(package.path, ';'),
-            },
-            diagnostics = {
-                -- Get the language server to recognize the `vim` global
-                globals = {'vim'},
-            },
-            workspace = {
-                -- Make the server aware of Neovim runtime files
-                library = {
-                    [vim.fn.expand('$VIMRUNTIME/lua')] = true,
-                    [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
-                },
-            },
-        },
-    },
+  cmd = { sumneko_root_path .. "/bin/macOS/lua-language-server", "-E", sumneko_root_path .. "/main.lua"};
+  on_attach = on_attach,
+  settings = {
+      Lua = {
+          runtime = {
+              -- Tell the language server which version of Lua you're using (LuaJIT in the case of Neovim)
+              version = 'LuaJIT',
+              -- Setup your lua path
+              path = vim.split(package.path, ';'),
+          },
+          diagnostics = {
+              -- Get the language server to recognize the `vim` global
+              globals = {'vim'},
+          },
+          workspace = {
+              -- Make the server aware of Neovim runtime files
+              library = {
+                  [vim.fn.expand('$VIMRUNTIME/lua')] = true,
+                  [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
+              },
+          },
+      },
+  },
 }
 
 vim.cmd([[

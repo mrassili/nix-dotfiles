@@ -9,8 +9,7 @@
     gnome3.geary
     graphviz
     gwenview
-    latte-dock
-    libreoffice-qt
+    # libreoffice-qt
     (nerdfonts.override { fonts = [ "Meslo" ]; })
     nextcloud-client
     okular

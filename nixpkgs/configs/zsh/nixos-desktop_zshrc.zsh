@@ -3,12 +3,12 @@ eval $(keychain -q --eval)
 
 home-upgrade () {
   nix flake update $HOME/.config/nixpkgs --recreate-lock-file
-  nix build "$HOME/.config/nixpkgs#nixos" -o "$HOME/.config/nixpkgs/result"
+  nix build "$HOME/.config/nixpkgs#nixos-desktop" -o "$HOME/.config/nixpkgs/result"
   (( $+commands[doom] )) && doom -y upgrade
 }
 
 home-switch () {
-  nix build "$HOME/.config/nixpkgs#nixos" -o "$HOME/.config/nixpkgs/result"
+  nix build "$HOME/.config/nixpkgs#nixos-desktop" -o "$HOME/.config/nixpkgs/result"
 }
 
 system-upgrade () {

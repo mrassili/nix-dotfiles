@@ -87,6 +87,7 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     git
+    latte-dock
     kdeApplications.knotes
     os-prober
     plasma-browser-integration
@@ -203,6 +204,6 @@
 
   nixpkgs.config.allowUnfree = true;
 
-  system.stateVersion = "20.09"; # Did you read the comment?
+  system.stateVersion = "21.03"; # Did you read the comment?
 
 }

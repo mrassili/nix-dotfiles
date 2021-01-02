@@ -106,16 +106,21 @@ vim.wo.signcolumn="yes"
 
 --Set colorscheme (order is important here)
 vim.o.termguicolors = true
--- vim.cmd [[
---   autocmd ColorScheme * call onedark#extend_highlight("NonText", { "fg": { "gui": "#C678DD" } })
--- ]]
+-- vim.cmd([[
+--   function HighlightWhitespace ()
+--     autocmd ColorScheme * call onedark#set_highlight("ExtraWhitespace", { "fg": { "gui": "#C678DD", "cterm": "#C678DD", "cterm16" : "#C678DD" } } )
+--     match ExtraWhitespace /\s\+$/
+--     autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+--     autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+--     autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+--     autocmd BufWinLeave * call clearmatches()
+--   endfunction
+
+--   v:lua.HighlightWhitespace()     
+-- ]])
 vim.g.onedark_terminal_italics = 2
 vim.cmd([[colorscheme onedark]])
-
---Show trailing whitspace
--- vim.o.list = true
--- vim.o.listchars="tab:> ,trail:#,nbsp:+"
-
+--
 --Set statusbar
 vim.g.lightline = { colorscheme = 'onedark';
        active = {

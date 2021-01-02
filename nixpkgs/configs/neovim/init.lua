@@ -362,7 +362,7 @@ local on_attach = function(_, bufnr)
       update_in_insert = false,
     }
   )
-  require'completion'.on_attach()
+  -- require'completion'.on_attach()
 
   -- Mappings.
   local opts = { noremap=true, silent=true }
@@ -439,6 +439,16 @@ nvim_lsp.sumneko_lua.setup {
       },
   },
 }
+
+FormatRange = function()
+  local start_pos = vim.api.nvim_buf_get_mark(0, '<')
+  local end_pos = vim.api.nvim_buf_get_mark(0, '>')
+  vim.lsp.buf.range_formatting({}, start_pos, end_pos)
+end
+
+vim.cmd([[
+  command! -range FormatRange  execute 'lua FormatRange()'
+]])
 
 vim.cmd([[
   command! Format  execute 'lua vim.lsp.buf.formatting()'

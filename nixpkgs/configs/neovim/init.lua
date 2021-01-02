@@ -327,11 +327,16 @@ vim.cmd([[
 ]])
 
 vim.cmd([[
+  function SetLuaDevOptions()
+    nmap <buffer> <C-c><C-c> <Plug>(Luadev-RunLine)
+    vmap <buffer> <C-c><C-c> <Plug>(Luadev-Run)
+    nmap <buffer> <C-c><C-k> <Plug>(Luadev-RunWord)
+    map  <buffer> <C-x><C-p> <Plug>(Luadev-Complete)
+    set filetype=lua
+  endfunction
+
   augroup nvim-luadev
-    autocmd BufEnter \[nvim-lua\] nmap <buffer> <C-c><C-c> <Plug>(Luadev-RunLine)
-    autocmd BufEnter \[nvim-lua\] vmap <buffer> <C-c><C-c> <Plug>(Luadev-Run)
-    autocmd BufEnter \[nvim-lua\] nmap <buffer> <C-c><C-k> <Plug>(Luadev-RunWord)
-    autocmd BufEnter \[nvim-lua\] set omnifunc=<Plug>(Luadev-Complete)
+    autocmd BufEnter \[nvim-lua\] call SetLuaDevOptions()
   augroup end
 ]])
 

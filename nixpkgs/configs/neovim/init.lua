@@ -104,11 +104,17 @@ vim.o.smartcase = true
 vim.o.updatetime = 250
 vim.wo.signcolumn="yes"
 
---Set colorscheme
+--Set colorscheme (order is important here)
 vim.o.termguicolors = true
-vim.cmd([[colorscheme onedark]])
--- vim.cmd([[colorscheme slate]])
+-- vim.cmd [[
+--   autocmd ColorScheme * call onedark#extend_highlight("NonText", { "fg": { "gui": "#C678DD" } })
+-- ]]
 vim.g.onedark_terminal_italics = 2
+vim.cmd([[colorscheme onedark]])
+
+--Show trailing whitspace
+-- vim.o.list = true
+-- vim.o.listchars="tab:> ,trail:#,nbsp:+"
 
 --Set statusbar
 vim.g.lightline = { colorscheme = 'onedark';
@@ -327,7 +333,7 @@ vim.cmd([[
   augroup end
 ]])
 
-vim.cmd([[ autocmd ColorScheme * :lua require('vim.lsp.diagnostic')._define_default_signs_and_highlights() ]]) 
+-- vim.cmd([[ autocmd ColorScheme * :lua require('vim.lsp.diagnostic')._define_default_signs_and_highlights() ]]) 
 
 vim.cmd([[
   function SetLuaDevOptions()

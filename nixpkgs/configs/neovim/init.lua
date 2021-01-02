@@ -107,6 +107,7 @@ vim.wo.signcolumn="yes"
 --Set colorscheme
 vim.o.termguicolors = true
 vim.cmd([[colorscheme onedark]])
+-- vim.cmd([[colorscheme slate]])
 vim.g.onedark_terminal_italics = 2
 
 --Set statusbar
@@ -326,6 +327,8 @@ vim.cmd([[
   augroup end
 ]])
 
+vim.cmd([[ autocmd ColorScheme * :lua require('vim.lsp.diagnostic')._define_default_signs_and_highlights() ]]) 
+
 vim.cmd([[
   function SetLuaDevOptions()
     nmap <buffer> <C-c><C-c> <Plug>(Luadev-RunLine)
@@ -383,7 +386,7 @@ local on_attach = function(_, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
 end
 
-local servers = {'gopls', 'rust_analyzer', 'vuels', 'jsonls', 'html', 'hls', 'rnix', 'ocamllsp', 'pyright'}
+local servers = {'gopls', 'rust_analyzer', 'vuels', 'jsonls', 'html', 'hls', 'rnix', 'ocamllsp', 'pyright', 'tsserver'}
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,

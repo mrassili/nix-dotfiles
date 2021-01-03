@@ -31,6 +31,7 @@ require('packer').startup(function()
   use 'tpope/vim-eunuch'
   use 'tpope/vim-unimpaired'
   use 'tpope/vim-commentary'
+  use 'scalameta/nvim-metals'
   use 'AndrewRadev/splitjoin.vim'
   use 'ludovicchabant/vim-gutentags'
   use 'junegunn/vim-easy-align'
@@ -44,7 +45,9 @@ require('packer').startup(function()
   use 'lervag/vimtex'
   use 'mhinz/neovim-remote'
   use 'Yggdroot/indentLine'
-  use 'sheerun/vim-polyglot'
+  use {'sheerun/vim-polyglot',
+    tag="v4.17.0"
+  }
   use 'jpalardy/vim-slime'
   use 'airblade/vim-gitgutter'
   -- use 'neovim/nvim-lspconfig'
@@ -373,8 +376,7 @@ local on_attach = function(_, bufnr)
 
       -- delay update diagnostics
       update_in_insert = false,
-      -- display_diagnostic_autocmds =  {}; -- { "InsertLeave", "CursorHoldI" },
-      display_diagnostic_autocmds = { "InsertLeave" },
+      -- display_diagnostic_autocmds = { "InsertLeave" },
 
     }
   )
@@ -403,7 +405,12 @@ local servers = {'gopls', 'rust_analyzer', 'vuels', 'jsonls', 'html', 'hls', 'rn
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
-  }
+    handlers = {
+      ['$/openWebsite'] = function(_,_,params)
+        io.popen(string.format("open %s", params[1]))
+      end
+    },
+}
 end
 nvim_lsp.texlab.setup{
   on_attach = on_attach;
@@ -510,3 +517,6 @@ vim.g.completion_chain_complete_list = {
 -- }
 -- Formatters
 vim.g.neoformat_enabled_python = { 'black' }
+
+
+vim.cmd([[ au FileType scala lua require('metals').initialize_or_attach({}) ]])

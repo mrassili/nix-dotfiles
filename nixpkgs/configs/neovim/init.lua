@@ -189,20 +189,19 @@ vim.api.nvim_set_keymap('n', 'ga', '<Plug>(EasyAlign)', {})
 vim.g.vimtex_compiler_progname = 'nvr'
 vim.g.tex_flavor = 'latex'
 
+--Use local .nvimrc (broken)
+-- vim.o.exrc = true
+
 require('telescope').setup {
-    extensions = {
-        fzf_writer = {
-            minimum_grep_characters = 2,
-            minimum_files_characters = 2,
-
-            -- Disabled by default.
-            -- Will probably slow down some aspects of the sorter, but can make color highlights.
-            -- I will work on this more later.
-            use_highlighter = true,
-        }
-    }
+  defaults = {
+    mappings = {
+      i = {
+        ["<C-u>"] = false,
+        ["<C-d>"] = false,
+      },
+    },
+  }
 }
-
 --Add leader shortcuts
 vim.api.nvim_set_keymap('n', '<leader>f', [[<cmd>lua require('telescope.builtin').find_files()<cr>]], { noremap = true})
 vim.api.nvim_set_keymap('n', '<leader><space>', [[<cmd>lua require('telescope.builtin').buffers()<cr>]], { noremap = true, silent = true})
@@ -374,9 +373,12 @@ local on_attach = function(_, bufnr)
 
       -- delay update diagnostics
       update_in_insert = false,
+      -- display_diagnostic_autocmds =  {}; -- { "InsertLeave", "CursorHoldI" },
+      display_diagnostic_autocmds = { "InsertLeave" },
+
     }
   )
-  -- require'completion'.on_attach()
+  require'completion'.on_attach()
 
   -- Mappings.
   local opts = { noremap=true, silent=true }
@@ -397,7 +399,7 @@ local on_attach = function(_, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
 end
 
-local servers = {'gopls', 'rust_analyzer', 'vuels', 'jsonls', 'html', 'hls', 'rnix', 'ocamllsp', 'pyright', 'tsserver'}
+local servers = {'gopls', 'rust_analyzer', 'vuels', 'jsonls', 'html', 'hls', 'rnix', 'ocamllsp', 'tsserver', 'pyright' }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,

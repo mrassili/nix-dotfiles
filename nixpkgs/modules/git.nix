@@ -7,4 +7,8 @@
     gitAndTools.git-crypt
     pre-commit
   ];
+  home.file.".config/git/ignore".text = ''
+    tags
+  '';
+
 }

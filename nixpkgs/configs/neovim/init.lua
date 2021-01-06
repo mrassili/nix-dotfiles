@@ -193,7 +193,7 @@ vim.g.vimtex_compiler_progname = 'nvr'
 vim.g.tex_flavor = 'latex'
 
 --Use local .nvimrc (broken)
--- vim.o.exrc = true
+vim.o.exrc = true
 
 require('telescope').setup {
   defaults = {
@@ -401,7 +401,70 @@ local on_attach = function(_, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
 end
 
-local servers = {'gopls', 'rust_analyzer', 'vuels', 'jsonls', 'html', 'hls', 'rnix', 'ocamllsp', 'tsserver', 'pyright' }
+-- local servers = {'gopls', 'julials', 'rust_analyzer', 'vuels', 'html', 'hls', 'rnix', 'ocamllsp', 'pyright' }
+local servers = {
+  "als",
+  "angularls",
+  "bashls",
+  "ccls",
+  "clangd",
+  "clojure_lsp",
+  "cmake",
+  "codeqlls",
+  "cssls",
+  "dartls",
+  -- "diagnosticls",
+  "dockerls",
+  -- "efm",
+  -- "elixirls",
+  "elmls",
+  "flow",
+  "fortls",
+  "gdscript",
+  "ghcide",
+  "gopls",
+  "groovyls",
+  "hie",
+  "hls",
+  "html",
+  "intelephense",
+  "jdtls",
+  "jedi_language_server",
+  --"jsonls",
+  "julials",
+  "kotlin_language_server",
+  "leanls",
+  "metals",
+  "nimls",
+  "ocamlls",
+  -- "ocamllsp",
+  "omnisharp",
+  "perlls",
+  "purescriptls",
+  -- "pyls",
+  -- "pyls_ms",
+  "pyright",
+  "r_language_server",
+  -- "rls",
+  "rnix",
+  "rome",
+  "rust_analyzer",
+  "scry",
+  "solargraph",
+  "sorbet",
+  "sourcekit",
+  "sqlls",
+  -- "sumneko_lua",
+  "svelte",
+  "terraformls",
+  -- "texlab",
+  "tsserver",
+  "vimls",
+  "vuels",
+  "yamlls",
+  "zls",
+}
+
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
@@ -412,6 +475,7 @@ for _, lsp in ipairs(servers) do
     },
 }
 end
+
 nvim_lsp.texlab.setup{
   on_attach = on_attach;
   settings = {
@@ -436,32 +500,52 @@ nvim_lsp.elixirls.setup{
   on_attach = on_attach;
 }
 
-local sumneko_root_path = "/Users/michael/.local/bin/sumneko_lua"
-nvim_lsp.sumneko_lua.setup {
-  cmd = { sumneko_root_path .. "/bin/macOS/lua-language-server", "-E", sumneko_root_path .. "/main.lua"};
-  on_attach = on_attach,
-  settings = {
-      Lua = {
-          runtime = {
-              -- Tell the language server which version of Lua you're using (LuaJIT in the case of Neovim)
-              version = 'LuaJIT',
-              -- Setup your lua path
-              path = vim.split(package.path, ';'),
-          },
-          diagnostics = {
-              -- Get the language server to recognize the `vim` global
-              globals = {'vim'},
-          },
-          workspace = {
-              -- Make the server aware of Neovim runtime files
-              library = {
-                  [vim.fn.expand('$VIMRUNTIME/lua')] = true,
-                  [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
-              },
-          },
-      },
-  },
+require'lspconfig'.jsonls.setup {
+  commands = {
+    Format = {
+      function()
+        vim.lsp.buf.range_formatting({},{0,0},{vim.fn.line("$"),0})
+      end
+    }
+  }
 }
+-- local system_name
+-- if vim.fn.has("mac") == 1 then
+--   system_name = "macOS"
+-- elseif vim.fn.has("unix") == 1 then
+--   system_name = "Linux"
+-- elseif vim.fn.has('win32') == 1 then
+--   system_name = "Windows"
+-- else
+--   print("Unsupported system for sumneko")
+-- end
+
+-- local sumneko_root_path = "/Users/michael/.local/bin/sumneko_lua"
+-- nvim_lsp.sumneko_lua.setup {
+--   cmd = { sumneko_root_path .. "/bin/"..system_name.."/lua-language-server", "-E", sumneko_root_path .. "/main.lua"};
+--   on_attach = on_attach,
+--   settings = {
+--       Lua = {
+--           runtime = {
+--               -- Tell the language server which version of Lua you're using (LuaJIT in the case of Neovim)
+--               version = 'LuaJIT',
+--               -- Setup your lua path
+--               path = vim.split(package.path, ';'),
+--           },
+--           diagnostics = {
+--               -- Get the language server to recognize the `vim` global
+--               globals = {'vim'},
+--           },
+--           workspace = {
+--               -- Make the server aware of Neovim runtime files
+--               library = {
+--                   [vim.fn.expand('$VIMRUNTIME/lua')] = true,
+--                   [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
+--               },
+--           },
+--       },
+--   },
+-- }
 
 FormatRange = function()
   local start_pos = vim.api.nvim_buf_get_mark(0, '<')
@@ -515,8 +599,7 @@ vim.g.completion_chain_complete_list = {
 --     enable = true
 --   }
 -- }
+
 -- Formatters
+--
 vim.g.neoformat_enabled_python = { 'black' }
-
-
-vim.cmd([[ au FileType scala lua require('metals').initialize_or_attach({}) ]])

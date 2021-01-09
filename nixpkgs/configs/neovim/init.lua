@@ -5,8 +5,7 @@ local fn = vim.fn
 local install_path = fn.stdpath('data')..'/site/pack/packer/opt/packer.nvim'
 
 if fn.empty(fn.glob(install_path)) > 0 then
-	execute('!git clone https://github.com/wbthomason/packer.nvim '..install_path)
-    execute 'packadd packer.nvim'
+  execute('!git clone https://github.com/wbthomason/packer.nvim '..install_path)
 end
 
 -- Only required if you have packer in your `opt` pack
@@ -31,6 +30,10 @@ require('packer').startup(function()
   use 'tpope/vim-eunuch'
   use 'tpope/vim-unimpaired'
   use 'tpope/vim-commentary'
+  use {
+    'glacambre/firenvim',
+    run = ":call firenvim#install(0)",
+  }
   use 'scalameta/nvim-metals'
   use 'AndrewRadev/splitjoin.vim'
   use 'ludovicchabant/vim-gutentags'
@@ -41,6 +44,14 @@ require('packer').startup(function()
   use 'justinmk/vim-dirvish'
   use 'joshdick/onedark.vim'
   use 'itchyny/lightline.vim'
+  -- use {
+  -- 'glepnir/galaxyline.nvim',
+  --   branch = 'main',
+  --   -- your statusline
+  --   -- config = function() require'my_statusline' end,
+  --   -- some optional icons
+  --   requires = {'kyazdani42/nvim-web-devicons', opt = true}
+-- }
   use 'christoomey/vim-tmux-navigator'
   use 'lervag/vimtex'
   use 'mhinz/neovim-remote'
@@ -61,8 +72,6 @@ end)
 
 --Allow filetype plugins and syntax highlighting
 vim.o.autoindent = true
-vim.cmd([[ filetype plugin indent on ]])
-vim.cmd([[ syntax on ]])
 
 --Expand tab to spaces
 vim.o.expandtab = true
@@ -76,10 +85,6 @@ vim.o.backspace = "indent,eol,start"
 --Set tab options for vim
 vim.o.tabstop = 8
 vim.o.softtabstop = 4
-
---Set highlight on search
-vim.o.hlsearch = false
-vim.o.incsearch = true
 
 --Make line numbers default
 vim.wo.number = true
@@ -107,10 +112,10 @@ vim.o.smartcase = true
 vim.o.updatetime = 250
 vim.wo.signcolumn="yes"
 
---Set colorscheme (order is important here)
-vim.o.termguicolors = true
+--Set HL group for whitespace
 -- vim.cmd([[
 --   function HighlightWhitespace ()
+--     autocmd!
 --     autocmd ColorScheme * call onedark#set_highlight("ExtraWhitespace", { "fg": { "gui": "#C678DD", "cterm": "#C678DD", "cterm16" : "#C678DD" } } )
 --     match ExtraWhitespace /\s\+$/
 --     autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
@@ -119,11 +124,14 @@ vim.o.termguicolors = true
 --     autocmd BufWinLeave * call clearmatches()
 --   endfunction
 
---   v:lua.HighlightWhitespace()     
+--   v:lua.HighlightWhitespace()
 -- ]])
-vim.g.onedark_terminal_italics = 2
-vim.cmd([[colorscheme onedark]])
 --
+--Set colorscheme (order is important here)
+vim.o.termguicolors = true
+vim.g.onedark_terminal_italics = 2
+vim.cmd[[colorscheme onedark]]
+
 --Set statusbar
 vim.g.lightline = { colorscheme = 'onedark';
        active = {
@@ -134,6 +142,9 @@ vim.g.lightline = { colorscheme = 'onedark';
          gitbranch = 'fugitive#head',
        };
 }
+
+--Fire, walk with me
+vim.g.firenvim_config = { localSettings = { ['.*'] = { takeover = 'never' } } }
 
 --Remap space as leader key
 vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { noremap = true})
@@ -153,8 +164,9 @@ vim.api.nvim_set_keymap('v', '<A-j>', ':m \'>+1<CR>gv=gv', { noremap = true})
 vim.api.nvim_set_keymap('v', '<A-k>', ':m \'<-2<CR>gv=gv', { noremap = true})
 
 --Remap escape to leave terminal mode
-vim.cmd [[
+require('lspconfig').util.nvim_multiline_command [[
   augroup Terminal
+    autocmd!
     au TermOpen * tnoremap <buffer> <Esc> <c-\><c-n>
     au TermOpen * set nonu
   augroup end
@@ -166,13 +178,13 @@ vim.o.pastetoggle="<F3>"
 -- Toggle to disable mouse mode and indentlines for easier paste
 ToggleMouse = function()
   if vim.o.mouse == 'a' then
-    vim.cmd([[IndentLinesDisable]])
+    vim.cmd[[IndentLinesDisable]]
     vim.wo.signcolumn='no'
     vim.o.mouse = 'v'
     vim.wo.number = false
     print("Mouse disabled")
   else
-    vim.cmd([[IndentLinesEnable]])
+    vim.cmd[[IndentLinesEnable]]
     vim.wo.signcolumn='yes'
     vim.o.mouse = 'a'
     vim.wo.number = true
@@ -296,7 +308,7 @@ vim.cmd([[
 vim.api.nvim_set_keymap('n', 'Y', 'y$', { noremap = true})
 
 -- Clear white space on empty lines and end of line
--- vim.api.nvim_set_keymap('n', '<F6>', ':let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>', { noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<F6>', [[:let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>]], { noremap = true, silent = true})
 
 -- Nerdtree like sidepanel
 -- absolute width of netrw window
@@ -331,30 +343,30 @@ ToggleNetrw = function()
   end
 end
 
-vim.api.nvim_set_keymap('n', '<leader>d', ':lua toggleNetrw()<cr><paste>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>d', ':lua ToggleNetrw()<cr><paste>', { noremap = true, silent = true })
 
 -- Function to open preview of file under netrw
-vim.cmd([[
+require('lspconfig').util.nvim_multiline_command[[
   augroup Netrw
+    autocmd!
     autocmd filetype netrw nmap <leader>; <cr>:wincmd W<cr>
   augroup end
-]])
+]]
 
--- vim.cmd([[ autocmd ColorScheme * :lua require('vim.lsp.diagnostic')._define_default_signs_and_highlights() ]]) 
+-- vim.cmd([[ autocmd ColorScheme * :lua require('vim.lsp.diagnostic')._define_default_signs_and_highlights() ]])
 
-vim.cmd([[
-  function SetLuaDevOptions()
-    nmap <buffer> <C-c><C-c> <Plug>(Luadev-RunLine)
-    vmap <buffer> <C-c><C-c> <Plug>(Luadev-Run)
-    nmap <buffer> <C-c><C-k> <Plug>(Luadev-RunWord)
-    map  <buffer> <C-x><C-p> <Plug>(Luadev-Complete)
-    set filetype=lua
-  endfunction
-
+vim.cmd[[
   augroup nvim-luadev
+    function SetLuaDevOptions()
+      nmap <buffer> <C-c><C-c> <Plug>(Luadev-RunLine)
+      vmap <buffer> <C-c><C-c> <Plug>(Luadev-Run)
+      nmap <buffer> <C-c><C-k> <Plug>(Luadev-RunWord)
+      map  <buffer> <C-x><C-p> <Plug>(Luadev-Complete)
+      set filetype=lua
+    endfunction
     autocmd BufEnter \[nvim-lua\] call SetLuaDevOptions()
   augroup end
-]])
+]]
 
 -- Vim polyglot language specific settings
 vim.g.python_highlight_space_errors = 0
@@ -364,7 +376,7 @@ vim.g.python_highlight_space_errors = 0
 -- Add nvim-lspconfig plugin
 local nvim_lsp = require('lspconfig')
 vim.lsp.set_log_level("debug")
-local on_attach = function(_, bufnr)
+local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
   vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     vim.lsp.diagnostic.on_publish_diagnostics, {
@@ -401,69 +413,7 @@ local on_attach = function(_, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
 end
 
--- local servers = {'gopls', 'julials', 'rust_analyzer', 'vuels', 'html', 'hls', 'rnix', 'ocamllsp', 'pyright' }
-local servers = {
-  "als",
-  "angularls",
-  "bashls",
-  "ccls",
-  "clangd",
-  "clojure_lsp",
-  "cmake",
-  "codeqlls",
-  "cssls",
-  "dartls",
-  -- "diagnosticls",
-  "dockerls",
-  -- "efm",
-  -- "elixirls",
-  "elmls",
-  "flow",
-  "fortls",
-  "gdscript",
-  "ghcide",
-  "gopls",
-  "groovyls",
-  "hie",
-  "hls",
-  "html",
-  "intelephense",
-  "jdtls",
-  "jedi_language_server",
-  --"jsonls",
-  "julials",
-  "kotlin_language_server",
-  "leanls",
-  "metals",
-  "nimls",
-  "ocamlls",
-  -- "ocamllsp",
-  "omnisharp",
-  "perlls",
-  "purescriptls",
-  -- "pyls",
-  -- "pyls_ms",
-  "pyright",
-  "r_language_server",
-  -- "rls",
-  "rnix",
-  "rome",
-  "rust_analyzer",
-  "scry",
-  "solargraph",
-  "sorbet",
-  "sourcekit",
-  "sqlls",
-  -- "sumneko_lua",
-  "svelte",
-  "terraformls",
-  -- "texlab",
-  "tsserver",
-  "vimls",
-  "vuels",
-  "yamlls",
-  "zls",
-}
+local servers = {'gopls', 'julials', 'rust_analyzer', 'vuels', 'html', 'hls', 'rnix', 'ocamllsp', 'dartls', 'tsserver', 'solargraph', 'pyright'}
 
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
@@ -495,12 +445,7 @@ nvim_lsp.texlab.setup{
   }
 }
 
-nvim_lsp.elixirls.setup{
-  cmd = { "/Users/michael/.local/bin/elixir-ls/language_server.sh" };
-  on_attach = on_attach;
-}
-
-require'lspconfig'.jsonls.setup {
+nvim_lsp.jsonls.setup {
   commands = {
     Format = {
       function()
@@ -509,43 +454,44 @@ require'lspconfig'.jsonls.setup {
     }
   }
 }
--- local system_name
--- if vim.fn.has("mac") == 1 then
---   system_name = "macOS"
--- elseif vim.fn.has("unix") == 1 then
---   system_name = "Linux"
--- elseif vim.fn.has('win32') == 1 then
---   system_name = "Windows"
--- else
---   print("Unsupported system for sumneko")
--- end
 
--- local sumneko_root_path = "/Users/michael/.local/bin/sumneko_lua"
--- nvim_lsp.sumneko_lua.setup {
---   cmd = { sumneko_root_path .. "/bin/"..system_name.."/lua-language-server", "-E", sumneko_root_path .. "/main.lua"};
---   on_attach = on_attach,
---   settings = {
---       Lua = {
---           runtime = {
---               -- Tell the language server which version of Lua you're using (LuaJIT in the case of Neovim)
---               version = 'LuaJIT',
---               -- Setup your lua path
---               path = vim.split(package.path, ';'),
---           },
---           diagnostics = {
---               -- Get the language server to recognize the `vim` global
---               globals = {'vim'},
---           },
---           workspace = {
---               -- Make the server aware of Neovim runtime files
---               library = {
---                   [vim.fn.expand('$VIMRUNTIME/lua')] = true,
---                   [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
---               },
---           },
---       },
---   },
--- }
+local system_name
+if vim.fn.has("mac") == 1 then
+  system_name = "macOS"
+elseif vim.fn.has("unix") == 1 then
+  system_name = "Linux"
+elseif vim.fn.has('win32') == 1 then
+  system_name = "Windows"
+else
+  print("Unsupported system for sumneko")
+end
+
+local sumneko_root_path = vim.fn.getenv("HOME").."/.local/bin/sumneko_lua"
+nvim_lsp.sumneko_lua.setup {
+  cmd = { sumneko_root_path .. "/bin/"..system_name.."/lua-language-server", "-E", sumneko_root_path .. "/main.lua"};
+  on_attach = on_attach,
+  settings = {
+      Lua = {
+          runtime = {
+              -- Tell the language server which version of Lua you're using (LuaJIT in the case of Neovim)
+              version = 'LuaJIT',
+              -- Setup your lua path
+              path = vim.split(package.path, ';'),
+          },
+          diagnostics = {
+              -- Get the language server to recognize the `vim` global
+              globals = {'vim'},
+          },
+          workspace = {
+              -- Make the server aware of Neovim runtime files
+              library = {
+                  [vim.fn.expand('$VIMRUNTIME/lua')] = true,
+                  [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
+              },
+          },
+      },
+  },
+}
 
 FormatRange = function()
   local start_pos = vim.api.nvim_buf_get_mark(0, '<')
@@ -558,7 +504,23 @@ vim.cmd([[
 ]])
 
 vim.cmd([[
-  command! Format  execute 'lua vim.lsp.buf.formatting()'
+  command! Format execute 'lua vim.lsp.buf.formatting()'
+]])
+
+
+ErrorsToQuickfix = function()
+  local items = diagnostics_to_items(
+    vim.lsp.diagnostic.get_all(),
+    function(d) return d.severity == vim.lsp.protocol.DiagnosticSeverity.Error end
+  )
+  vim.fn.setqflist({}, 'r', {
+    title = 'Language Server';
+    items = items
+  })
+end
+
+vim.cmd([[
+  command! -range ErrorsToQuickfix execute 'lua ErrorsToQuickfix'
 ]])
 
 -- Use <Tab> and <S-Tab> to navigate through popup menu
@@ -601,5 +563,4 @@ vim.g.completion_chain_complete_list = {
 -- }
 
 -- Formatters
---
 vim.g.neoformat_enabled_python = { 'black' }

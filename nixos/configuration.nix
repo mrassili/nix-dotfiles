@@ -6,10 +6,11 @@
 {
   imports =
     [
-      # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      # ./modules/sync/dropbox.nix
     ];
+
+  # Use 5.10 kernel
+  boot.kernelPackages = pkgs.linuxPackages_5_10;
 
   # Use the systemd-boot EFI boot loader.
   boot.supportedFilesystems = [ "ntfs" ];
@@ -44,37 +45,20 @@
     };
   };
 
-  # networking.hostName = "nixos"; # Define your hostname.
-  # networking.wireless.enable = false;  # Enables wireless support via wpa_supplicant.
-
   # Enable networking
-  networking.interfaces.enp0s31f6.useDHCP = true;
-  # networking.interfaces.wlp2s0.useDHCP = true;
+  networking.hostName = "nixos-desktop";
+  networking.interfaces.enp38s0.useDHCP = true;
   networking.networkmanager.enable = true;
   networking.resolvconf.dnsExtensionMechanism = false;
 
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
-  # Select internationalisation properties.
-  # i18n = {
-  #   consoleFont = "Lat2-Terminus16";
-  #   consoleKeyMap = "us";
-  #   defaultLocale = "en_US.UTF-8";
-  # };
-
   fonts = {
-    enableFontDir = true;
-    enableGhostscriptFonts = true;
+    fontDir.enable = true;
     fonts = with pkgs; [
       ubuntu_font_family
-      fira-code
-      fira-code-symbols
     ];
     fontconfig.defaultFonts = {
       sansSerif = [ "Ubuntu" ];
-      monospace = [ "Fira Code" ];
+      monospace = [ "Ubuntu Mono" ];
     };
   };
   # Set your time zone.
@@ -87,9 +71,8 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     git
-    latte-dock
     kdeApplications.knotes
-    os-prober
+    latte-dock
     plasma-browser-integration
     unzip
     vim
@@ -103,26 +86,11 @@
       experimental-features = nix-command flakes
     '';
    };
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = { enable = true; enableSSHSupport = true; };
-
-  # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
   services.openssh.ports = [ 5037 ];
   services.openssh.passwordAuthentication = false;
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
-
-  # Enable CUPS to print documents.
-  # services.printing.enable = true;
 
   # Enable sound.
   sound.enable = true;
@@ -137,13 +105,6 @@
   services.xserver.screenSection = ''
     Option "NoFlip" "true"
   '';
-  # Old but deprecated settings
-  # Option "metamodes" "nvidia-auto-select +0+0 { ForceCompositionPipeline = On }"
-  # Option         "AllowIndirectGLXProtocol" "off"
-  # Option         "TripleBuffer" "on"
-
-  # Enable touchpad support.
-  # services.xserver.libinput.enable = true;
 
   # Enable the KDE Desktop Environment.
   services.xserver.displayManager.sddm = {
@@ -151,13 +112,14 @@
     enableHidpi = true;
   };
   services.xserver.desktopManager.plasma5.enable = true;
-  services.xserver.videoDrivers = [ "nvidia" ];
 
+  # Enable nvidia with modesetting.
+  services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia = {
     modesetting.enable = true;
   };
 
-  # Enable OpenGL
+  # Enable OpenGL.
   hardware.opengl = {
     enable = true;
     driSupport32Bit = true;
@@ -165,23 +127,19 @@
     setLdLibraryPath = true;
   };
 
-  # Enable Docker
+  # Enable Docker.
   virtualisation.docker = {
     enable = true;
     enableNvidia = true;
   };
 
-  # Enable podman uid mappings
-  # virtualisation.containers.enable = true;
-  # virtualisation.containers.users = [ "mjlbach" ];
-
-  # Compatibility with geary
+  # Compatibility with geary.
   programs.dconf.enable = true;
   services.gnome3.gnome-keyring.enable = true;
   services.gnome3.gnome-online-accounts.enable = true;
   security.pam.services.sddm.enableGnomeKeyring = true;
 
-  # Enable flatpaks
+  # Enable flatpaks.
   services.flatpak.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -193,10 +151,6 @@
     shell = pkgs.zsh;
   };
 
-  # This value determines the NixOS release with which your system is to be
-  # compatible, in order to avoid breaking some software such as database
-  # servers. You should change this only after NixOS release notes say you
-  # should.
   nix = {
     autoOptimiseStore = true;
     trustedUsers = [ "root" "mjlbach" "@wheel" ];
@@ -204,6 +158,6 @@
 
   nixpkgs.config.allowUnfree = true;
 
-  system.stateVersion = "21.03"; # Did you read the comment?
+  system.stateVersion = "21.03";
 
 }

@@ -30,6 +30,7 @@ require('packer').startup(function()
   use 'tpope/vim-eunuch'
   use 'tpope/vim-unimpaired'
   use 'tpope/vim-commentary'
+  use 'norcalli/snippets.nvim'
   use {
     'glacambre/firenvim',
     run = ":call firenvim#install(0)",
@@ -85,6 +86,10 @@ vim.o.backspace = "indent,eol,start"
 --Set tab options for vim
 vim.o.tabstop = 8
 vim.o.softtabstop = 4
+
+--Set highlight on search
+vim.o.hlsearch = false
+vim.o.incsearch = true
 
 --Make line numbers default
 vim.wo.number = true
@@ -144,7 +149,8 @@ vim.g.lightline = { colorscheme = 'onedark';
 }
 
 --Fire, walk with me
-vim.g.firenvim_config = { localSettings = { ['.*'] = { takeover = 'never' } } }
+vim.cmd[[set guifont="Monaco:h18"]]
+-- vim.g.firenvim_config = { localSettings = { ['.*'] = { takeover = 'never' } } }
 
 --Remap space as leader key
 vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { noremap = true})
@@ -381,7 +387,7 @@ local on_attach = function(client, bufnr)
   vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     vim.lsp.diagnostic.on_publish_diagnostics, {
       -- disable virtual text
-      virtual_text = false,
+      virtual_text = false;
 
       -- show signs
       signs = true,
@@ -392,8 +398,9 @@ local on_attach = function(client, bufnr)
 
     }
   )
-  require'completion'.on_attach()
+  -- require'completion'.on_attach()
 
+  vim.cmd[[autocmd FileType julia set binary noeol]]
   -- Mappings.
   local opts = { noremap=true, silent=true }
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
@@ -413,7 +420,7 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
 end
 
-local servers = {'gopls', 'julials', 'rust_analyzer', 'vuels', 'html', 'hls', 'rnix', 'ocamllsp', 'dartls', 'tsserver', 'solargraph', 'pyright'}
+local servers = {'gopls', 'rust_analyzer', 'julials', 'vuels', 'hls', 'rnix', 'ocamllsp', 'dartls', 'tsserver', 'solargraph', 'pyright', 'als'}
 
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
@@ -455,6 +462,15 @@ nvim_lsp.jsonls.setup {
   }
 }
 
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true;
+require'snippets'.use_suggested_mappings()
+
+nvim_lsp.html.setup {
+    capabilities = capabilities;
+    on_attach = on_attach,
+}
+
 local system_name
 if vim.fn.has("mac") == 1 then
   system_name = "macOS"
@@ -470,6 +486,7 @@ local sumneko_root_path = vim.fn.getenv("HOME").."/.local/bin/sumneko_lua"
 nvim_lsp.sumneko_lua.setup {
   cmd = { sumneko_root_path .. "/bin/"..system_name.."/lua-language-server", "-E", sumneko_root_path .. "/main.lua"};
   on_attach = on_attach,
+  capabilities = capabilities;
   settings = {
       Lua = {
           runtime = {
@@ -492,6 +509,33 @@ nvim_lsp.sumneko_lua.setup {
       },
   },
 }
+
+
+--local lspconfig = require'lspconfig'
+--local configs = require'lspconfig/configs'
+--
+--local total_time = 0
+--for i = 1, 1000 do
+--  local server_name = 'foo_lsp'..tostring(i)
+--
+--  local start_time = vim.loop.hrtime()
+--  if not lspconfig[server_name] then
+--      configs[server_name] = {
+--        default_config = {
+--          cmd = {'/home/ashkan/works/3rd/lua-language-server/run.sh'};
+--          filetypes = {'lua'};
+--          root_dir = function(fname)
+--            return nvim_lsp.util.find_git_ancestor(fname) or vim.loop.os_homedir()
+--          end;
+--          settings = {};
+--        };
+--    }
+--    lspconfig[server_name].setup{}
+--  end
+--  local time = (vim.loop.hrtime() - start_time) / 1E9
+--  total_time = total_time + time
+--end
+--print(total_time) 
 
 FormatRange = function()
   local start_pos = vim.api.nvim_buf_get_mark(0, '<')

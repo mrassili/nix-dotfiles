@@ -10,11 +10,13 @@
     type = "github";
     owner = "mjlbach";
     repo = "emacs-overlay";
+    # url = "path:/Users/michae/Repositories/emacs-overlay";
     ref = "feature/flakes";
   };
 
   inputs.home-manager = {
     url = "github:nix-community/home-manager";
+    # url = "path:/Users/michael/Repositories/nix/home-manager";
     inputs.nixpkgs.follows = "nixpkgs";
   };
 

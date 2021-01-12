@@ -13,7 +13,7 @@
     ffsend
     fzf
     gawk
-    # gdb
+    gdb
     gnupg
     gnused
     gnutls

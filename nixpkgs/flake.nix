@@ -122,7 +122,7 @@
                 ./modules/alacritty.nix
                 ./modules/chat.nix
                 ./modules/cli.nix
-                ./modules/cuda.nix
+                # ./modules/cuda.nix
                 ./modules/git.nix
                 ./modules/media.nix
                 ./modules/nix-utilities.nix

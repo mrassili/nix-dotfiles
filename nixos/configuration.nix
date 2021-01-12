@@ -131,9 +131,7 @@
   };
 
   # Enable for geary.
-  # programs.dconf.enable = true;
   services.gnome3.gnome-keyring.enable = true;
-  services.gnome3.gnome-online-accounts.enable = true;
   security.pam.services.sddm.enableGnomeKeyring = true;
 
   # Enable flatpaks.

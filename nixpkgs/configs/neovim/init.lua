@@ -5,8 +5,7 @@ local fn = vim.fn
 local install_path = fn.stdpath('data')..'/site/pack/packer/opt/packer.nvim'
 
 if fn.empty(fn.glob(install_path)) > 0 then
-	execute('!git clone https://github.com/wbthomason/packer.nvim '..install_path)
-    execute 'packadd packer.nvim'
+  execute('!git clone https://github.com/wbthomason/packer.nvim '..install_path)
 end
 
 -- Only required if you have packer in your `opt` pack
@@ -31,6 +30,11 @@ require('packer').startup(function()
   use 'tpope/vim-eunuch'
   use 'tpope/vim-unimpaired'
   use 'tpope/vim-commentary'
+  use {
+    'glacambre/firenvim',
+    run = ":call firenvim#install(0)",
+  }
+  use 'scalameta/nvim-metals'
   use 'AndrewRadev/splitjoin.vim'
   use 'ludovicchabant/vim-gutentags'
   use 'junegunn/vim-easy-align'
@@ -40,11 +44,21 @@ require('packer').startup(function()
   use 'justinmk/vim-dirvish'
   use 'joshdick/onedark.vim'
   use 'itchyny/lightline.vim'
+  -- use {
+  -- 'glepnir/galaxyline.nvim',
+  --   branch = 'main',
+  --   -- your statusline
+  --   -- config = function() require'my_statusline' end,
+  --   -- some optional icons
+  --   requires = {'kyazdani42/nvim-web-devicons', opt = true}
+-- }
   use 'christoomey/vim-tmux-navigator'
   use 'lervag/vimtex'
   use 'mhinz/neovim-remote'
   use 'Yggdroot/indentLine'
-  use 'sheerun/vim-polyglot'
+  use {'sheerun/vim-polyglot',
+    tag="v4.17.0"
+  }
   use 'jpalardy/vim-slime'
   use 'airblade/vim-gitgutter'
   -- use 'neovim/nvim-lspconfig'
@@ -58,8 +72,6 @@ end)
 
 --Allow filetype plugins and syntax highlighting
 vim.o.autoindent = true
-vim.cmd([[ filetype plugin indent on ]])
-vim.cmd([[ syntax on ]])
 
 --Expand tab to spaces
 vim.o.expandtab = true
@@ -73,10 +85,6 @@ vim.o.backspace = "indent,eol,start"
 --Set tab options for vim
 vim.o.tabstop = 8
 vim.o.softtabstop = 4
-
---Set highlight on search
-vim.o.hlsearch = false
-vim.o.incsearch = true
 
 --Make line numbers default
 vim.wo.number = true
@@ -104,10 +112,10 @@ vim.o.smartcase = true
 vim.o.updatetime = 250
 vim.wo.signcolumn="yes"
 
---Set colorscheme (order is important here)
-vim.o.termguicolors = true
+--Set HL group for whitespace
 -- vim.cmd([[
 --   function HighlightWhitespace ()
+--     autocmd!
 --     autocmd ColorScheme * call onedark#set_highlight("ExtraWhitespace", { "fg": { "gui": "#C678DD", "cterm": "#C678DD", "cterm16" : "#C678DD" } } )
 --     match ExtraWhitespace /\s\+$/
 --     autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
@@ -116,11 +124,14 @@ vim.o.termguicolors = true
 --     autocmd BufWinLeave * call clearmatches()
 --   endfunction
 
---   v:lua.HighlightWhitespace()     
+--   v:lua.HighlightWhitespace()
 -- ]])
-vim.g.onedark_terminal_italics = 2
-vim.cmd([[colorscheme onedark]])
 --
+--Set colorscheme (order is important here)
+vim.o.termguicolors = true
+vim.g.onedark_terminal_italics = 2
+vim.cmd[[colorscheme onedark]]
+
 --Set statusbar
 vim.g.lightline = { colorscheme = 'onedark';
        active = {
@@ -131,6 +142,9 @@ vim.g.lightline = { colorscheme = 'onedark';
          gitbranch = 'fugitive#head',
        };
 }
+
+--Fire, walk with me
+vim.g.firenvim_config = { localSettings = { ['.*'] = { takeover = 'never' } } }
 
 --Remap space as leader key
 vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { noremap = true})
@@ -150,8 +164,9 @@ vim.api.nvim_set_keymap('v', '<A-j>', ':m \'>+1<CR>gv=gv', { noremap = true})
 vim.api.nvim_set_keymap('v', '<A-k>', ':m \'<-2<CR>gv=gv', { noremap = true})
 
 --Remap escape to leave terminal mode
-vim.cmd [[
+require('lspconfig').util.nvim_multiline_command [[
   augroup Terminal
+    autocmd!
     au TermOpen * tnoremap <buffer> <Esc> <c-\><c-n>
     au TermOpen * set nonu
   augroup end
@@ -163,13 +178,13 @@ vim.o.pastetoggle="<F3>"
 -- Toggle to disable mouse mode and indentlines for easier paste
 ToggleMouse = function()
   if vim.o.mouse == 'a' then
-    vim.cmd([[IndentLinesDisable]])
+    vim.cmd[[IndentLinesDisable]]
     vim.wo.signcolumn='no'
     vim.o.mouse = 'v'
     vim.wo.number = false
     print("Mouse disabled")
   else
-    vim.cmd([[IndentLinesEnable]])
+    vim.cmd[[IndentLinesEnable]]
     vim.wo.signcolumn='yes'
     vim.o.mouse = 'a'
     vim.wo.number = true
@@ -189,20 +204,19 @@ vim.api.nvim_set_keymap('n', 'ga', '<Plug>(EasyAlign)', {})
 vim.g.vimtex_compiler_progname = 'nvr'
 vim.g.tex_flavor = 'latex'
 
+--Use local .nvimrc (broken)
+vim.o.exrc = true
+
 require('telescope').setup {
-    extensions = {
-        fzf_writer = {
-            minimum_grep_characters = 2,
-            minimum_files_characters = 2,
-
-            -- Disabled by default.
-            -- Will probably slow down some aspects of the sorter, but can make color highlights.
-            -- I will work on this more later.
-            use_highlighter = true,
-        }
-    }
+  defaults = {
+    mappings = {
+      i = {
+        ["<C-u>"] = false,
+        ["<C-d>"] = false,
+      },
+    },
+  }
 }
-
 --Add leader shortcuts
 vim.api.nvim_set_keymap('n', '<leader>f', [[<cmd>lua require('telescope.builtin').find_files()<cr>]], { noremap = true})
 vim.api.nvim_set_keymap('n', '<leader><space>', [[<cmd>lua require('telescope.builtin').buffers()<cr>]], { noremap = true, silent = true})
@@ -294,7 +308,7 @@ vim.cmd([[
 vim.api.nvim_set_keymap('n', 'Y', 'y$', { noremap = true})
 
 -- Clear white space on empty lines and end of line
--- vim.api.nvim_set_keymap('n', '<F6>', ':let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>', { noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<F6>', [[:let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>]], { noremap = true, silent = true})
 
 -- Nerdtree like sidepanel
 -- absolute width of netrw window
@@ -329,30 +343,30 @@ ToggleNetrw = function()
   end
 end
 
-vim.api.nvim_set_keymap('n', '<leader>d', ':lua toggleNetrw()<cr><paste>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>d', ':lua ToggleNetrw()<cr><paste>', { noremap = true, silent = true })
 
 -- Function to open preview of file under netrw
-vim.cmd([[
+require('lspconfig').util.nvim_multiline_command[[
   augroup Netrw
+    autocmd!
     autocmd filetype netrw nmap <leader>; <cr>:wincmd W<cr>
   augroup end
-]])
+]]
 
--- vim.cmd([[ autocmd ColorScheme * :lua require('vim.lsp.diagnostic')._define_default_signs_and_highlights() ]]) 
+-- vim.cmd([[ autocmd ColorScheme * :lua require('vim.lsp.diagnostic')._define_default_signs_and_highlights() ]])
 
-vim.cmd([[
-  function SetLuaDevOptions()
-    nmap <buffer> <C-c><C-c> <Plug>(Luadev-RunLine)
-    vmap <buffer> <C-c><C-c> <Plug>(Luadev-Run)
-    nmap <buffer> <C-c><C-k> <Plug>(Luadev-RunWord)
-    map  <buffer> <C-x><C-p> <Plug>(Luadev-Complete)
-    set filetype=lua
-  endfunction
-
+vim.cmd[[
   augroup nvim-luadev
+    function SetLuaDevOptions()
+      nmap <buffer> <C-c><C-c> <Plug>(Luadev-RunLine)
+      vmap <buffer> <C-c><C-c> <Plug>(Luadev-Run)
+      nmap <buffer> <C-c><C-k> <Plug>(Luadev-RunWord)
+      map  <buffer> <C-x><C-p> <Plug>(Luadev-Complete)
+      set filetype=lua
+    endfunction
     autocmd BufEnter \[nvim-lua\] call SetLuaDevOptions()
   augroup end
-]])
+]]
 
 -- Vim polyglot language specific settings
 vim.g.python_highlight_space_errors = 0
@@ -362,7 +376,7 @@ vim.g.python_highlight_space_errors = 0
 -- Add nvim-lspconfig plugin
 local nvim_lsp = require('lspconfig')
 vim.lsp.set_log_level("debug")
-local on_attach = function(_, bufnr)
+local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
   vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     vim.lsp.diagnostic.on_publish_diagnostics, {
@@ -374,9 +388,11 @@ local on_attach = function(_, bufnr)
 
       -- delay update diagnostics
       update_in_insert = false,
+      -- display_diagnostic_autocmds = { "InsertLeave" },
+
     }
   )
-  -- require'completion'.on_attach()
+  require'completion'.on_attach()
 
   -- Mappings.
   local opts = { noremap=true, silent=true }
@@ -397,12 +413,19 @@ local on_attach = function(_, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
 end
 
-local servers = {'gopls', 'rust_analyzer', 'vuels', 'jsonls', 'html', 'hls', 'rnix', 'ocamllsp', 'pyright', 'tsserver'}
+local servers = {'gopls', 'julials', 'rust_analyzer', 'vuels', 'html', 'hls', 'rnix', 'ocamllsp', 'dartls', 'tsserver', 'solargraph', 'pyright'}
+
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
-  }
+    handlers = {
+      ['$/openWebsite'] = function(_,_,params)
+        io.popen(string.format("open %s", params[1]))
+      end
+    },
+}
 end
+
 nvim_lsp.texlab.setup{
   on_attach = on_attach;
   settings = {
@@ -422,14 +445,30 @@ nvim_lsp.texlab.setup{
   }
 }
 
-nvim_lsp.elixirls.setup{
-  cmd = { "/Users/michael/.local/bin/elixir-ls/language_server.sh" };
-  on_attach = on_attach;
+nvim_lsp.jsonls.setup {
+  commands = {
+    Format = {
+      function()
+        vim.lsp.buf.range_formatting({},{0,0},{vim.fn.line("$"),0})
+      end
+    }
+  }
 }
 
-local sumneko_root_path = "/Users/michael/.local/bin/sumneko_lua"
+local system_name
+if vim.fn.has("mac") == 1 then
+  system_name = "macOS"
+elseif vim.fn.has("unix") == 1 then
+  system_name = "Linux"
+elseif vim.fn.has('win32') == 1 then
+  system_name = "Windows"
+else
+  print("Unsupported system for sumneko")
+end
+
+local sumneko_root_path = vim.fn.getenv("HOME").."/.local/bin/sumneko_lua"
 nvim_lsp.sumneko_lua.setup {
-  cmd = { sumneko_root_path .. "/bin/macOS/lua-language-server", "-E", sumneko_root_path .. "/main.lua"};
+  cmd = { sumneko_root_path .. "/bin/"..system_name.."/lua-language-server", "-E", sumneko_root_path .. "/main.lua"};
   on_attach = on_attach,
   settings = {
       Lua = {
@@ -465,7 +504,23 @@ vim.cmd([[
 ]])
 
 vim.cmd([[
-  command! Format  execute 'lua vim.lsp.buf.formatting()'
+  command! Format execute 'lua vim.lsp.buf.formatting()'
+]])
+
+
+ErrorsToQuickfix = function()
+  local items = diagnostics_to_items(
+    vim.lsp.diagnostic.get_all(),
+    function(d) return d.severity == vim.lsp.protocol.DiagnosticSeverity.Error end
+  )
+  vim.fn.setqflist({}, 'r', {
+    title = 'Language Server';
+    items = items
+  })
+end
+
+vim.cmd([[
+  command! -range ErrorsToQuickfix execute 'lua ErrorsToQuickfix'
 ]])
 
 -- Use <Tab> and <S-Tab> to navigate through popup menu
@@ -506,5 +561,6 @@ vim.g.completion_chain_complete_list = {
 --     enable = true
 --   }
 -- }
+
 -- Formatters
 vim.g.neoformat_enabled_python = { 'black' }

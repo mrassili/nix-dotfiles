@@ -1,15 +1,11 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 {
   imports =
     [
       ./hardware-configuration.nix
     ];
 
-  # Use 5.10 kernel
+  # Use 5.10 kernel.
   boot.kernelPackages = pkgs.linuxPackages_5_10;
 
   # Use the systemd-boot EFI boot loader.
@@ -45,11 +41,15 @@
     };
   };
 
-  # Enable networking
+  # Use performance cpu governor.
+  powerManagement.cpuFreqGovernor = lib.mkDefault "performance";
+
+  # Enable networking.
   networking.hostName = "nixos-desktop";
   networking.networkmanager.enable = true;
   networking.resolvconf.dnsExtensionMechanism = false;
 
+  # Set system fonts.
   fonts = {
     fontDir.enable = true;
     fonts = with pkgs; [
@@ -60,14 +60,17 @@
       monospace = [ "Ubuntu Mono" ];
     };
   };
+
+  # High-DPI console.
+  console.font = lib.mkDefault "${pkgs.terminus_font}/share/consolefonts/ter-u12n.psf.gz";
+
   # Set your time zone.
   services.localtime.enable = true;
 
-  # Enable early oom
+  # Enable early oom.
   services.earlyoom.enable = true;
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
+  # Packages installed in system profile.
   environment.systemPackages = with pkgs; [
     git
     kdeApplications.knotes
@@ -77,12 +80,19 @@
     wget
   ];
 
+  # Configure the nix package manager.
   nix = {
     package = pkgs.nixFlakes;
+    maxJobs = lib.mkDefault 24;
+    autoOptimiseStore = true;
+    trustedUsers = [ "root" "mjlbach" "@wheel" ];
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
-   };
+  };
+
+  # Allow unfree packages from nixpkgs.
+  nixpkgs.config.allowUnfree = true;
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
@@ -130,14 +140,14 @@
     enableNvidia = true;
   };
 
-  # Enable for geary.
+  # Enable gnome-keyring for geary.
   services.gnome3.gnome-keyring.enable = true;
   security.pam.services.sddm.enableGnomeKeyring = true;
 
   # Enable flatpaks.
   services.flatpak.enable = true;
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
+  # Define a user account.
   users.users.mjlbach = {
     isNormalUser = true;
     createHome = true;
@@ -145,13 +155,6 @@
     extraGroups = [ "wheel" "video" "networkmanager" "vboxusers" "docker" ];
     shell = pkgs.zsh;
   };
-
-  nix = {
-    autoOptimiseStore = true;
-    trustedUsers = [ "root" "mjlbach" "@wheel" ];
-  };
-
-  nixpkgs.config.allowUnfree = true;
 
   system.stateVersion = "21.03";
 

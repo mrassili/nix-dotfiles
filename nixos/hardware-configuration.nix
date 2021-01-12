@@ -30,8 +30,4 @@
   swapDevices =
     [{ device = "/dev/disk/by-uuid/6f1a2aca-f22d-4ecd-88ba-1c3d3e47917c"; }];
 
-  nix.maxJobs = lib.mkDefault 8;
-  powerManagement.cpuFreqGovernor = lib.mkDefault "performance";
-  # High-DPI console
-  console.font = lib.mkDefault "${pkgs.terminus_font}/share/consolefonts/ter-u12n.psf.gz";
 }

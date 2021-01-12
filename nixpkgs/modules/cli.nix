@@ -4,6 +4,7 @@
     #awscli
     bat
     bottom
+    cgdb
     coreutils
     curl
     du-dust
@@ -12,6 +13,7 @@
     ffsend
     fzf
     gawk
+    # gdb
     gnupg
     gnused
     gnutls

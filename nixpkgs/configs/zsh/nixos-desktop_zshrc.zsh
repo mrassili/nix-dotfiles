@@ -9,6 +9,7 @@ home-upgrade () {
 }
 
 home-switch () {
+  nix build "$HOME/.config/nixpkgs#nixos-desktop" -o "$HOME/.config/nixpkgs/result"
   zsh "$HOME/.config/nixpkgs/result/activate"
 }
 

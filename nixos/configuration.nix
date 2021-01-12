@@ -47,7 +47,6 @@
 
   # Enable networking
   networking.hostName = "nixos-desktop";
-  networking.interfaces.enp38s0.useDHCP = true;
   networking.networkmanager.enable = true;
   networking.resolvconf.dnsExtensionMechanism = false;
 
@@ -73,11 +72,9 @@
     git
     kdeApplications.knotes
     latte-dock
-    plasma-browser-integration
     unzip
     vim
     wget
-    xdg-desktop-portal-kde
   ];
 
   nix = {
@@ -133,8 +130,8 @@
     enableNvidia = true;
   };
 
-  # Compatibility with geary.
-  programs.dconf.enable = true;
+  # Enable for geary.
+  # programs.dconf.enable = true;
   services.gnome3.gnome-keyring.enable = true;
   services.gnome3.gnome-online-accounts.enable = true;
   security.pam.services.sddm.enableGnomeKeyring = true;

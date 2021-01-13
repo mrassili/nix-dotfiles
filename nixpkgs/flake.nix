@@ -48,7 +48,7 @@
     {
       homeConfigurations = {
         macbook-pro = inputs.home-manager.lib.homeManagerConfiguration {
-          configuration = { pkgs, ... }:
+          configuration = { pkgs, config, ... }:
             {
               xdg.configFile."nix/nix.conf".source = ./configs/nix/nix.conf;
               nixpkgs.config = import ./configs/nix/config.nix;

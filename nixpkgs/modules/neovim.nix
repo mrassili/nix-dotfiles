@@ -7,6 +7,7 @@
     gopls
     nodePackages.pyright
   ];
+  xdg.configFile."nvim/init.lua".source = ../configs/neovim/init.lua;
   # programs.neovim = {
   #   enable = true;
   #   package = pkgs.neovim-nightly;

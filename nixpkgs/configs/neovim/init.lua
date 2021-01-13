@@ -12,6 +12,7 @@ end
 vim.cmd [[packadd packer.nvim]]
 vim.cmd [[autocmd BufWritePost plugins.lua PackerCompile]]
 
+
 local use = require('packer').use
 require('packer').startup(function()
   -- Packer can manage itself as an optional plugin
@@ -393,9 +394,11 @@ local on_attach = function(client, bufnr)
       signs = true,
 
       -- delay update diagnostics
-      update_in_insert = false,
+      -- update_in_insert = true,
+      -- show_diagnostic_autocmds = { "BufWritePost" },
       -- display_diagnostic_autocmds = { "InsertLeave" },
-
+      -- show_diagnostic_autocmds = { "InsertLeave", "CursorHoldI", "TextChangedI", "TextChangedP" },
+      -- show_diagnostic_autocmds = { "InsertLeave", "CursorHoldI"},
     }
   )
   -- require'completion'.on_attach()
@@ -420,7 +423,7 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
 end
 
-local servers = {'gopls', 'rust_analyzer', 'julials', 'vuels', 'hls', 'rnix', 'ocamllsp', 'dartls', 'tsserver', 'solargraph', 'pyright', 'als'}
+local servers = {'gopls', 'clangd', 'rust_analyzer', 'julials', 'vuels', 'hls', 'rnix', 'ocamllsp', 'dartls', 'tsserver', 'solargraph', 'pyright', 'als'}
 
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {

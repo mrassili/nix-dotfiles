@@ -58,13 +58,10 @@ require('packer').startup(function()
   use 'lervag/vimtex'
   use 'mhinz/neovim-remote'
   use 'Yggdroot/indentLine'
-  use {'sheerun/vim-polyglot',
-    tag="v4.17.0"
-  }
+  use 'sheerun/vim-polyglot'
   use 'jpalardy/vim-slime'
   use 'airblade/vim-gitgutter'
-  -- use 'neovim/nvim-lspconfig'
-  use {'~/Repositories/neovim_development/nvim-lspconfig'}
+  use 'neovim/nvim-lspconfig'
   use 'bfredl/nvim-luadev'
   use 'haorenW1025/completion-nvim'
   use 'sbdchd/neoformat'
@@ -382,8 +379,8 @@ vim.g.python_highlight_space_errors = 0
 -- log file location: /Users/michael/.local/share/nvim/lsp.log
 -- Add nvim-lspconfig plugin
 local nvim_lsp = require('lspconfig')
-vim.lsp.set_log_level("debug")
-local on_attach = function(client, bufnr)
+-- vim.lsp.set_log_level("debug")
+local on_attach = function(_client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
   vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     vim.lsp.diagnostic.on_publish_diagnostics, {
@@ -394,14 +391,10 @@ local on_attach = function(client, bufnr)
       signs = true,
 
       -- delay update diagnostics
-      -- update_in_insert = true,
-      -- show_diagnostic_autocmds = { "BufWritePost" },
-      -- display_diagnostic_autocmds = { "InsertLeave" },
-      -- show_diagnostic_autocmds = { "InsertLeave", "CursorHoldI", "TextChangedI", "TextChangedP" },
-      -- show_diagnostic_autocmds = { "InsertLeave", "CursorHoldI"},
+      update_in_insert = true,
     }
   )
-  -- require'completion'.on_attach()
+  require'completion'.on_attach()
 
   vim.cmd[[autocmd FileType julia set binary noeol]]
   -- Mappings.
@@ -474,20 +467,16 @@ nvim_lsp.html.setup {
     on_attach = on_attach,
 }
 
-local system_name
-if vim.fn.has("mac") == 1 then
-  system_name = "macOS"
-elseif vim.fn.has("unix") == 1 then
-  system_name = "Linux"
-elseif vim.fn.has('win32') == 1 then
-  system_name = "Windows"
+local sumneko_cmd
+if vim.fn.executable("lua-language-server") == 1 then
+  sumneko_cmd = {"lua-language-server"}
 else
-  print("Unsupported system for sumneko")
+  local sumneko_root_path = vim.fn.getenv("HOME").."/.local/bin/sumneko_lua"
+  sumneko_cmd = {sumneko_root_path.."/bin/macOS/lua-language-server", "-E", sumneko_root_path.."/main.lua" }
 end
 
-local sumneko_root_path = vim.fn.getenv("HOME").."/.local/bin/sumneko_lua"
 nvim_lsp.sumneko_lua.setup {
-  cmd = { sumneko_root_path .. "/bin/"..system_name.."/lua-language-server", "-E", sumneko_root_path .. "/main.lua"};
+  cmd = sumneko_cmd;
   on_attach = on_attach,
   capabilities = capabilities;
   settings = {
@@ -514,32 +503,6 @@ nvim_lsp.sumneko_lua.setup {
 }
 
 
---local lspconfig = require'lspconfig'
---local configs = require'lspconfig/configs'
---
---local total_time = 0
---for i = 1, 1000 do
---  local server_name = 'foo_lsp'..tostring(i)
---
---  local start_time = vim.loop.hrtime()
---  if not lspconfig[server_name] then
---      configs[server_name] = {
---        default_config = {
---          cmd = {'/home/ashkan/works/3rd/lua-language-server/run.sh'};
---          filetypes = {'lua'};
---          root_dir = function(fname)
---            return nvim_lsp.util.find_git_ancestor(fname) or vim.loop.os_homedir()
---          end;
---          settings = {};
---        };
---    }
---    lspconfig[server_name].setup{}
---  end
---  local time = (vim.loop.hrtime() - start_time) / 1E9
---  total_time = total_time + time
---end
---print(total_time) 
-
 FormatRange = function()
   local start_pos = vim.api.nvim_buf_get_mark(0, '<')
   local end_pos = vim.api.nvim_buf_get_mark(0, '>')
@@ -552,22 +515,6 @@ vim.cmd([[
 
 vim.cmd([[
   command! Format execute 'lua vim.lsp.buf.formatting()'
-]])
-
-
-ErrorsToQuickfix = function()
-  local items = diagnostics_to_items(
-    vim.lsp.diagnostic.get_all(),
-    function(d) return d.severity == vim.lsp.protocol.DiagnosticSeverity.Error end
-  )
-  vim.fn.setqflist({}, 'r', {
-    title = 'Language Server';
-    items = items
-  })
-end
-
-vim.cmd([[
-  command! -range ErrorsToQuickfix execute 'lua ErrorsToQuickfix'
 ]])
 
 -- Use <Tab> and <S-Tab> to navigate through popup menu

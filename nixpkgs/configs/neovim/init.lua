@@ -148,7 +148,7 @@ vim.g.lightline = { colorscheme = 'onedark';
 
 --Fire, walk with me
 vim.cmd[[set guifont="Monaco:h18"]]
--- vim.g.firenvim_config = { localSettings = { ['.*'] = { takeover = 'never' } } }
+vim.g.firenvim_config = { localSettings = { ['.*'] = { takeover = 'never' } } }
 
 --Remap space as leader key
 vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { noremap = true})

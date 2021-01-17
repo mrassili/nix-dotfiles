@@ -350,7 +350,11 @@ end
 
 vim.api.nvim_set_keymap('n', '<leader>d', ':lua ToggleNetrw()<cr><paste>', { noremap = true, silent = true })
 
+-- directory managmeent, including autochdir
 vim.cmd[[nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>]]
+-- vim.cmd[[autocmd BufEnter * silent! lcd %:p:h | endif]]
+vim.cmd[[autocmd BufEnter * silent! Glcd ]]
+
 -- Function to open preview of file under netrw
 require('lspconfig').util.nvim_multiline_command[[
   augroup Netrw

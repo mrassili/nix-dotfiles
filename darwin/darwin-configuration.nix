@@ -7,11 +7,11 @@
     with pkgs;
     [
       # gimp
-      # (texlive.combine { inherit (texlive) scheme-medium grffile; })
+      (texlive.combine { inherit (texlive) scheme-medium grffile; })
       alacritty
-      # handbrake
+      handbrake
       vim
-      # zathura
+      zathura
     ];
 
   # Use a custom configuration.nix location.

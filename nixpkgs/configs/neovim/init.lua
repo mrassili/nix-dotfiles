@@ -227,7 +227,8 @@ vim.api.nvim_set_keymap('n', '<leader><space>', [[<cmd>lua require('telescope.bu
 vim.api.nvim_set_keymap('n', '<leader>l', [[<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<cr>]], { noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>t', [[<cmd>lua require('telescope.builtin').tags()<cr>]], { noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>?', [[<cmd>lua require('telescope.builtin').oldfiles()<cr>]], { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>s', [[<cmd>lua require('telescope.builtin').live_grep()<cr>]], { noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>sd', [[<cmd>lua require('telescope.builtin').grep_string()<cr>]], { noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>sp', [[<cmd>lua require('telescope.builtin').live_grep()<cr>]], { noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>o', [[<cmd>lua require('telescope.builtin').tags{ only_current_buffer = true }<cr>]], { noremap = true, silent = true})
 
 -- TODO: convert to telescope
@@ -349,6 +350,7 @@ end
 
 vim.api.nvim_set_keymap('n', '<leader>d', ':lua ToggleNetrw()<cr><paste>', { noremap = true, silent = true })
 
+vim.cmd[[nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>]]
 -- Function to open preview of file under netrw
 require('lspconfig').util.nvim_multiline_command[[
   augroup Netrw

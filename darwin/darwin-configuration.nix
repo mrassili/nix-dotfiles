@@ -6,9 +6,12 @@
   environment.systemPackages =
     with pkgs;
     [
-      alacritty
       # gimp
+      # (texlive.combine { inherit (texlive) scheme-medium grffile; })
+      alacritty
+      # handbrake
       vim
+      # zathura
     ];
 
   # Use a custom configuration.nix location.

@@ -82,6 +82,7 @@
                 ./modules/languages.nix
                 ./modules/neovim.nix
                 ./modules/nix-utilities.nix
+                ./modules/linux-only.nix
                 ./modules/ssh.nix
               ];
 
@@ -103,6 +104,7 @@
                 ./modules/cli.nix
                 ./modules/neovim.nix
                 ./modules/git.nix
+                ./modules/linux-only.nix
                 ./modules/nix-utilities.nix
               ];
               programs.zsh.initExtra = builtins.readFile ./configs/zsh/linux-server_zshrc.zsh;
@@ -130,6 +132,7 @@
                 ./modules/python.nix
                 ./modules/ssh.nix
                 ./modules/languages.nix
+                ./modules/linux-only.nix
                 ./modules/neovim.nix
                 ./modules/emacs.nix
               ];

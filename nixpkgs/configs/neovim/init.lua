@@ -43,6 +43,9 @@ require('packer').startup(function()
   use {'nvim-telescope/telescope.nvim',
   requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
   }
+  use {'sunjon/telescope-frecency',
+  requires = {{'tami5/sql.nvim'}}
+  }
   use 'justinmk/vim-dirvish'
   use 'joshdick/onedark.vim'
   use 'itchyny/lightline.vim'
@@ -221,6 +224,7 @@ require('telescope').setup {
     },
   }
 }
+require('telescope').load_extension("frecency")
 --Add leader shortcuts
 vim.api.nvim_set_keymap('n', '<leader>f', [[<cmd>lua require('telescope.builtin').find_files()<cr>]], { noremap = true})
 vim.api.nvim_set_keymap('n', '<leader><space>', [[<cmd>lua require('telescope.builtin').buffers()<cr>]], { noremap = true, silent = true})

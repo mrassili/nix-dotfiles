@@ -20,15 +20,17 @@
 
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;
-  nix.package = pkgs.nixFlakes;
-  nix.trustedUsers = [ "@admin" ];
-  nix.gc.automatic = true;
-  nix.extraOptions = ''
+  nix = {
+    package = pkgs.nixFlakes;
+    trustedUsers = [ "@admin" ];
+    gc.automatic = true;
+    extraOptions = ''
     gc-keep-derivations = true
     gc-keep-outputs = true
     experimental-features = nix-command flakes
     auto-optimise-store = true
   '';
+  };
 
   # Create /etc/bashrc that loads the nix-darwin environment.
   programs.zsh.enable = true; # default shell on catalina

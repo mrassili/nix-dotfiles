@@ -61,9 +61,6 @@
     };
   };
 
-  # High-DPI console.
-  console.font = lib.mkDefault "${pkgs.terminus_font}/share/consolefonts/ter-u12n.psf.gz";
-
   # Set your time zone.
   services.localtime.enable = true;
 

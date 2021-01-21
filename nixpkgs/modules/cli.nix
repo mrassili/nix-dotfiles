@@ -15,7 +15,6 @@
     gnupg
     gnused
     gnutls
-    htop
     keychain
     mosh
     nix-zsh-completions

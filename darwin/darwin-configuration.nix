@@ -28,7 +28,6 @@
     gc-keep-derivations = true
     gc-keep-outputs = true
     experimental-features = nix-command flakes
-    auto-optimise-store = true
   '';
   };
 

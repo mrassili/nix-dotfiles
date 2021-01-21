@@ -16,7 +16,7 @@
     # Build darwin flake using:
     # $ darwin-rebuild build --flake ./modules/examples#darwinConfigurations.simple.system \
     #       --override-input darwin .
-    darwinConfigurations."MacBook-Pro" = darwin.lib.darwinSystem {
+    darwinConfigurations.MacBook-Pro = darwin.lib.darwinSystem {
       modules = [ configuration darwin.darwinModules.simple ];
     };
 

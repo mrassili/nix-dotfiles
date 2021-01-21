@@ -7,7 +7,7 @@ nixpkgs contains my userland nix configuration, and is symlinked to $HOME/.confi
 # To install nix
 
 ```bash
-curl -L https://nixos.org/nix/install | sh
+sh <(curl -L https://nixos.org/nix/install) --daemon
 ```
 # To install cachix
 

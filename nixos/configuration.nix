@@ -73,7 +73,6 @@
   # Packages installed in system profile.
   environment.systemPackages = with pkgs; [
     git
-    kdeApplications.knotes
     latte-dock
     unzip
     vim

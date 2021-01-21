@@ -1,10 +1,16 @@
 typeset -U path
-path=(
-      $HOME/.nix-profile/bin
-      $path
-    )
+path=($HOME/.config/emacs/bin
+      $HOME/.poetry/bin
+      $HOME/.cargo/bin
+      $HOME/.local/bin
+      $HOME/n/bin
+      $path)
 
-conda() {
+export TERMINAL="alacritty"
+export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/extras/CUPTI/lib64
+export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).
+
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('$HOME/.local/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"

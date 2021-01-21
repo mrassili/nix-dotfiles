@@ -139,6 +139,11 @@
     enableNvidia = true;
   };
 
+  virtualisation.podman = {
+    enable = true;
+    enableNvidia = true;
+  };
+
   # Enable gnome-keyring for geary.
   services.gnome3.gnome-keyring.enable = true;
   security.pam.services.sddm.enableGnomeKeyring = true;

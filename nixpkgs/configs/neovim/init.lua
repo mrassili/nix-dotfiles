@@ -170,13 +170,13 @@ vim.api.nvim_set_keymap('v', '<A-j>', ':m \'>+1<CR>gv=gv', { noremap = true})
 vim.api.nvim_set_keymap('v', '<A-k>', ':m \'<-2<CR>gv=gv', { noremap = true})
 
 --Remap escape to leave terminal mode
-require('lspconfig').util.nvim_multiline_command [[
+vim.api.nvim_exec([[
   augroup Terminal
     autocmd!
     au TermOpen * tnoremap <buffer> <Esc> <c-\><c-n>
     au TermOpen * set nonu
   augroup end
-]]
+]], false)
 
 --Add map to enter paste mode
 vim.o.pastetoggle="<F3>"
@@ -359,12 +359,12 @@ vim.cmd[[nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>]]
 vim.cmd[[autocmd BufEnter * silent! Glcd ]]
 
 -- Function to open preview of file under netrw
-require('lspconfig').util.nvim_multiline_command[[
+vim.api.nvim_exec([[
   augroup Netrw
     autocmd!
     autocmd filetype netrw nmap <leader>; <cr>:wincmd W<cr>
   augroup end
-]]
+]], false)
 
 -- vim.cmd([[ autocmd ColorScheme * :lua require('vim.lsp.diagnostic')._define_default_signs_and_highlights() ]])
 

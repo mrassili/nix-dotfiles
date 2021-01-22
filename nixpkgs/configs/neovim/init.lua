@@ -36,7 +36,6 @@ require('packer').startup(function()
     'glacambre/firenvim',
     run = ":call firenvim#install(0)",
   }
-  use 'scalameta/nvim-metals'
   use 'AndrewRadev/splitjoin.vim'
   use 'ludovicchabant/vim-gutentags'
   use 'junegunn/vim-easy-align'

@@ -190,6 +190,10 @@ eval "$(zoxide init zsh)"
 # Set environmental variables
 export EDITOR="nvim"
 
+# Rust
+export CARGO_HOME=$HOME/.local/cargo
+export RUSTUP_HOME=$HOME/.local/rustup
+
 # List ec2 instance in default region
 list-ec2 () {
 aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceType, State.Name, LaunchTime, PublicDnsName]' --output table

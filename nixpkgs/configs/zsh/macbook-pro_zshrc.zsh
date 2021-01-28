@@ -2,7 +2,7 @@ typeset -U path
 path=(
       /run/current-system/sw/bin
       $HOME/.nix-profile/bin
-      $HOME/.cargo/bin
+      $HOME/.local/cargo/bin
       $HOME/.config/emacs/bin
       $HOME/.npm-packages/bin
       $HOME/.poetry/bin

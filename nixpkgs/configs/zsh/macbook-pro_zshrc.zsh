@@ -21,6 +21,8 @@ path=(
       $path
     )
 
+export TERMINFO=$HOME/.config/terminfo
+
 conda() {
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!

@@ -10,7 +10,12 @@ end
 
 -- Only required if you have packer in your `opt` pack
 vim.cmd [[packadd packer.nvim]]
-vim.cmd [[autocmd BufWritePost plugins.lua PackerCompile]]
+vim.api.nvim_exec([[
+  augroup Packer
+    autocmd!
+    autocmd BufWritePost plugins.lua PackerCompile
+  augroup end
+]], false)
 
 
 local use = require('packer').use
@@ -57,7 +62,7 @@ require('packer').startup(function()
   --   requires = {'kyazdani42/nvim-web-devicons', opt = true}
 -- }
   use 'christoomey/vim-tmux-navigator'
-  use 'lervag/vimtex'
+  use { 'lervag/vimtex', ft = {'tex'} }
   use 'mhinz/neovim-remote'
   use 'Yggdroot/indentLine'
   use 'sheerun/vim-polyglot'
@@ -153,13 +158,13 @@ vim.cmd[[set guifont="Monaco:h18"]]
 vim.g.firenvim_config = { localSettings = { ['.*'] = { takeover = 'never' } } }
 
 --Remap space as leader key
-vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { noremap = true})
+vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { noremap = true, silent=true})
 -- TODO: Fix leader mapping
 vim.g.mapleader = " "
 
 --Remap for dealing with word wrap
-vim.api.nvim_set_keymap('n', 'k', "v:count == 0 ? 'gk' : 'k'", { noremap=true, expr = true })
-vim.api.nvim_set_keymap('n', 'j', "v:count == 0 ? 'gj' : 'j'", {noremap= true, expr = true })
+vim.api.nvim_set_keymap('n', 'k', "v:count == 0 ? 'gk' : 'k'", { noremap=true, expr = true, silent = true})
+vim.api.nvim_set_keymap('n', 'j', "v:count == 0 ? 'gj' : 'j'", {noremap= true, expr = true, silent = true})
 
 --Add move line shortcuts
 vim.api.nvim_set_keymap('n', '<A-j>', ':m .+1<CR>==', { noremap = true})
@@ -225,7 +230,7 @@ require('telescope').setup {
 }
 -- require('telescope').load_extension("frecency")
 --Add leader shortcuts
-vim.api.nvim_set_keymap('n', '<leader>f', [[<cmd>lua require('telescope.builtin').find_files()<cr>]], { noremap = true})
+vim.api.nvim_set_keymap('n', '<leader>f', [[<cmd>lua require('telescope.builtin').find_files()<cr>]], { noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader><space>', [[<cmd>lua require('telescope.builtin').buffers()<cr>]], { noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>l', [[<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<cr>]], { noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>t', [[<cmd>lua require('telescope.builtin').tags()<cr>]], { noremap = true, silent = true})
@@ -308,9 +313,12 @@ vim.api.nvim_set_keymap('o', 'N', "'nN'[v:searchforward]", { noremap = true, exp
 vim.g.loaded_python_provider = 0
 
 -- Highlight on yank
-vim.cmd([[
-  au TextYankPost * silent! lua vim.highlight.on_yank()
-]])
+vim.api.nvim_exec([[
+  augroup YankHighlight
+    autocmd!
+    autocmd TextYankPost * silent! lua vim.highlight.on_yank()
+  augroup end
+]], false)
 
 -- Y yank until the end of line
 vim.api.nvim_set_keymap('n', 'Y', 'y$', { noremap = true})
@@ -356,7 +364,12 @@ vim.api.nvim_set_keymap('n', '<leader>d', ':lua ToggleNetrw()<cr><paste>', { nor
 -- directory managmeent, including autochdir
 vim.cmd[[nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>]]
 -- vim.cmd[[autocmd BufEnter * silent! lcd %:p:h | endif]]
-vim.cmd[[autocmd BufEnter * silent! Glcd ]]
+vim.api.nvim_exec([[
+  augroup BufferCD
+    autocmd!
+    autocmd BufEnter * silent! Glcd 
+  augroup end
+]], false)
 
 -- Function to open preview of file under netrw
 vim.api.nvim_exec([[
@@ -367,9 +380,9 @@ vim.api.nvim_exec([[
 ]], false)
 
 -- vim.cmd([[ autocmd ColorScheme * :lua require('vim.lsp.diagnostic')._define_default_signs_and_highlights() ]])
-
-vim.cmd[[
+vim.api.nvim_exec([[
   augroup nvim-luadev
+    autocmd!
     function SetLuaDevOptions()
       nmap <buffer> <C-c><C-c> <Plug>(Luadev-RunLine)
       vmap <buffer> <C-c><C-c> <Plug>(Luadev-Run)
@@ -379,7 +392,7 @@ vim.cmd[[
     endfunction
     autocmd BufEnter \[nvim-lua\] call SetLuaDevOptions()
   augroup end
-]]
+]], false)
 
 -- Vim polyglot language specific settings
 vim.g.python_highlight_space_errors = 0
@@ -405,7 +418,6 @@ local on_attach = function(_client, bufnr)
   )
   require'completion'.on_attach()
 
-  vim.cmd[[autocmd FileType julia set binary noeol]]
   -- Mappings.
   local opts = { noremap=true, silent=true }
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)

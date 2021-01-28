@@ -25,7 +25,7 @@
     sd
     socat
     termshark
-    tldr
+    tealdeer
     tmux
     tree
     universal-ctags

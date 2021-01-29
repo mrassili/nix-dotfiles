@@ -76,7 +76,7 @@
 
   xdg.configFile."git/config".source = ../configs/git/gitconfig;
   home.file.".aws/config".source = ../configs/aws/aws_config;
-  home.file.".dircolors".source = pkgs.LS_COLORS.outPath + "/LS_COLORS";
+  xdg.configFile."dircolors".source = pkgs.LS_COLORS.outPath + "/LS_COLORS";
   xdg.configFile."tmux/tmux.conf".source = ../configs/tmux/tmux.conf;
   xdg.configFile."direnv/lib/poetry.sh".source = ../configs/direnv/poetry.sh;
 }

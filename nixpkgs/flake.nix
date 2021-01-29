@@ -62,7 +62,6 @@
                 ./modules/neovim.nix
                 ./modules/nix-utilities.nix
                 ./modules/ssh.nix
-                ./modules/weechat.nix
               ];
               programs.zsh.initExtra = builtins.readFile ./configs/zsh/macbook-pro_zshrc.zsh;
               # xdg.configFile."terminfo".source = ./configs/terminfo/terminfo_mac;

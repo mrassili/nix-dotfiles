@@ -4,7 +4,7 @@ eval $(keychain -q --eval)
 # Colorize terminal
 export CLICOLOR=1
 export COLORTERM="truecolor"
-eval $( dircolors -b $HOME/.dircolors )
+eval $( dircolors -b $HOME/.config/dircolors )
 
 # Completion
 autoload -U compinit 

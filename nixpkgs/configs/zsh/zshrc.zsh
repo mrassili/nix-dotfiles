@@ -193,6 +193,7 @@ export EDITOR="nvim"
 # Rust
 export CARGO_HOME=$HOME/.local/cargo
 export RUSTUP_HOME=$HOME/.local/rustup
+export GOPATH=$HOME/.local/go
 
 # List ec2 instance in default region
 list-ec2 () {

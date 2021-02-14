@@ -4,6 +4,7 @@ path=($HOME/.config/emacs/bin
       $HOME/.cargo/bin
       $HOME/.local/bin
       $HOME/n/bin
+      $HOME/.ghcup/bin
       $path)
 
 export TERMINAL="alacritty"
@@ -13,6 +14,7 @@ export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PR
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
+conda () {
 __conda_setup="$('$HOME/.local/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"

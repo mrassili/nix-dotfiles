@@ -112,7 +112,7 @@ vim.o.breakindent = true
 vim.o.showcmd = true
 
 --Save undo history
-vim.o.undofile = true
+vim.cmd[[ set undofile ]]
 
 --Case insensitive searching UNLESS /C or capital in search
 vim.o.ignorecase = true
@@ -558,13 +558,13 @@ require'compe'.setup {
 
   source = {
     path = true;
-    buffer = true;
+    buffer = false;
     calc = true;
     vsnip = true;
     nvim_lsp = true;
     nvim_lua = true;
     spell = true;
-    tags = true;
+    tags = false;
     snippets_nvim = true;
     treesitter = true;
   };

@@ -5,6 +5,7 @@ path=($HOME/.config/emacs/bin
       $HOME/.local/bin
       $HOME/n/bin
       $HOME/.ghcup/bin
+      $HOME/.local/share/julia/bin
       $path)
 
 export TERMINAL="alacritty"

@@ -8,6 +8,7 @@ path=(
       $HOME/.poetry/bin
       $HOME/flutter/bin
       $HOME/go/bin
+      $HOME/.ghcup/bin
       /Applications/Julia-1.5.app/Contents/Resources/julia/bin
       /Users/michael/.gem/ruby/2.6.0/bin
       /Users/michael/n/bin

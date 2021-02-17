@@ -56,7 +56,7 @@
               nixpkgs.overlays = overlays;
               imports = [
                 ./modules/cli.nix
-                ./modules/emacs.nix
+                # ./modules/emacs.nix
                 ./modules/git.nix
                 ./modules/home-manager.nix
                 ./modules/neovim.nix

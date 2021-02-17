@@ -112,7 +112,8 @@ vim.o.breakindent = true
 vim.o.showcmd = true
 
 --Save undo history
-vim.cmd[[ set undofile ]]
+-- vim.o.undofile = true
+vim.cmd[[ set undofile]]
 
 --Case insensitive searching UNLESS /C or capital in search
 vim.o.ignorecase = true

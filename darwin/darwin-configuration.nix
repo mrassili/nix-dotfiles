@@ -7,6 +7,7 @@
     with pkgs;
     [
       # gimp
+      emacsMacport
       (texlive.combine { inherit (texlive) scheme-medium grffile; })
       alacritty
       handbrake

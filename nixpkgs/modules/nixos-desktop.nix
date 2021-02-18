@@ -1,7 +1,6 @@
 { config, pkgs, libs, ... }:
 {
   home.packages = with pkgs; [
-    xpra
     ark
     bitwarden
     exercism

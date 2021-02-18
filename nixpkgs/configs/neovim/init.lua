@@ -438,7 +438,7 @@ local on_attach = function(_client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
 end
 
-local servers = {'gopls', 'clangd', 'rust_analyzer', 'julials', 'vuels', 'hls', 'rnix', 'ocamllsp', 'dartls', 'tsserver', 'solargraph', 'pyright', 'als'}
+local servers = {'gopls', 'clangd', 'rust_analyzer', 'julials', 'vuels', 'hls', 'rnix', 'ocamllsp', 'dartls', 'tsserver', 'hls', 'solargraph', 'pyright', 'als'}
 
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
@@ -451,10 +451,6 @@ for _, lsp in ipairs(servers) do
 }
 end
 
-nvim_lsp['hls'].setup {
-  on_attach = on_attach,
-  cmd = 'haskell-language-server-wrapper',
-}
 nvim_lsp.texlab.setup{
   on_attach = on_attach;
   settings = {

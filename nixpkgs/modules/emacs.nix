@@ -12,6 +12,7 @@
     enable = true;
     # package = if pkgs.stdenv.isDarwin then pkgs.nixos-unstable.emacsGcc else pkgs.nixos-unstable.emacsPgtkGcc;
     package = if pkgs.stdenv.isDarwin then pkgs.emacsMacport else pkgs.emacsPgtkGcc;
+    # (emacsPackagesFor emacsMacport).emacsWithPackages(ps: [ ps.seq ])
     # extraPackages = (epkgs: [ epkgs.vterm ] );
   };
 

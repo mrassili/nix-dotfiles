@@ -26,7 +26,6 @@ require('packer').startup(function()
   -- use {'nvim-treesitter/nvim-treesitter'}
 
   use 'tpope/vim-vinegar'
-  use 'tpope/vim-sensible'
   use 'tpope/vim-surround'
   use 'tpope/vim-fugitive'
   use 'tpope/vim-rhubarb'
@@ -37,19 +36,13 @@ require('packer').startup(function()
   use 'tpope/vim-unimpaired'
   use 'tpope/vim-commentary'
   use 'norcalli/snippets.nvim'
-  use {
-    'glacambre/firenvim',
-    run = ":call firenvim#install(0)",
-  }
+  use { 'glacambre/firenvim', run = ":call firenvim#install(0)" }
   use 'AndrewRadev/splitjoin.vim'
   use 'ludovicchabant/vim-gutentags'
   use 'junegunn/vim-easy-align'
   use {'nvim-telescope/telescope.nvim',
   requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
   }
-  -- use {'sunjon/telescope-frecency',
-  -- requires = {{'tami5/sql.nvim'}}
-  -- }
   use 'justinmk/vim-dirvish'
   use 'joshdick/onedark.vim'
   use 'itchyny/lightline.vim'
@@ -64,16 +57,17 @@ require('packer').startup(function()
   use 'christoomey/vim-tmux-navigator'
   use { 'lervag/vimtex', ft = {'tex'} }
   use 'mhinz/neovim-remote'
-  use 'Yggdroot/indentLine'
+  use { 'lukas-reineke/indent-blankline.nvim', branch="lua" }
   use 'sheerun/vim-polyglot'
   use 'jpalardy/vim-slime'
-  use 'airblade/vim-gitgutter'
+  use 'hkupty/iron.nvim.git'
+  use 'lewis6991/gitsigns.nvim'
   use 'neovim/nvim-lspconfig'
   use 'bfredl/nvim-luadev'
   use 'hrsh7th/nvim-compe'
   use 'sbdchd/neoformat'
-  use 'dstein64/vim-startuptime'
-
+  -- use 'Olical/aniseed'
+  -- use 'Olical/conjure'
 end)
 
 --Allow filetype plugins and syntax highlighting
@@ -123,21 +117,6 @@ vim.o.smartcase = true
 vim.o.updatetime = 250
 vim.wo.signcolumn="yes"
 
---Set HL group for whitespace
--- vim.cmd([[
---   function HighlightWhitespace ()
---     autocmd!
---     autocmd ColorScheme * call onedark#set_highlight("ExtraWhitespace", { "fg": { "gui": "#C678DD", "cterm": "#C678DD", "cterm16" : "#C678DD" } } )
---     match ExtraWhitespace /\s\+$/
---     autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
---     autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
---     autocmd InsertLeave * match ExtraWhitespace /\s\+$/
---     autocmd BufWinLeave * call clearmatches()
---   endfunction
-
---   v:lua.HighlightWhitespace()
--- ]])
---
 --Set colorscheme (order is important here)
 vim.o.termguicolors = true
 vim.g.onedark_terminal_italics = 2
@@ -145,13 +124,8 @@ vim.cmd[[colorscheme onedark]]
 
 --Set statusbar
 vim.g.lightline = { colorscheme = 'onedark';
-       active = {
-         left = { { 'mode', 'paste' },
-         { 'gitbranch', 'readonly', 'filename', 'modified' } }
-       };
-       component_function = {
-         gitbranch = 'fugitive#head',
-       };
+      active = { left = { { 'mode', 'paste' }, { 'gitbranch', 'readonly', 'filename', 'modified' } } };
+      component_function = { gitbranch = 'fugitive#head', };
 }
 
 --Fire, walk with me
@@ -160,8 +134,8 @@ vim.g.firenvim_config = { localSettings = { ['.*'] = { takeover = 'never' } } }
 
 --Remap space as leader key
 vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { noremap = true, silent=true})
--- TODO: Fix leader mapping
 vim.g.mapleader = " "
+vim.g.maplocalleader = " "
 
 --Remap for dealing with word wrap
 vim.api.nvim_set_keymap('n', 'k', "v:count == 0 ? 'gk' : 'k'", { noremap=true, expr = true, silent = true})
@@ -187,16 +161,21 @@ vim.api.nvim_exec([[
 --Add map to enter paste mode
 vim.o.pastetoggle="<F3>"
 
+vim.g.indent_blankline_char = "┊"
+vim.g.indent_blankline_filetype_exclude = { 'help' }
+vim.g.indent_blankline_buftype_exclude = { 'terminal', 'nofile', 'packer'}
+vim.g.indent_blankline_char_highlight = 'LineNr'
+
 -- Toggle to disable mouse mode and indentlines for easier paste
 ToggleMouse = function()
   if vim.o.mouse == 'a' then
-    vim.cmd[[IndentLinesDisable]]
+    vim.cmd[[IndentBlanklineDisable]]
     vim.wo.signcolumn='no'
     vim.o.mouse = 'v'
     vim.wo.number = false
     print("Mouse disabled")
   else
-    vim.cmd[[IndentLinesEnable]]
+    vim.cmd[[IndentBlanklineEnable]]
     vim.wo.signcolumn='yes'
     vim.o.mouse = 'a'
     vim.wo.number = true
@@ -204,7 +183,7 @@ ToggleMouse = function()
   end
 end
 
-vim.api.nvim_set_keymap('n', '<F10>', ':lua ToggleMouse()<cr>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<F10>', '<cmd>lua ToggleMouse()<cr>', { noremap = true })
 
 --Start interactive EasyAlign in visual mode (e.g. vipga)
 vim.api.nvim_set_keymap('x', 'ga', '<Plug>(EasyAlign)', {})
@@ -216,9 +195,7 @@ vim.api.nvim_set_keymap('n', 'ga', '<Plug>(EasyAlign)', {})
 vim.g.vimtex_compiler_progname = 'nvr'
 vim.g.tex_flavor = 'latex'
 
---Use local .nvimrc (broken)
-vim.o.exrc = true
-
+-- Telescope
 require('telescope').setup {
   defaults = {
     mappings = {
@@ -227,9 +204,10 @@ require('telescope').setup {
         ["<C-d>"] = false,
       },
     },
+    generic_sorter =  require'telescope.sorters'.get_fzy_sorter,
+    file_sorter =  require'telescope.sorters'.get_fzy_sorter,
   }
 }
--- require('telescope').load_extension("frecency")
 --Add leader shortcuts
 vim.api.nvim_set_keymap('n', '<leader>f', [[<cmd>lua require('telescope.builtin').find_files()<cr>]], { noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader><space>', [[<cmd>lua require('telescope.builtin').buffers()<cr>]], { noremap = true, silent = true})
@@ -239,17 +217,12 @@ vim.api.nvim_set_keymap('n', '<leader>?', [[<cmd>lua require('telescope.builtin'
 vim.api.nvim_set_keymap('n', '<leader>sd', [[<cmd>lua require('telescope.builtin').grep_string()<cr>]], { noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>sp', [[<cmd>lua require('telescope.builtin').live_grep()<cr>]], { noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>o', [[<cmd>lua require('telescope.builtin').tags{ only_current_buffer = true }<cr>]], { noremap = true, silent = true})
-
--- TODO: convert to telescope
--- vim.api.nvim_set_keymap('n', '<leader>A', ':Windows<CR>', { noremap = true, silent = true})
--- vim.api.nvim_set_keymap('n', '<leader>p', ':Projects<CR>', { noremap = true, silent = true})
-
--- Add git shortcuts
 vim.api.nvim_set_keymap('n', '<leader>gc', [[<cmd>lua require('telescope.builtin').git_commits()<cr>]], { noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>gb', [[<cmd>lua require('telescope.builtin').git_branches()<cr>]], { noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>gs', [[<cmd>lua require('telescope.builtin').git_status()<cr>]], { noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>gp', [[<cmd>lua require('telescope.builtin').git_bcommits()<cr>]], { noremap = true, silent = true})
 
+-- Fugitive shortcuts
 vim.api.nvim_set_keymap('n', '<leader>ga', ':Git add %:p<CR><CR>', { noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>gd', ':Gdiff<CR>', { noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>ge', ':Gedit<CR>', { noremap = true, silent = true})
@@ -258,8 +231,6 @@ vim.api.nvim_set_keymap('n', '<leader>gw', ':Gwrite<CR><CR>', { noremap = true, 
 vim.api.nvim_set_keymap('n', '<leader>gl', ':silent! Glog<CR>:bot copen<CR>', { noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>gm', ':Gmove<Space>', { noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>go', ':Git checkout<Space>', { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>gps', ':Dispatch! git push<CR>', { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>gpl', ':Dispatch! git pull<CR>', { noremap = true, silent = true})
 
 -- alternative shorcuts without fzf
 vim.api.nvim_set_keymap('n', '<leader>,', ':buffer *', { noremap = true})
@@ -272,17 +243,6 @@ vim.api.nvim_set_keymap('n', '<leader>T', ':tjump *', { noremap = true})
 -- --exclude=dist
 vim.g.gutentags_file_list_command = 'fd'
 vim.g.gutentags_ctags_extra_args = { '--python-kinds=-iv' }
-
--- speed up indent line
--- default ''.
--- n for Normal mode
--- v for Visual mode
--- i for Insert mode
--- c for Command line editing, for 'incsearch'
-vim.g.indentLine_faster = 1
-vim.g.indentLine_setConceal = 2
-vim.g.indentLine_concealcursor = ""
-vim.g.indentLine_bufNameExclude = { "term:.*" }
 
 -- remove conceal on markdown files
 vim.g.markdown_syntax_conceal = 0
@@ -362,16 +322,6 @@ end
 
 vim.api.nvim_set_keymap('n', '<leader>d', ':lua ToggleNetrw()<cr><paste>', { noremap = true, silent = true })
 
--- directory managmeent, including autochdir
-vim.cmd[[nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>]]
--- vim.cmd[[autocmd BufEnter * silent! lcd %:p:h | endif]]
-vim.api.nvim_exec([[
-  augroup BufferCD
-    autocmd!
-    autocmd BufEnter * silent! Glcd 
-  augroup end
-]], false)
-
 -- Function to open preview of file under netrw
 vim.api.nvim_exec([[
   augroup Netrw
@@ -380,6 +330,15 @@ vim.api.nvim_exec([[
   augroup end
 ]], false)
 
+-- directory managmeent, including autochdir
+vim.cmd[[nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>]]
+
+vim.api.nvim_exec([[
+  augroup BufferCD
+    autocmd!
+    autocmd BufEnter * silent! Glcd 
+  augroup end
+]], false)
 -- vim.cmd([[ autocmd ColorScheme * :lua require('vim.lsp.diagnostic')._define_default_signs_and_highlights() ]])
 vim.api.nvim_exec([[
   augroup nvim-luadev
@@ -460,16 +419,17 @@ local on_attach = function(_client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
 end
 
-local servers = {'gopls', 'clangd', 'rust_analyzer', 'julials', 'vuels', 'hls', 'rnix', 'ocamllsp', 'dartls', 'tsserver', 'hls', 'solargraph', 'pyright', 'als'}
+local servers = {
+  'pyright', 'clangd'
+}
+--local servers = {
+--  'gopls', 'clangd', 'vuels', 'hls', 'solargraph', 'rnix', 'ocamllsp',
+--  'dartls', 'tsserver', 'solargraph', 'pyright', 'als'
+--}
 
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
-    handlers = {
-      ['$/openWebsite'] = function(_,_,params)
-        io.popen(string.format("open %s", params[1]))
-      end
-    },
 }
 end
 
@@ -669,3 +629,11 @@ vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
 
 -- Formatters
 vim.g.neoformat_enabled_python = { 'black' }
+
+local iron = require('iron')
+
+iron.core.set_config {
+  preferred = {
+    python = "ipython",
+  }
+}

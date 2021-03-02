@@ -1,16 +1,16 @@
 typeset -U path
 path=(
-      /run/current-system/sw/bin
       $HOME/.nix-profile/bin
+      /run/current-system/sw/bin
       $HOME/.local/cargo/bin
       $HOME/.config/emacs/bin
       $HOME/.npm-packages/bin
       $HOME/.poetry/bin
-      $HOME/flutter/bin
+      $HOME/.local/flutter/bin
       $HOME/go/bin
       $HOME/.ghcup/bin
       /Applications/Julia-1.5.app/Contents/Resources/julia/bin
-      /Users/michael/.gem/ruby/2.6.0/bin
+      $HOME/.gem/ruby/2.6.0/bin/
       /Users/michael/n/bin
       /Library/TeX/Root/bin/x86_64-darwin/
       /Users/michael/.npm-packages/bin

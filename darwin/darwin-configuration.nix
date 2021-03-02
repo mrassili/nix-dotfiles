@@ -7,7 +7,8 @@
     with pkgs;
     [
       # gimp
-      emacsMacport
+      # emacsMacport
+      ((emacsPackagesFor emacsMacport).emacsWithPackages(ps: [ ps.vterm ]))
       (texlive.combine { inherit (texlive) scheme-medium grffile; })
       alacritty
       handbrake

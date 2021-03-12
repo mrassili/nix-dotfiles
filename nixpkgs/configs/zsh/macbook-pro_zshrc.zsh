@@ -7,6 +7,7 @@ path=(
       $HOME/.npm-packages/bin
       $HOME/.poetry/bin
       $HOME/.local/flutter/bin
+      $HOME/.local/zig
       $HOME/go/bin
       $HOME/.ghcup/bin
       /Applications/Julia-1.5.app/Contents/Resources/julia/bin
@@ -46,7 +47,7 @@ snvim() {
 }
 
 home-upgrade () {
-  nix flake update $HOME/.config/nixpkgs --recreate-lock-file
+  nix flake update $HOME/.config/nixpkgs
   nix build "$HOME/.config/nixpkgs#macbook-pro" -o "$HOME/.config/nixpkgs/result"
   zsh "$HOME/.config/nixpkgs/result/activate"
   (( $+commands[doom] )) && doom -y upgrade
@@ -58,7 +59,7 @@ home-switch () {
 }
 
 system-upgrade () {
-   nix flake update --recreate-lock-file $HOME/.config/darwin
+   nix flake update $HOME/.config/darwin
    darwin-rebuild switch --flake $HOME/.config/darwin
 }
 

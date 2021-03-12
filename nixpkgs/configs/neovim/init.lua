@@ -195,6 +195,17 @@ vim.api.nvim_set_keymap('n', 'ga', '<Plug>(EasyAlign)', {})
 vim.g.vimtex_compiler_progname = 'nvr'
 vim.g.tex_flavor = 'latex'
 
+-- Gitsigns
+require('gitsigns').setup({
+  signs = {
+    add          = {hl = 'GitGutterAdd'   , text = '+'},
+    change       = {hl = 'GitGutterChange', text = '~'},
+    delete       = {hl = 'GitGutterDelete', text = '_'},
+    topdelete    = {hl = 'GitGutterDelete', text = '‾'},
+    changedelete = {hl = 'GitGutterChange', text = '~'},
+  }
+})
+
 -- Telescope
 require('telescope').setup {
   defaults = {
@@ -221,6 +232,7 @@ vim.api.nvim_set_keymap('n', '<leader>gc', [[<cmd>lua require('telescope.builtin
 vim.api.nvim_set_keymap('n', '<leader>gb', [[<cmd>lua require('telescope.builtin').git_branches()<cr>]], { noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>gs', [[<cmd>lua require('telescope.builtin').git_status()<cr>]], { noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>gp', [[<cmd>lua require('telescope.builtin').git_bcommits()<cr>]], { noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>wb', [[<cmd>lua require('telescope.builtin').lsp_document_symbols()<cr>]], { noremap = true, silent = true})
 
 -- Fugitive shortcuts
 vim.api.nvim_set_keymap('n', '<leader>ga', ':Git add %:p<CR><CR>', { noremap = true, silent = true})
@@ -343,7 +355,7 @@ vim.api.nvim_exec([[
 vim.api.nvim_exec([[
   augroup nvim-luadev
     autocmd!
-    function SetLuaDevOptions()
+    function! SetLuaDevOptions()
       nmap <buffer> <C-c><C-c> <Plug>(Luadev-RunLine)
       vmap <buffer> <C-c><C-c> <Plug>(Luadev-Run)
       nmap <buffer> <C-c><C-k> <Plug>(Luadev-RunWord)
@@ -505,7 +517,6 @@ nvim_lsp.sumneko_lua.setup {
       },
   },
 }
-
 
 FormatRange = function()
   local start_pos = vim.api.nvim_buf_get_mark(0, '<')

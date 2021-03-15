@@ -162,8 +162,8 @@ vim.api.nvim_exec([[
 vim.o.pastetoggle="<F3>"
 
 vim.g.indent_blankline_char = "┊"
-vim.g.indent_blankline_filetype_exclude = { 'help' }
-vim.g.indent_blankline_buftype_exclude = { 'terminal', 'nofile', 'packer'}
+vim.g.indent_blankline_filetype_exclude = { 'help', 'packer' }
+vim.g.indent_blankline_buftype_exclude = { 'terminal', 'nofile'}
 vim.g.indent_blankline_char_highlight = 'LineNr'
 
 -- Toggle to disable mouse mode and indentlines for easier paste
@@ -432,7 +432,7 @@ local on_attach = function(_client, bufnr)
 end
 
 local servers = {
-  'pyright', 'clangd'
+  'pyright', 'clangd', 'rust_analyzer', 'hls', 'zls'
 }
 --local servers = {
 --  'gopls', 'clangd', 'vuels', 'hls', 'solargraph', 'rnix', 'ocamllsp',

@@ -3,6 +3,7 @@
   home.packages = with pkgs; [
     #awscli
     bat
+    bitwarden-cli
     bottom
     coreutils
     curl

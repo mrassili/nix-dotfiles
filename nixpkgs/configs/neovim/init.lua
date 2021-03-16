@@ -88,7 +88,6 @@ vim.o.softtabstop = 4
 
 --Set highlight on search
 vim.o.hlsearch = false
-vim.o.incsearch = true
 
 --Make line numbers default
 vim.wo.number = true
@@ -102,12 +101,8 @@ vim.o.mouse = "a"
 --Enable break indent
 vim.o.breakindent = true
 
---Set show command
-vim.o.showcmd = true
-
 --Save undo history
--- vim.o.undofile = true
-vim.cmd[[ set undofile]]
+vim.cmd[[ set undofile ]]
 
 --Case insensitive searching UNLESS /C or capital in search
 vim.o.ignorecase = true

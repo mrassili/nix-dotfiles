@@ -70,17 +70,11 @@ require('packer').startup(function()
   -- use 'Olical/conjure'
 end)
 
---Allow filetype plugins and syntax highlighting
-vim.o.autoindent = true
-
 --Expand tab to spaces
 vim.o.expandtab = true
 
 --Incremental live completion
 vim.o.inccommand = "nosplit"
-
---Change backspace to behave more intuitively
-vim.o.backspace = "indent,eol,start"
 
 --Set tab options for vim
 vim.o.tabstop = 8

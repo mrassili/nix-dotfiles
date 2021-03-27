@@ -180,6 +180,10 @@ em () {
   emacsclient $1 > /dev/null 2>&1 || emacs $1 &
 }
 
+gc-roots () {
+	ls -l $(readlink /nix/var/nix/gcroots/auto/*)
+} 
+
 # FZF
 export FZF_DEFAULT_COMMAND='fd --type f'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"

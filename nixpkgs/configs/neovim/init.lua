@@ -1,15 +1,12 @@
 -- Install packer
 local execute = vim.api.nvim_command
-local fn = vim.fn
 
-local install_path = fn.stdpath('data')..'/site/pack/packer/opt/packer.nvim'
+local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 
-if fn.empty(fn.glob(install_path)) > 0 then
-  execute('!git clone https://github.com/wbthomason/packer.nvim '..install_path)
+if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
+  execute('!git clone https://github.com/wbthomason/packer.nvim '.. install_path)
 end
 
--- Only required if you have packer in your `opt` pack
-vim.cmd [[packadd packer.nvim]]
 vim.api.nvim_exec([[
   augroup Packer
     autocmd!
@@ -17,14 +14,10 @@ vim.api.nvim_exec([[
   augroup end
 ]], false)
 
-
 local use = require('packer').use
 require('packer').startup(function()
-  -- Packer can manage itself as an optional plugin
-  use {'wbthomason/packer.nvim', opt = true}
-
+  use 'wbthomason/packer.nvim'
   -- use {'nvim-treesitter/nvim-treesitter'}
-
   use 'tpope/vim-vinegar'
   use 'tpope/vim-surround'
   use 'tpope/vim-fugitive'

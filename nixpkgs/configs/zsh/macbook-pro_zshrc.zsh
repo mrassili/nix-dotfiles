@@ -48,14 +48,12 @@ snvim() {
 
 home-upgrade () {
   nix flake update $HOME/.config/nixpkgs
-  nix build "$HOME/.config/nixpkgs#macbook-pro" -o "$HOME/.config/nixpkgs/result"
-  zsh "$HOME/.config/nixpkgs/result/activate"
+  home-manager switch --flake "/Users/michael/.config/nixpkgs#macbook-pro"
   (( $+commands[doom] )) && doom -y upgrade
 }
 
 home-switch () {
-  nix build "$HOME/.config/nixpkgs#macbook-pro" -o "$HOME/.config/nixpkgs/result"
-  zsh "$HOME/.config/nixpkgs/result/activate"
+  home-manager switch --flake "/Users/michael/.config/nixpkgs#macbook-pro"
 }
 
 system-upgrade () {

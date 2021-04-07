@@ -360,37 +360,16 @@ local on_attach = function(_client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
   vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     vim.lsp.diagnostic.on_publish_diagnostics, {
-      -- disable virtual text
-      virtual_text = false;
-
-      -- show signs
+      virtual_text = true;
       signs = true,
-
-      -- delay update diagnostics
       update_in_insert = true,
     }
   )
 
-  -- Override to add 
-  vim.lsp.handlers['textDocument/hover'] = function(_, method, result)
-    vim.lsp.util.focusable_float(method, function()
-      if not (result and result.contents) then
-        -- return { 'No information available' }
-        return
-      end
-      local markdown_lines = vim.lsp.util.convert_input_to_markdown_lines(result.contents)
-      markdown_lines = vim.lsp.util.trim_empty_lines(markdown_lines)
-      if vim.tbl_isempty(markdown_lines) then
-        -- return { 'No information available' }
-        return
-      end
-      local bufnr, winnr = vim.lsp.util.fancy_floating_markdown(markdown_lines, {
-        pad_left = 1; pad_right = 1;
-      })
-      vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<Cmd>wincmd p<CR>', {noremap = true, silent = true})
-      vim.lsp.util.close_preview_autocmd({"CursorMoved", "BufHidden", "InsertCharPre"}, winnr)
-      return bufnr, winnr
-    end)
+  local overridden_hover = vim.lsp.with(vim.lsp.handlers.hover, { border = "single" })
+  vim.lsp.handlers["textDocument/hover"] = function(...)
+    local buf = overridden_hover (...)
+    vim.api.nvim_buf_set_keymap(buf, 'n', 'K', '<Cmd>wincmd p<CR>', {noremap = true, silent = true})
   end
 
   -- Mappings.
@@ -414,7 +393,7 @@ local on_attach = function(_client, bufnr)
 end
 
 local servers = {
-  'pyright', 'clangd', 'rust_analyzer', 'hls', 'zls'
+  'clangd', 'gopls', 'rust_analyzer', 'rnix', 'hls', 'pyright',
 }
 --local servers = {
 --  'gopls', 'clangd', 'vuels', 'hls', 'solargraph', 'rnix', 'ocamllsp',
@@ -475,8 +454,8 @@ end
 
 nvim_lsp.sumneko_lua.setup {
   cmd = sumneko_cmd;
+  autostart = false;
   on_attach = on_attach,
-  capabilities = capabilities;
   settings = {
       Lua = {
           runtime = {

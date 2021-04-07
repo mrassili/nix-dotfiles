@@ -26,12 +26,12 @@ snvim() {
 }
 
 home-upgrade () {
-  nix flake update $HOME/.config/nixpkgs --recreate-lock-file
-  nix build "$HOME/.config/nixpkgs#linux-server" -o "$HOME/.config/nixpkgs/result"
-  zsh "$HOME/.config/nixpkgs/result/activate"
+  nix flake update $HOME/.config/nixpkgs
+  home-manager switch --flake "/home/mjlbach/.config/nixpkgs#linux-server"
+  # (( $+commands[doom] )) && doom -y upgrade
 }
 
 home-switch () {
-  nix build "$HOME/.config/nixpkgs#linux-server" -o "$HOME/.config/nixpkgs/result"
-  zsh "$HOME/.config/nixpkgs/result/activate"
+  home-manager switch --flake "/home/mjlbach/.config/nixpkgs#linux-server"
 }
+

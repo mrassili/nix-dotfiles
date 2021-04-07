@@ -49,7 +49,7 @@ snvim() {
 home-upgrade () {
   nix flake update $HOME/.config/nixpkgs
   home-manager switch --flake "/Users/michael/.config/nixpkgs#macbook-pro"
-  (( $+commands[doom] )) && doom -y upgrade
+  # (( $+commands[doom] )) && doom -y upgrade
 }
 
 home-switch () {

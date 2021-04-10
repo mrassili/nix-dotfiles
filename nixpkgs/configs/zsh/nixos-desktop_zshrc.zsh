@@ -8,19 +8,17 @@ path=(
 eval $(keychain -q --eval)
 
 home-upgrade () {
-  nix flake update $HOME/.config/nixpkgs --recreate-lock-file
-  nix build "$HOME/.config/nixpkgs#nixos-desktop" -o "$HOME/.config/nixpkgs/result"
-  zsh "$HOME/.config/nixpkgs/result/activate"
-  (( $+commands[doom] )) && doom -y upgrade
+  nix flake update $HOME/.config/nixpkgs
+  home-manager switch --flake "$HOME/.config/nixpkgs#nixos-desktop"
+  # (( $+commands[doom] )) && doom -y upgrade
 }
 
 home-switch () {
-  nix build "$HOME/.config/nixpkgs#nixos-desktop" -o "$HOME/.config/nixpkgs/result"
-  zsh "$HOME/.config/nixpkgs/result/activate"
+  home-manager switch --flake "$HOME/.config/nixpkgs#nixos-desktop"
 }
 
 system-upgrade () {
-  sudo nix flake update /etc/nixos --recreate-lock-file
+  sudo nix flake update /etc/nixos
   sudo nixos-rebuild switch --flake '/etc/nixos#nixos-desktop'
 }
 

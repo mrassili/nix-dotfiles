@@ -17,7 +17,7 @@
     spectacle
     spotify
     steam
-    unityhub
+    # unityhub
     virtualgl
     wireguard-tools
     zgrviewer

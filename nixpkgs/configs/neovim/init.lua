@@ -17,50 +17,26 @@ vim.api.nvim_exec([[
 local use = require('packer').use
 require('packer').startup(function()
   use 'wbthomason/packer.nvim'
-  -- use {'nvim-treesitter/nvim-treesitter'}
+  use {'nvim-treesitter/nvim-treesitter'}
   use 'tpope/vim-vinegar'
-  use 'tpope/vim-surround'
   use 'tpope/vim-fugitive'
   use 'tpope/vim-rhubarb'
-  use 'tpope/vim-dispatch'
-  use 'tpope/vim-repeat'
-  use 'tpope/vim-sleuth'
-  use 'tpope/vim-eunuch'
-  use 'tpope/vim-unimpaired'
+  use 'tpope/vim-surround'
   use 'tpope/vim-commentary'
-  use 'norcalli/snippets.nvim'
-  use { 'glacambre/firenvim', run = ":call firenvim#install(0)" }
-  use 'AndrewRadev/splitjoin.vim'
+  use 'tpope/vim-repeat'
+  use 'justinmk/vim-dirvish'
+  use 'christoomey/vim-tmux-navigator'
   use 'ludovicchabant/vim-gutentags'
-  use 'junegunn/vim-easy-align'
   use {'nvim-telescope/telescope.nvim',
   requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
   }
-  use 'justinmk/vim-dirvish'
   use 'joshdick/onedark.vim'
   use 'itchyny/lightline.vim'
-  -- use {
-  -- 'glepnir/galaxyline.nvim',
-  --   branch = 'main',
-  --   -- your statusline
-  --   -- config = function() require'my_statusline' end,
-  --   -- some optional icons
-  --   requires = {'kyazdani42/nvim-web-devicons', opt = true}
--- }
-  use 'christoomey/vim-tmux-navigator'
-  use { 'lervag/vimtex', ft = {'tex'} }
-  use 'mhinz/neovim-remote'
   use { 'lukas-reineke/indent-blankline.nvim', branch="lua" }
-  use 'sheerun/vim-polyglot'
-  use 'jpalardy/vim-slime'
   use 'hkupty/iron.nvim.git'
   use 'lewis6991/gitsigns.nvim'
   use 'neovim/nvim-lspconfig'
   use 'bfredl/nvim-luadev'
-  use 'hrsh7th/nvim-compe'
-  use 'sbdchd/neoformat'
-  -- use 'Olical/aniseed'
-  -- use 'Olical/conjure'
 end)
 
 --Expand tab to spaces
@@ -168,14 +144,14 @@ end
 vim.api.nvim_set_keymap('n', '<F10>', '<cmd>lua ToggleMouse()<cr>', { noremap = true })
 
 --Start interactive EasyAlign in visual mode (e.g. vipga)
-vim.api.nvim_set_keymap('x', 'ga', '<Plug>(EasyAlign)', {})
+-- vim.api.nvim_set_keymap('x', 'ga', '<Plug>(EasyAlign)', {})
 
 --Start interactive EasyAlign for a motion/text object (e.g. gaip)
-vim.api.nvim_set_keymap('n', 'ga', '<Plug>(EasyAlign)', {})
+-- vim.api.nvim_set_keymap('n', 'ga', '<Plug>(EasyAlign)', {})
 
 --Add neovim remote for vimtex
-vim.g.vimtex_compiler_progname = 'nvr'
-vim.g.tex_flavor = 'latex'
+-- vim.g.vimtex_compiler_progname = 'nvr'
+-- vim.g.tex_flavor = 'latex'
 
 -- Gitsigns
 require('gitsigns').setup({
@@ -242,10 +218,10 @@ vim.g.gutentags_ctags_extra_args = { '--python-kinds=-iv' }
 vim.g.markdown_syntax_conceal = 0
 
 -- Configure vim slime to use tmux
-vim.g.slime_target = "tmux"
-vim.g.slime_python_ipython = 1
-vim.g.slime_dont_ask_default = 1
-vim.g.slime_default_config = {socket_name = "default", target_pane = "{right-of}"}
+-- vim.g.slime_target = "tmux"
+-- vim.g.slime_python_ipython = 1
+-- vim.g.slime_dont_ask_default = 1
+-- vim.g.slime_default_config = {socket_name = "default", target_pane = "{right-of}"}
 
 -- Change preview window location
 vim.g.splitbelow = true
@@ -333,7 +309,7 @@ vim.api.nvim_exec([[
     autocmd BufEnter * silent! Glcd 
   augroup end
 ]], false)
--- vim.cmd([[ autocmd ColorScheme * :lua require('vim.lsp.diagnostic')._define_default_signs_and_highlights() ]])
+
 vim.api.nvim_exec([[
   augroup nvim-luadev
     autocmd!
@@ -351,6 +327,8 @@ vim.api.nvim_exec([[
 -- Vim polyglot language specific settings
 vim.g.python_highlight_space_errors = 0
 
+-- vim.cmd([[ autocmd ColorScheme * :lua require('vim.lsp.diagnostic')._define_default_signs_and_highlights() ]])
+--
 -- LSP settings
 -- log file location: /Users/michael/.local/share/nvim/lsp.log
 -- Add nvim-lspconfig plugin
@@ -425,25 +403,6 @@ nvim_lsp.texlab.setup{
   }
 }
 
-nvim_lsp.jsonls.setup {
-  commands = {
-    Format = {
-      function()
-        vim.lsp.buf.range_formatting({},{0,0},{vim.fn.line("$"),0})
-      end
-    }
-  }
-}
-
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true;
-require'snippets'.use_suggested_mappings()
-
-nvim_lsp.html.setup {
-    capabilities = capabilities;
-    on_attach = on_attach,
-}
-
 local sumneko_cmd
 if vim.fn.executable("lua-language-server") == 1 then
   sumneko_cmd = {"lua-language-server"}
@@ -496,90 +455,6 @@ vim.cmd([[
 -- Set completeopt to have a better completion experience
 vim.o.completeopt="menuone,noinsert,noselect"
 
--- Compe setup
-require'compe'.setup {
-  enabled = true;
-  autocomplete = true;
-  debug = false;
-  min_length = 1;
-  preselect = 'enable';
-  throttle_time = 80;
-  source_timeout = 200;
-  incomplete_delay = 400;
-  max_abbr_width = 100;
-  max_kind_width = 100;
-  max_menu_width = 100;
-  documentation = true;
-
-  source = {
-    path = true;
-    buffer = false;
-    calc = true;
-    vsnip = false;
-    nvim_lsp = true;
-    nvim_lua = true;
-    spell = true;
-    tags = false;
-    snippets_nvim = true;
-    treesitter = true;
-  };
-}
-
-local t = function(str)
-  return vim.api.nvim_replace_termcodes(str, true, true, true)
-end
-
-local check_back_space = function()
-    local col = vim.fn.col('.') - 1
-    if col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
-        return true
-    else
-        return false
-    end
-end
-
--- Use (s-)tab to:
---- move to prev/next item in completion menuone
---- jump to prev/next snippet's placeholder
-_G.tab_complete = function()
-  if vim.fn.pumvisible() == 1 then
-    return t "<C-n>"
-  -- elseif vim.fn.call("vsnip#available", {1}) == 1 then
-  --   return t "<Plug>(vsnip-expand-or-jump)"
-  elseif check_back_space() then
-    return t "<Tab>"
-  else
-    return vim.fn['compe#complete']()
-  end
-end
-_G.s_tab_complete = function()
-  if vim.fn.pumvisible() == 1 then
-    return t "<C-p>"
-  -- elseif vim.fn.call("vsnip#jumpable", {-1}) == 1 then
-  -- me-
-  --   return t "<Plug>(vsnip-jump-prev)"
-  else
-    return t "<S-Tab>"
-  end
-end
-
-vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", {expr = true})
-vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
-vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
-vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
-
--- vim.api.nvim_set_keymap("i", "<C-Space>", "v:lua.tab_complete()", {expr = true, silent = true})
--- vim.api.nvim_set_keymap("i", "<CR>", "v:lua.tab_complete()", {expr = true, silent = true})
--- vim.api.nvim_set_keymap("i", "<C-e>", "v:lua.s_tab_complete()", {expr = true, silent = true})
--- vim.api.nvim_set_keymap("i", "<C-f>", "v:lua.s_tab_complete()", {expr = true, silent = true})
--- vim.api.nvim_set_keymap("i", "<C-d>", "v:lua.s_tab_complete()", {expr = true, silent = true})
-
--- inoremap <silent><expr> <C-Space> compe#complete()
--- inoremap <silent><expr> <CR>      compe#confirm('<CR>')
--- inoremap <silent><expr> <C-e>     compe#close('<C-e>')
--- inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
--- inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
-
 -- require'nvim-treesitter.configs'.setup {
 --   ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
 --   highlight = {
@@ -600,7 +475,7 @@ vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
 -- }
 
 -- Formatters
-vim.g.neoformat_enabled_python = { 'black' }
+-- vim.g.neoformat_enabled_python = { 'black' }
 
 local iron = require('iron')
 

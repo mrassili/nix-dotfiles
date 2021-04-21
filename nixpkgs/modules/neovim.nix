@@ -4,6 +4,7 @@
   home.packages = with pkgs; [
     neovim-nightly
     rnix-lsp
+    rust-analyzer
     gopls
     nodePackages.pyright
   ];

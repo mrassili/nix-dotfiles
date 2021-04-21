@@ -20,7 +20,7 @@
     mosh
     nix-zsh-completions
     nmap
-    nnn
+    # nnn
     ripgrep
     rsync
     sd

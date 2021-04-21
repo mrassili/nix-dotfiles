@@ -37,6 +37,9 @@ require('packer').startup(function()
   use 'lewis6991/gitsigns.nvim'
   use 'neovim/nvim-lspconfig'
   use 'bfredl/nvim-luadev'
+  use 'tbastos/vim-lua'
+  use 'LnL7/vim-nix'
+  use 'ziglang/zig.vim'
 end)
 
 --Expand tab to spaces

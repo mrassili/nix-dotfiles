@@ -43,7 +43,7 @@ conda "$@"
 }
 
 snvim() {
-      /usr/local/bin/nvim -u ~/.config/nvim/init_test.lua $@
+      $HOME/Repositories/neovim_development/neovim/result/bin/nvim -u ~/.config/nvim/init_test.lua $@
 }
 
 home-upgrade () {

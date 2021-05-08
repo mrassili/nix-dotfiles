@@ -10,7 +10,7 @@
     du-dust
     exa
     fd
-    ffsend
+    # ffsend
     fzf
     gawk
     gnupg

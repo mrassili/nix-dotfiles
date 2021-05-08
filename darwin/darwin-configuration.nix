@@ -11,6 +11,8 @@
       ((emacsPackagesFor emacsMacport).emacsWithPackages(ps: [ ps.vterm ]))
       # (texlive.combine { inherit (texlive) scheme-medium grffile; })
       alacritty
+      kitty
+      wezterm
       handbrake
       vim
       zathura

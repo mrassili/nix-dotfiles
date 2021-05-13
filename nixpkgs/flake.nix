@@ -10,7 +10,7 @@
     type = "github";
     owner = "mjlbach";
     repo = "emacs-overlay";
-    rev = "d62b49ac651e314080e333a7e1f190877675ee99";
+    # rev = "d62b49ac651e314080e333a7e1f190877675ee99";
     # url = "path:/Users/michae/Repositories/emacs-overlay";
     ref = "feature/flakes";
   };

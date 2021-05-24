@@ -8,6 +8,7 @@
     gnome3.geary
     graphviz
     gwenview
+    kitty
     # libreoffice-qt
     (nerdfonts.override { fonts = [ "Meslo" ]; })
     nextcloud-client

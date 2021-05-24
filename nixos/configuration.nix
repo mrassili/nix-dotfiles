@@ -142,11 +142,16 @@
   };
 
   # Enable gnome-keyring for geary.
-  services.gnome3.gnome-keyring.enable = true;
+  services.gnome.gnome-keyring.enable = true;
   security.pam.services.sddm.enableGnomeKeyring = true;
 
   # Enable flatpaks.
   services.flatpak.enable = true;
+
+  # services.dendrite.enable = true;
+  # services.dendrite.privateKey="/home/mjlbach/matrix_key.pem";
+  # services.dendrite.settings.global.private_key="/home/mjlbach/matrix_key.pem";
+  # services.dendrite.settings.global.server_name="test-server";
 
   # Define a user account.
   users.users.mjlbach = {
@@ -157,6 +162,6 @@
     shell = pkgs.zsh;
   };
 
-  system.stateVersion = "21.03";
+  system.stateVersion = "21.05";
 
 }

@@ -10,9 +10,9 @@
   ];
   # xdg.configFile."nvim/init.lua".source = config.lib.file.mkOutOfStoreSymlink ../configs/neovim/init.lua;
   xdg.configFile."nvim/init.lua".source = ../configs/neovim/init.lua;
-  xdg.configFile."nvim/parser/c.so".source = "${pkgs.tree-sitter.builtGrammars.tree-sitter-c}/parser";
-  xdg.configFile."nvim/parser/lua.so".source = "${pkgs.tree-sitter.builtGrammars.tree-sitter-lua}/parser";
-  xdg.configFile."nvim/parser/rust.so".source = "${pkgs.tree-sitter.builtGrammars.tree-sitter-rust}/parser";
+  # xdg.configFile."nvim/parser/c.so".source = "${pkgs.tree-sitter.builtGrammars.tree-sitter-c}/parser";
+  # xdg.configFile."nvim/parser/lua.so".source = "${pkgs.tree-sitter.builtGrammars.tree-sitter-lua}/parser";
+  # xdg.configFile."nvim/parser/rust.so".source = "${pkgs.tree-sitter.builtGrammars.tree-sitter-rust}/parser";
   # programs.neovim = {
   #   enable = true;
   #   package = pkgs.neovim-nightly;

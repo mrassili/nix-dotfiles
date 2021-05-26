@@ -15,7 +15,7 @@
       wezterm
       handbrake
       vim
-      zathura
+      # zathura
     ];
 
   # Use a custom configuration.nix location.

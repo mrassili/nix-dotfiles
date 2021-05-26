@@ -1,10 +1,9 @@
 -- Install packer
-local execute = vim.api.nvim_command
 
 local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-  execute('!git clone https://github.com/wbthomason/packer.nvim '.. install_path)
+  vim.fn.execute('!git clone https://github.com/wbthomason/packer.nvim '..install_path)
 end
 
 vim.api.nvim_exec([[
@@ -34,7 +33,7 @@ require('packer').startup(function()
   use 'joshdick/onedark.vim'
   use 'itchyny/lightline.vim'
   use { 'lukas-reineke/indent-blankline.nvim', branch="lua" }
-  use 'hkupty/iron.nvim.git'
+  use 'hkupty/iron.nvim'
   use 'lewis6991/gitsigns.nvim'
   use 'neovim/nvim-lspconfig'
   use 'bfredl/nvim-luadev'
@@ -48,10 +47,6 @@ vim.o.expandtab = true
 
 --Incremental live completion
 vim.o.inccommand = "nosplit"
-
---Set tab options for vim
-vim.o.tabstop = 8
-vim.o.softtabstop = 4
 
 --Set highlight on search
 vim.o.hlsearch = false
@@ -127,6 +122,8 @@ vim.g.indent_blankline_char = "┊"
 vim.g.indent_blankline_filetype_exclude = { 'help', 'packer' }
 vim.g.indent_blankline_buftype_exclude = { 'terminal', 'nofile'}
 vim.g.indent_blankline_char_highlight = 'LineNr'
+vim.g.indent_blankline_show_trailing_blankline_indent = false
+vim.g.indent_blankline_show_current_context = true
 
 -- Toggle to disable mouse mode and indentlines for easier paste
 ToggleMouse = function()
@@ -148,6 +145,7 @@ end
 vim.api.nvim_set_keymap('n', '<F10>', '<cmd>lua ToggleMouse()<cr>', { noremap = true })
 
 --Start interactive EasyAlign in visual mode (e.g. vipga)
+-- Note this overwrites a useful ascii print thing
 -- vim.api.nvim_set_keymap('x', 'ga', '<Plug>(EasyAlign)', {})
 
 --Start interactive EasyAlign for a motion/text object (e.g. gaip)

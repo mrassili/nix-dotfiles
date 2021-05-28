@@ -5,7 +5,6 @@
     bat
     bitwarden-cli
     bottom
-    coreutils
     curl
     du-dust
     exa

@@ -353,7 +353,8 @@ local on_attach = function(_client, bufnr)
     }
   )
 
-  local overridden_hover = vim.lsp.with(vim.lsp.handlers.hover, { border = "single" })
+  -- local overridden_hover = vim.lsp.with(vim.lsp.handlers.hover, { border = "single" })
+  local overridden_hover = vim.lsp.handlers.hover
   vim.lsp.handlers["textDocument/hover"] = function(...)
     local buf = overridden_hover (...)
     vim.api.nvim_buf_set_keymap(buf, 'n', 'K', '<Cmd>wincmd p<CR>', {noremap = true, silent = true})

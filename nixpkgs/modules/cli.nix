@@ -82,5 +82,5 @@
   xdg.configFile."tmux/tmux.conf".source = ../configs/tmux/tmux.conf;
   xdg.configFile."direnv/lib/poetry.sh".source = ../configs/direnv/poetry.sh;
   xdg.configFile."kitty/kitty.conf".source = ../configs/terminal/kitty.conf;
-  xdg.configFile."starship.tom".source = ../configs/terminal/starship.toml;
+  xdg.configFile."starship.toml".source = ../configs/terminal/starship.toml;
 }

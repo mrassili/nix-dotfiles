@@ -13,6 +13,14 @@ export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/extras/CUPTI/lib64
 export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).
 
+# Colorize terminal
+eval $( dircolors -b $HOME/.config/dircolors )
+
+# Prompt aliases
+alias ls="ls --color=auto"
+alias ll="ls -alh --color=auto"
+alias l="ls --color=auto"
+
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 conda () {

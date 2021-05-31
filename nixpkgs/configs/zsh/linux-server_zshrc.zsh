@@ -4,6 +4,10 @@ path=(
       $path
     )
 
+
+# Colorize terminal
+eval $( dircolors -b $HOME/.config/dircolors )
+
 conda() {
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
@@ -20,6 +24,11 @@ fi
 unset __conda_setup
 conda "$@"
 }
+
+# Prompt aliases
+alias ls="ls --color=auto"
+alias ll="ls -alh --color=auto"
+alias l="ls --color=auto"
 
 snvim() {
       /usr/local/bin/nvim -u ~/.config/nvim/init_test.lua $@

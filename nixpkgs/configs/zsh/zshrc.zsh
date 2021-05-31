@@ -1,11 +1,6 @@
 # Use keychain to manage ssh keys
 eval $(keychain -q --eval)
 
-# Colorize terminal
-export CLICOLOR=1
-export COLORTERM="truecolor"
-eval $( dircolors -b $HOME/.config/dircolors )
-
 # Completion
 autoload -U compinit 
 compinit
@@ -149,11 +144,6 @@ man() {
 autoload edit-command-line
 zle -N edit-command-line
 bindkey '^x^e' edit-command-line
-
-# Prompt aliases
-alias ls="ls --color=auto"
-alias ll="ls -alh --color=auto"
-alias l="ls --color=auto"
 
 alias pag="ps aux | grep"
 alias htop="btm -b"

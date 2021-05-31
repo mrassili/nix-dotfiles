@@ -24,6 +24,7 @@ path=(
     )
 
 export TERMINFO=$HOME/.config/terminfo
+export CLICOLOR=1
 
 conda() {
 # >>> conda initialize >>>

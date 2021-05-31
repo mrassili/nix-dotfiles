@@ -4,8 +4,13 @@ path=(
       $path
     )
 
-# initialize keychain: This can go below instant prompt so long as -q is enabled and --eval is disabled
-eval $(keychain -q --eval)
+# Prompt aliases
+alias ls="ls --color=auto"
+alias ll="ls -alh --color=auto"
+alias l="ls --color=auto"
+
+# Colorize terminal
+eval $( dircolors -b $HOME/.config/dircolors )
 
 home-upgrade () {
   nix flake update $HOME/.config/nixpkgs

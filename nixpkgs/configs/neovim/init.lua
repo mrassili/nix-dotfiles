@@ -465,27 +465,27 @@ vim.cmd([[
 -- Set completeopt to have a better completion experience
 vim.o.completeopt="menuone,noinsert,noselect"
 
--- require'nvim-treesitter.configs'.setup {
---   ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
---   highlight = {
---     enable = true,              -- false will disable the whole extension
---   },
---   incremental_selection = {
---     enable = true,
---     keymaps = {
---       init_selection = "gnn",
---       node_incremental = "grn",
---       scope_incremental = "grc",
---       node_decremental = "grm",
---     },
---   },
---   indent = {
---     enable = true
---   }
--- }
+require'nvim-treesitter.configs'.setup {
+  -- ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+  highlight = {
+    enable = true,              -- false will disable the whole extension
+  },
+  incremental_selection = {
+    enable = true,
+    keymaps = {
+      init_selection = "gnn",
+      node_incremental = "grn",
+      scope_incremental = "grc",
+      node_decremental = "grm",
+    },
+  },
+  indent = {
+    enable = true,
+  },
+}
 
 -- Formatters
--- vim.g.neoformat_enabled_python = { 'black' }
+vim.g.neoformat_enabled_python = { 'black' }
 
 local iron = require('iron')
 

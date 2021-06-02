@@ -49,12 +49,12 @@ snvim() {
 
 home-upgrade () {
   nix flake update $HOME/Repositories/nix/nix-dotfiles/home-manager
-  home-manager switch --flake "/Users/michael/Repositories/nix/nix-dotfiles/home-manager#linux-desktop"
+  home-manager switch --flake "/Users/michael/Repositories/nix/nix-dotfiles/home-manager#macbook-pro"
   # (( $+commands[doom] )) && doom -y upgrade
 }
 
 home-switch () {
-  home-manager switch --flake "/Users/michael/Repositories/nix/nix-dotfiles/home-manager#linux-desktop"
+  home-manager switch --flake "/Users/michael/Repositories/nix/nix-dotfiles/home-manager#macbook-pro"
 }
 
 system-upgrade () {

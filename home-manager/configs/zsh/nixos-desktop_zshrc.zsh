@@ -14,12 +14,12 @@ eval $( dircolors -b $HOME/.config/dircolors )
 
 home-upgrade () {
   nix flake update $HOME/.config/nixpkgs
-  home-manager switch --flake "$HOME/.config/nixpkgs#nixos-desktop"
+  home-manager switch --flake "$HOME/Repositories/nix/nix-dotfiles/home-manager#nixos-desktop"
   # (( $+commands[doom] )) && doom -y upgrade
 }
 
 home-switch () {
-  home-manager switch --flake "$HOME/.config/nixpkgs#nixos-desktop"
+  home-manager switch --flake "$HOME/Repositories/nix/nix-dotfiles/home-manager#nixos-desktop"
 }
 
 system-upgrade () {

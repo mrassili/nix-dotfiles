@@ -48,20 +48,20 @@ snvim() {
 }
 
 home-upgrade () {
-  nix flake update $HOME/.config/nixpkgs
-  home-manager switch --flake "/Users/michael/.config/nixpkgs#macbook-pro"
+  nix flake update $HOME/Repositories/nix/nix-dotfiles/home-manager
+  home-manager switch --flake "/Users/michael/Repositories/nix/nix-dotfiles/home-manager#linux-desktop"
   # (( $+commands[doom] )) && doom -y upgrade
 }
 
 home-switch () {
-  home-manager switch --flake "/Users/michael/.config/nixpkgs#macbook-pro"
+  home-manager switch --flake "/Users/michael/Repositories/nix/nix-dotfiles/home-manager#linux-desktop"
 }
 
 system-upgrade () {
-   nix flake update $HOME/.config/darwin
-   darwin-rebuild switch --flake $HOME/.config/darwin
+   nix flake update $HOME/Repositories/nix/nix-dotfiles/darwin
+   darwin-rebuild switch --flake $HOME/Repositories/nix/nix-dotfiles/darwin
 }
 
 system-switch () {
-   darwin-rebuild switch --flake $HOME/.config/darwin
+   darwin-rebuild switch --flake $HOME/Repositories/nix/nix-dotfiles/darwin
 }

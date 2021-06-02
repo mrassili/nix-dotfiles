@@ -43,11 +43,11 @@ snvim() {
 }
 
 home-upgrade () {
-  nix flake update $HOME/.config/nixpkgs
-  home-manager switch --flake "/home/michael/.config/nixpkgs#linux-desktop"
+  nix flake update $HOME/Repositories/nix/nix-dotfiles
+  home-manager switch --flake "/home/michael/Repositories/nix/nix-dotfiles/home-manager#linux-desktop"
   # (( $+commands[doom] )) && doom -y upgrade
 }
 
 home-switch () {
-  home-manager switch --flake "/home/michael/.config/nixpkgs#linux-desktop"
+  home-manager switch --flake "/home/michael/Repositories/nix/nix-dotfiles/home-manager#linux-desktop"
 }

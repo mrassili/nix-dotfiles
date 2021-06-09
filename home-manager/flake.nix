@@ -96,6 +96,31 @@
           homeDirectory = "/home/michael";
           username = "michael";
         };
+        wsl = inputs.home-manager.lib.homeManagerConfiguration {
+          configuration = { pkgs, ... }:
+            {
+              xdg.configFile."nix/nix.conf".source = ./configs/nix/nix.conf;
+              nixpkgs.config = import ./configs/nix/config.nix;
+              nixpkgs.overlays = overlays;
+              imports = [
+                ./modules/cli.nix
+                ./modules/emacs.nix
+                ./modules/git.nix
+                ./modules/home-manager.nix
+                ./modules/languages.nix
+                ./modules/neovim.nix
+                ./modules/nix-utilities.nix
+                ./modules/linux-only.nix
+                ./modules/ssh.nix
+              ];
+
+              programs.zsh.initExtra = builtins.readFile ./configs/zsh/wsl_zshrc.zsh;
+              xdg.configFile."alacritty/alacritty.yml".source = ./configs/terminal/alacritty.yml;
+            };
+          system = "x86_64-linux";
+          homeDirectory = "/home/mjlbach";
+          username = "mjlbach";
+        };
         linux-server = inputs.home-manager.lib.homeManagerConfiguration {
           configuration = { pkgs, ... }:
             {

@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 {
   imports =
     [
@@ -85,6 +85,7 @@
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
+    registry.nixpkgs.flake = inputs.nixpkgs;
   };
 
   # Allow unfree packages from nixpkgs.

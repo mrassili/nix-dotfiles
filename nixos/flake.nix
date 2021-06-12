@@ -7,6 +7,7 @@
       modules = [ ./configuration.nix ];
       extraArgs = { inputs=inputs; };
     };
+    # Exported to allow using flake checkout as channel
     legacyPackages.x86_64-linux =
       (builtins.head (builtins.attrValues self.nixosConfigurations)).pkgs;
   };

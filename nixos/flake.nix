@@ -7,7 +7,7 @@
       modules = [ ./configuration.nix ];
       extraArgs = { inputs=inputs; };
     };
-    # legacyPackages.x86_64-linux =
-    #   (builtins.head (builtins.attrValues self.nixosConfigurations)).pkgs;
+    legacyPackages.x86_64-linux =
+      (builtins.head (builtins.attrValues self.nixosConfigurations)).pkgs;
   };
 }

@@ -13,20 +13,20 @@ alias l="ls --color=auto"
 eval $( dircolors -b $HOME/.config/dircolors )
 
 home-upgrade () {
-  nix flake update $HOME/.config/nixpkgs
-  home-manager switch --flake "$HOME/Repositories/nix/nix-dotfiles/home-manager#nixos-desktop"
+  nix flake update /nix-dotfiles/home-manager
+  home-manager switch --flake "/nix-dotfiles/home-manager#nixos-desktop"
   # (( $+commands[doom] )) && doom -y upgrade
 }
 
 home-switch () {
-  home-manager switch --flake "$HOME/Repositories/nix/nix-dotfiles/home-manager#nixos-desktop"
+  home-manager switch --flake "/nix-dotfiles/home-manager#nixos-desktop"
 }
 
 system-upgrade () {
-  sudo nix flake update /etc/nixos
-  sudo nixos-rebuild switch --flake '/etc/nixos#nixos-desktop'
+  sudo nix flake update /nix-dotfiles/nixos
+  sudo nixos-rebuild switch --flake '/nix-dotfiles/nixos#nixos-desktop'
 }
 
 system-switch () {
-  sudo nixos-rebuild switch --flake '/etc/nixos#nixos-desktop'
+  sudo nixos-rebuild switch --flake '/nix-dotfiles/nixos#nixos-desktop'
 }

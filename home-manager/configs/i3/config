@@ -40,8 +40,7 @@ exec --no-startup-id dunst
 exec --no-startup-id redshift -l 37:-122
 
 # Start picom
-# exec --no-startup-id picom -b --experimental-backends
-exec --no-startup-id picom -b
+exec --no-startup-id picom -b --experimental-backends
 
 # Hack to fix screen tearing
 # exec --no-startup-id nvidia-settings --assign CurrentMetaMode="2560x1440_144 +0+0 { ForceFullCompositionPipeline = On }"
@@ -59,8 +58,12 @@ exec --no-startup-id /usr/libexec/gsd-xsettings
 
 # Hide edge border on full screen
 hide_edge_borders smart
+
 # Printscreen
 bindsym Print exec maim -s | xclip -selection clipboard -t image/png
+
+# Printscreen
+bindsym shift+Print exec maim -s ~/Pictures/$(date +%s).png
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status

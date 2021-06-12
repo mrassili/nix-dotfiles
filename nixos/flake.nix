@@ -5,7 +5,9 @@
     nixosConfigurations.nixos-desktop = inputs.nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [ ./configuration.nix ];
-      extraArgs = inputs;
+      extraArgs = { inputs=inputs; };
     };
+    # legacyPackages.x86_64-linux =
+    #   (builtins.head (builtins.attrValues self.nixosConfigurations)).pkgs;
   };
 }

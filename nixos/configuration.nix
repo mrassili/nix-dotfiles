@@ -85,8 +85,13 @@
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
+    nixPath = lib.mkForce [ "nixpkgs=/etc/self/nixos/compat" ];
     registry.nixpkgs.flake = inputs.nixpkgs;
   };
+
+  # Set nixpkgs channel to follow flake
+  environment.etc.nixpkgs.source = inputs.nixpkgs;
+  environment.etc.self.source = inputs.self;
 
   # Allow unfree packages from nixpkgs.
   nixpkgs.config.allowUnfree = true;

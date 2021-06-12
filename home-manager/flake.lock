@@ -321,7 +321,24 @@
         "emacs-overlay": "emacs-overlay",
         "home-manager": "home-manager",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
-        "nixpkgs": "nixpkgs_3"
+        "nixpkgs": "nixpkgs_3",
+        "telescope-fzf-native": "telescope-fzf-native"
+      }
+    },
+    "telescope-fzf-native": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1623224094,
+        "narHash": "sha256-3t8jdBMEw3W/RT2lWpXZoTzNilceLjb7pRIY1eBegPs=",
+        "owner": "nvim-telescope",
+        "repo": "telescope-fzf-native.nvim",
+        "rev": "43e391499e635a31958d4363a1f5fc08ad387b81",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nvim-telescope",
+        "repo": "telescope-fzf-native.nvim",
+        "type": "github"
       }
     },
     "xelb": {

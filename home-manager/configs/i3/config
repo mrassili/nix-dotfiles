@@ -152,10 +152,13 @@ bindsym $mod+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
 
 # focus the parent container
-bindsym $mod+p focus parent
+bindsym $mod+a focus parent
+
+# move child to parent
+bindsym $mod+shift+a exec i3helper moveToParent
 
 # focus the child container
-bindsym $mod+c focus child
+bindsym $mod+z focus child
 
 # Switch to window when focus
 focus_on_window_activation focus

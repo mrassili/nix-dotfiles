@@ -21,6 +21,11 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
 
+  inputs.telescope-fzf-native = {
+    url = "github:nvim-telescope/telescope-fzf-native.nvim";
+    flake = false;
+  };
+
   inputs.LS_COLORS = {
     url = "github:trapd00r/LS_COLORS";
     flake = false;
@@ -37,6 +42,9 @@
       # };
       overlays = [
         # nixos-unstable-overlay
+        (self: super: {
+          telescope-fzf-native = super.callPackage ./packages/telescope-fzf-native.nix {src = inputs.telescope-fzf-native;};
+        })
         (self: super: {
           opencv4 = super.opencv4.override { enableUnfree = false; enableCuda = false; };
           blender = super.blender.override { cudaSupport = false; };

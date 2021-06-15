@@ -7,6 +7,7 @@ path=(
       $HOME/.npm-packages/bin
       $HOME/.poetry/bin
       $HOME/.local/flutter/bin
+      /Applications/Tailscale.app/Contents/MacOS
       $HOME/.local/zig
       $HOME/go/bin
       $HOME/.ghcup/bin

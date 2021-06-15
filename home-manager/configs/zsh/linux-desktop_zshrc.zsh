@@ -8,7 +8,7 @@ path=($HOME/.config/emacs/bin
       $HOME/.local/share/julia/bin
       $path)
 
-export TERMINAL="alacritty"
+export TERMINAL="kitty"
 export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/extras/CUPTI/lib64
 export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).
@@ -43,7 +43,7 @@ snvim() {
 }
 
 home-upgrade () {
-  nix flake update $HOME/Repositories/nix/nix-dotfiles
+  nix flake update $HOME/Repositories/nix/nix-dotfiles/home-manager
   home-manager switch --flake "/home/michael/Repositories/nix/nix-dotfiles/home-manager#linux-desktop"
   # (( $+commands[doom] )) && doom -y upgrade
 }

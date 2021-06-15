@@ -28,7 +28,7 @@
     tealdeer
     tmux
     tree
-    # universal-ctags
+    universal-ctags
     unzip
     watch
     watchman

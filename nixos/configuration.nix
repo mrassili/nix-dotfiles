@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 {
   imports =
     [
@@ -85,7 +85,16 @@
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
+    # Set nixpkgs channel to follow flake
+    nixPath = lib.mkForce [ "nixpkgs=/etc/self/nixos/compat" ];
+    registry.nixpkgs.flake = inputs.nixpkgs;
   };
+
+  # Copy system config to allow nixPath to find compat
+  environment.etc.self.source = inputs.self;
+
+  # Add current nixpkgs checkout to /etc/nixpkgs for easy browsing
+  environment.etc.nixpkgs.source = inputs.nixpkgs;
 
   # Allow unfree packages from nixpkgs.
   nixpkgs.config.allowUnfree = true;

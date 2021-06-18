@@ -107,10 +107,12 @@ vim.api.nvim_set_keymap('v', '<A-j>', ':m \'>+1<CR>gv=gv', { noremap = true})
 vim.api.nvim_set_keymap('v', '<A-k>', ':m \'<-2<CR>gv=gv', { noremap = true})
 
 --Remap escape to leave terminal mode
+vim.api.nvim_set_keymap('t', '<Esc>', [[<c-\><c-n>]], {noremap = true})
+
+--Disable numbers in terminal mode
 vim.api.nvim_exec([[
   augroup Terminal
     autocmd!
-    au TermOpen * tnoremap <buffer> <Esc> <c-\><c-n>
     au TermOpen * set nonu
   augroup end
 ]], false)

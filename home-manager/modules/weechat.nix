@@ -56,5 +56,5 @@ in
   # '';
   # python.slack.slack_api_token = "${config.secrets.slack-term}"
 
-  home.packages = [ weechat ];
+  # home.packages = [ weechat ];
 }

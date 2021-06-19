@@ -2,6 +2,7 @@
   description = "Example home-manager from non-nixos system";
 
   inputs.nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+  # inputs.nixpkgs.url = "path:/home/michael/Repositories/nix/nixpkgs";
   # inputs.nixos-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
   inputs.neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
@@ -48,6 +49,9 @@
         (self: super: {
           opencv4 = super.opencv4.override { enableUnfree = false; enableCuda = false; };
           blender = super.blender.override { cudaSupport = false; };
+        })
+        (self: super: {
+          zsh-powerlevel10k = super.callPackage ./packages/powerlevel10k.nix {};
         })
         inputs.emacs-overlay.overlay
         inputs.neovim-nightly-overlay.overlay

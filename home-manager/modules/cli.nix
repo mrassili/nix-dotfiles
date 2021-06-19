@@ -36,7 +36,7 @@
     zoxide
     # starship
     zsh
-    zsh-powerlevel10k
+    # zsh-powerlevel10k
   ];
 
 

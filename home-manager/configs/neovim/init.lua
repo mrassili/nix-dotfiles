@@ -23,6 +23,7 @@ require('packer').startup(function()
   use 'tpope/vim-surround'
   use 'tpope/vim-commentary'
   use 'tpope/vim-repeat'
+  use 'tpope/vim-unimpaired'
   use 'justinmk/vim-dirvish'
   use 'christoomey/vim-tmux-navigator'
   use 'ludovicchabant/vim-gutentags'
@@ -217,6 +218,11 @@ vim.api.nvim_set_keymap('n', '<leader>go', ':Git checkout<Space>', { noremap = t
 vim.api.nvim_set_keymap('n', '<leader>,', ':buffer *', { noremap = true})
 vim.api.nvim_set_keymap('n', '<leader>.', ':e<space>**/', { noremap = true})
 vim.api.nvim_set_keymap('n', '<leader>T', ':tjump *', { noremap = true})
+
+-- Managing quickfix list
+vim.api.nvim_set_keymap('n', '<leader>qo', ':copen<CR>', { noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>qq', ':cclose<CR>', { noremap = true, silent = true})
+vim.cmd([[autocmd FileType qf nnoremap <buffer> q :cclose<CR>]])
 
 -- Make gutentags use ripgrep
 -- --python-kinds=-iv
@@ -423,30 +429,35 @@ else
   sumneko_cmd = {sumneko_root_path.."/bin/macOS/lua-language-server", "-E", sumneko_root_path.."/main.lua" }
 end
 
-nvim_lsp.sumneko_lua.setup {
-  cmd = sumneko_cmd;
-  autostart = false;
-  on_attach = on_attach,
+local runtime_path = vim.split(package.path, ';')
+table.insert(runtime_path, "lua/?.lua")
+table.insert(runtime_path, "lua/?/init.lua")
+
+require'lspconfig'.sumneko_lua.setup {
+  cmd = sumneko_cmd,
+  autostart = false,
+  on_attach=on_attach,
   settings = {
-      Lua = {
-          runtime = {
-              -- Tell the language server which version of Lua you're using (LuaJIT in the case of Neovim)
-              version = 'LuaJIT',
-              -- Setup your lua path
-              path = vim.split(package.path, ';'),
-          },
-          diagnostics = {
-              -- Get the language server to recognize the `vim` global
-              globals = {'vim'},
-          },
-          workspace = {
-              -- Make the server aware of Neovim runtime files
-              library = {
-                  [vim.fn.expand('$VIMRUNTIME/lua')] = true,
-                  [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
-              },
-          },
+    Lua = {
+      runtime = {
+        -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+        version = 'LuaJIT',
+        -- Setup your lua path
+        path = runtime_path,
       },
+      diagnostics = {
+        -- Get the language server to recognize the `vim` global
+        globals = {'vim'},
+      },
+      workspace = {
+        -- Make the server aware of Neovim runtime files
+        library = vim.api.nvim_get_runtime_file("", true),
+      },
+      -- Do not send telemetry data containing a randomized but unique identifier
+      telemetry = {
+        enable = false,
+      },
+    },
   },
 }
 

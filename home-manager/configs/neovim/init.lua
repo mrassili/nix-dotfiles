@@ -146,7 +146,7 @@ ToggleMouse = function()
   end
 end
 
-vim.api.nvim_set_keymap('n', '<F10>', '<cmd>lua ToggleMouse()<cr>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<leader>bm', '<cmd>lua ToggleMouse()<cr>', { noremap = true })
 
 --Start interactive EasyAlign in visual mode (e.g. vipga)
 -- Note this overwrites a useful ascii print thing

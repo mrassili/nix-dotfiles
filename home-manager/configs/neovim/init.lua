@@ -35,6 +35,7 @@ require('packer').startup(function()
   use 'itchyny/lightline.vim'
   use { 'lukas-reineke/indent-blankline.nvim', branch="lua" }
   use 'hkupty/iron.nvim'
+  use 'folke/which-key.nvim'
   use 'lewis6991/gitsigns.nvim'
   use 'neovim/nvim-lspconfig'
   use 'bfredl/nvim-luadev'
@@ -237,6 +238,10 @@ vim.api.nvim_set_keymap('n', '<leader>lr', ':LspRestart<CR>', { noremap = true, 
 vim.api.nvim_set_keymap('n', '<leader>li', ':LspInfo<CR>', { noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>ls', ':LspStart<CR>', { noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>lt', ':LspStop<CR>', { noremap = true, silent = true})
+
+-- Neovim management
+vim.api.nvim_set_keymap('n', '<leader>nu', ':PackerUpdate<CR>', { noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>nc', ':e /home/michael/Repositories/nix/nix-dotfiles/home-manager/configs/neovim/init.lua<CR>', { noremap = true, silent = true})
 
 -- Make gutentags use ripgrep
 -- --python-kinds=-iv

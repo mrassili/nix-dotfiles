@@ -193,13 +193,13 @@ require('telescope').load_extension('fzf')
 --Add leader shortcuts
 vim.api.nvim_set_keymap('n', '<leader>f', [[<cmd>lua require('telescope.builtin').find_files({previewer = false})<cr>]], { noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader><space>', [[<cmd>lua require('telescope.builtin').buffers()<cr>]], { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>l', [[<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<cr>]], { noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>sb', [[<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<cr>]], { noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>h', [[<cmd>lua require('telescope.builtin').help_tags()<cr>]], { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>t', [[<cmd>lua require('telescope.builtin').tags()<cr>]], { noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>st', [[<cmd>lua require('telescope.builtin').tags()<cr>]], { noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>?', [[<cmd>lua require('telescope.builtin').oldfiles()<cr>]], { noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>sd', [[<cmd>lua require('telescope.builtin').grep_string()<cr>]], { noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>sp', [[<cmd>lua require('telescope.builtin').live_grep()<cr>]], { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>o', [[<cmd>lua require('telescope.builtin').tags{ only_current_buffer = true }<cr>]], { noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>so', [[<cmd>lua require('telescope.builtin').tags{ only_current_buffer = true }<cr>]], { noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>gc', [[<cmd>lua require('telescope.builtin').git_commits()<cr>]], { noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>gb', [[<cmd>lua require('telescope.builtin').git_branches()<cr>]], { noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>gs', [[<cmd>lua require('telescope.builtin').git_status()<cr>]], { noremap = true, silent = true})
@@ -220,7 +220,7 @@ vim.api.nvim_set_keymap('n', '<leader>go', ':Git checkout<Space>', { noremap = t
 -- alternative shorcuts without fzf
 vim.api.nvim_set_keymap('n', '<leader>,', ':buffer *', { noremap = true})
 vim.api.nvim_set_keymap('n', '<leader>.', ':e<space>**/', { noremap = true})
-vim.api.nvim_set_keymap('n', '<leader>T', ':tjump *', { noremap = true})
+vim.api.nvim_set_keymap('n', '<leader>sT', ':tjump *', { noremap = true})
 
 -- Managing quickfix list
 vim.api.nvim_set_keymap('n', '<leader>qo', ':copen<CR>', { noremap = true, silent = true})
@@ -242,6 +242,62 @@ vim.api.nvim_set_keymap('n', '<leader>lt', ':LspStop<CR>', { noremap = true, sil
 -- Neovim management
 vim.api.nvim_set_keymap('n', '<leader>nu', ':PackerUpdate<CR>', { noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>nc', ':e /home/michael/Repositories/nix/nix-dotfiles/home-manager/configs/neovim/init.lua<CR>', { noremap = true, silent = true})
+
+vim.cmd([[autocmd ColorScheme * highlight WhichKeyFloat guifg=ABB2BF guibg=282C34]])
+vim.cmd([[autocmd ColorScheme * highlight FloatBorder guifg=ABB2BF guibg=282C34]])
+
+require("which-key").setup {
+  window = {
+    border = {"─", "─" ,"─", " ", " ", " ", " ", " " }, -- none, single, double, shadow
+    position = "bottom", -- bottom, top
+    margin = { 0, 0, 0, 0 }, -- extra window margin [top, right, bottom, left]
+    padding = { 0, 0, 1, 0 }, -- extra window padding [top, right, bottom, left]
+  },
+}
+
+local wk = require("which-key")
+-- As an example, we will the create following mappings:
+--  * <leader>ff find files
+--  * <leader>fr show recent files
+--  * <leader>fb Foobar
+-- we'll document:
+--  * <leader>fn new file
+--  * <leader>fe edit file
+-- and hide <leader>1
+
+wk.register({
+  f = {
+    name = "file", -- optional group name
+  },
+  b = {
+    name = "buffer", -- optional group name
+  },
+  n = {
+    name = "neovim", -- optional group name
+  },
+  s = {
+    name = "search", -- optional group name
+  },
+  w = {
+    name = "workspace", -- optional group name
+  },
+  q = {
+    name = "quickfix", -- optional group name
+  },
+  g = {
+    name = "git", -- optional group name
+  },
+  h = {
+    name = "help/hunks", -- optional group name
+  },
+  ["?"] = "which_key_ignore",
+  [";"] = "which_key_ignore",
+  [","] = "which_key_ignore",
+  ["<space>"] = "which_key_ignore",
+  ["."] = "which_key_ignore",
+  ["<space>"] = "which_key_ignore",
+}, { prefix = "<leader>" })
+
 
 -- Make gutentags use ripgrep
 -- --python-kinds=-iv
@@ -326,7 +382,7 @@ ToggleNetrw = function()
   end
 end
 
-vim.api.nvim_set_keymap('n', '<leader>d', ':lua ToggleNetrw()<cr><paste>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>wt', ':lua ToggleNetrw()<cr><paste>', { noremap = true, silent = true })
 
 -- Function to open preview of file under netrw
 vim.api.nvim_exec([[
@@ -337,14 +393,14 @@ vim.api.nvim_exec([[
 ]], false)
 
 -- directory managmeent, including autochdir
-vim.cmd[[nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>]]
+-- vim.cmd[[nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>]]
 
-vim.api.nvim_exec([[
-  augroup BufferCD
-    autocmd!
-    autocmd BufEnter * silent! Glcd 
-  augroup end
-]], false)
+-- vim.api.nvim_exec([[
+--   augroup BufferCD
+--     autocmd!
+--     autocmd BufEnter * silent! Glcd 
+--   augroup end
+-- ]], false)
 
 vim.api.nvim_exec([[
   augroup nvim-luadev

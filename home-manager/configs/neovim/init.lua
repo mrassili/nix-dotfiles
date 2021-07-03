@@ -33,7 +33,7 @@ require('packer').startup(function()
   use {'nvim-telescope/telescope-fzf-native.nvim'}
   use 'joshdick/onedark.vim'
   use 'itchyny/lightline.vim'
-  use { 'lukas-reineke/indent-blankline.nvim', branch="lua" }
+  use 'lukas-reineke/indent-blankline.nvim'
   use 'hkupty/iron.nvim'
   use 'folke/which-key.nvim'
   use 'lewis6991/gitsigns.nvim'
@@ -241,7 +241,7 @@ vim.api.nvim_set_keymap('n', '<leader>lt', ':LspStop<CR>', { noremap = true, sil
 
 -- Neovim management
 vim.api.nvim_set_keymap('n', '<leader>nu', ':PackerUpdate<CR>', { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>nc', ':e /home/michael/Repositories/nix/nix-dotfiles/home-manager/configs/neovim/init.lua<CR>', { noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>nc', ':e $HOME/Repositories/nix/nix-dotfiles/home-manager/configs/neovim/init.lua<CR>', { noremap = true, silent = true})
 
 vim.cmd([[autocmd ColorScheme * highlight WhichKeyFloat guifg=ABB2BF guibg=282C34]])
 vim.cmd([[autocmd ColorScheme * highlight FloatBorder guifg=ABB2BF guibg=282C34]])
@@ -463,6 +463,15 @@ local on_attach = function(_client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
 end
 
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+capabilities.textDocument.completion.completionItem.resolveSupport = {
+  properties = {
+    'documentation',
+    'detail',
+    'additionalTextEdits',
+  }
+}
 local servers = {
   'clangd', 'gopls', 'rust_analyzer', 'rnix', 'hls', 'pyright',
 }
@@ -473,6 +482,7 @@ local servers = {
 
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
+    capabilities=capabilities,
     on_attach = on_attach,
 }
 end

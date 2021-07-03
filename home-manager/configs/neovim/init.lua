@@ -82,6 +82,10 @@ vim.o.termguicolors = true
 vim.g.onedark_terminal_italics = 2
 vim.cmd[[colorscheme onedark]]
 
+--Add spellchecking
+vim.cmd [[ autocmd FileType gitcommit setlocal spell ]]
+vim.cmd [[ autocmd FileType markdown setlocal spell ]]
+
 --Set statusbar
 vim.g.lightline = { colorscheme = 'onedark';
       active = { left = { { 'mode', 'paste' }, { 'gitbranch', 'readonly', 'filename', 'modified' } } };

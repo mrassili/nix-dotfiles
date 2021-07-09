@@ -1,17 +1,20 @@
 -- Install packer
 
-local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
+local install_path = vim.fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
 
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-  vim.fn.execute('!git clone https://github.com/wbthomason/packer.nvim '..install_path)
+  vim.fn.execute('!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
 end
 
-vim.api.nvim_exec([[
+vim.api.nvim_exec(
+  [[
   augroup Packer
     autocmd!
     autocmd BufWritePost plugins.lua PackerCompile
   augroup end
-]], false)
+]],
+  false
+)
 
 local use = require('packer').use
 require('packer').startup(function()
@@ -28,10 +31,8 @@ require('packer').startup(function()
   use 'justinmk/vim-dirvish'
   use 'christoomey/vim-tmux-navigator'
   use 'ludovicchabant/vim-gutentags'
-  use {'nvim-telescope/telescope.nvim',
-  requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
-  }
-  use {'nvim-telescope/telescope-fzf-native.nvim'}
+  use { 'nvim-telescope/telescope.nvim', requires = { { 'nvim-lua/popup.nvim' }, { 'nvim-lua/plenary.nvim' } } }
+  use { 'nvim-telescope/telescope-fzf-native.nvim' }
   use 'joshdick/onedark.vim'
   use 'itchyny/lightline.vim'
   use 'lukas-reineke/indent-blankline.nvim'
@@ -49,7 +50,7 @@ end)
 vim.o.expandtab = true
 
 --Incremental live completion
-vim.o.inccommand = "nosplit"
+vim.o.inccommand = 'nosplit'
 
 --Set highlight on search
 vim.o.hlsearch = false
@@ -61,13 +62,13 @@ vim.wo.number = true
 vim.o.hidden = true
 
 --Enable mouse mode
-vim.o.mouse = "a"
+vim.o.mouse = 'a'
 
 --Enable break indent
 vim.o.breakindent = true
 
 --Save undo history
-vim.cmd[[ set undofile ]]
+vim.cmd [[ set undofile ]]
 
 --Case insensitive searching UNLESS /C or capital in search
 vim.o.ignorecase = true
@@ -75,61 +76,65 @@ vim.o.smartcase = true
 
 --Decrease update time
 vim.o.updatetime = 250
-vim.wo.signcolumn="yes"
+vim.wo.signcolumn = 'yes'
 
 --Set colorscheme (order is important here)
 vim.o.termguicolors = true
 vim.g.onedark_terminal_italics = 2
-vim.cmd[[colorscheme onedark]]
+vim.cmd [[colorscheme onedark]]
 
 --Add spellchecking
 vim.cmd [[ autocmd FileType gitcommit setlocal spell ]]
 vim.cmd [[ autocmd FileType markdown setlocal spell ]]
 
 --Set statusbar
-vim.g.lightline = { colorscheme = 'onedark';
-      active = { left = { { 'mode', 'paste' }, { 'gitbranch', 'readonly', 'filename', 'modified' } } };
-      component_function = { gitbranch = 'fugitive#head', };
+vim.g.lightline = {
+  colorscheme = 'onedark',
+  active = { left = { { 'mode', 'paste' }, { 'gitbranch', 'readonly', 'filename', 'modified' } } },
+  component_function = { gitbranch = 'fugitive#head' },
 }
 
 --Fire, walk with me
-vim.cmd[[set guifont="Monaco:h18"]]
+vim.cmd [[set guifont="Monaco:h18"]]
 vim.g.firenvim_config = { localSettings = { ['.*'] = { takeover = 'never' } } }
 
 --Remap space as leader key
-vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { noremap = true, silent=true})
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
+vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { noremap = true, silent = true })
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
 
 --Remap for dealing with word wrap
-vim.api.nvim_set_keymap('n', 'k', "v:count == 0 ? 'gk' : 'k'", { noremap=true, expr = true, silent = true})
-vim.api.nvim_set_keymap('n', 'j', "v:count == 0 ? 'gj' : 'j'", {noremap= true, expr = true, silent = true})
+vim.api.nvim_set_keymap('n', 'k', "v:count == 0 ? 'gk' : 'k'", { noremap = true, expr = true, silent = true })
+vim.api.nvim_set_keymap('n', 'j', "v:count == 0 ? 'gj' : 'j'", { noremap = true, expr = true, silent = true })
 
 --Add move line shortcuts
-vim.api.nvim_set_keymap('n', '<A-j>', ':m .+1<CR>==', { noremap = true})
-vim.api.nvim_set_keymap('n', '<A-k>', ':m .-2<CR>==', { noremap = true})
-vim.api.nvim_set_keymap('i', '<A-j>', '<Esc>:m .+1<CR>==gi', { noremap = true})
-vim.api.nvim_set_keymap('i', '<A-k>', '<Esc>:m .-2<CR>==gi', { noremap = true})
-vim.api.nvim_set_keymap('v', '<A-j>', ':m \'>+1<CR>gv=gv', { noremap = true})
-vim.api.nvim_set_keymap('v', '<A-k>', ':m \'<-2<CR>gv=gv', { noremap = true})
+vim.api.nvim_set_keymap('n', '<A-j>', ':m .+1<CR>==', { noremap = true })
+vim.api.nvim_set_keymap('n', '<A-k>', ':m .-2<CR>==', { noremap = true })
+vim.api.nvim_set_keymap('i', '<A-j>', '<Esc>:m .+1<CR>==gi', { noremap = true })
+vim.api.nvim_set_keymap('i', '<A-k>', '<Esc>:m .-2<CR>==gi', { noremap = true })
+vim.api.nvim_set_keymap('v', '<A-j>', ":m '>+1<CR>gv=gv", { noremap = true })
+vim.api.nvim_set_keymap('v', '<A-k>', ":m '<-2<CR>gv=gv", { noremap = true })
 
 --Remap escape to leave terminal mode
-vim.api.nvim_set_keymap('t', '<Esc>', [[<c-\><c-n>]], {noremap = true})
+vim.api.nvim_set_keymap('t', '<Esc>', [[<c-\><c-n>]], { noremap = true })
 
 --Disable numbers in terminal mode
-vim.api.nvim_exec([[
+vim.api.nvim_exec(
+  [[
   augroup Terminal
     autocmd!
     au TermOpen * set nonu
   augroup end
-]], false)
+]],
+  false
+)
 
 --Add map to enter paste mode
-vim.o.pastetoggle="<F3>"
+vim.o.pastetoggle = '<F3>'
 
-vim.g.indent_blankline_char = "┊"
+vim.g.indent_blankline_char = '┊'
 vim.g.indent_blankline_filetype_exclude = { 'help', 'packer' }
-vim.g.indent_blankline_buftype_exclude = { 'terminal', 'nofile'}
+vim.g.indent_blankline_buftype_exclude = { 'terminal', 'nofile' }
 vim.g.indent_blankline_char_highlight = 'LineNr'
 vim.g.indent_blankline_show_trailing_blankline_indent = false
 -- vim.g.indent_blankline_show_current_context = false
@@ -137,17 +142,17 @@ vim.g.indent_blankline_show_trailing_blankline_indent = false
 -- Toggle to disable mouse mode and indentlines for easier paste
 ToggleMouse = function()
   if vim.o.mouse == 'a' then
-    vim.cmd[[IndentBlanklineDisable]]
-    vim.wo.signcolumn='no'
+    vim.cmd [[IndentBlanklineDisable]]
+    vim.wo.signcolumn = 'no'
     vim.o.mouse = 'v'
     vim.wo.number = false
-    print("Mouse disabled")
+    print 'Mouse disabled'
   else
-    vim.cmd[[IndentBlanklineEnable]]
-    vim.wo.signcolumn='yes'
+    vim.cmd [[IndentBlanklineEnable]]
+    vim.wo.signcolumn = 'yes'
     vim.o.mouse = 'a'
     vim.wo.number = true
-    print("Mouse enabled")
+    print 'Mouse enabled'
   end
 end
 
@@ -165,102 +170,102 @@ vim.api.nvim_set_keymap('n', '<leader>bm', '<cmd>lua ToggleMouse()<cr>', { norem
 -- vim.g.tex_flavor = 'latex'
 
 -- Gitsigns
-require('gitsigns').setup({
+require('gitsigns').setup {
   signs = {
-    add          = {hl = 'GitGutterAdd'   , text = '+'},
-    change       = {hl = 'GitGutterChange', text = '~'},
-    delete       = {hl = 'GitGutterDelete', text = '_'},
-    topdelete    = {hl = 'GitGutterDelete', text = '‾'},
-    changedelete = {hl = 'GitGutterChange', text = '~'},
-  }
-})
+    add = { hl = 'GitGutterAdd', text = '+' },
+    change = { hl = 'GitGutterChange', text = '~' },
+    delete = { hl = 'GitGutterDelete', text = '_' },
+    topdelete = { hl = 'GitGutterDelete', text = '‾' },
+    changedelete = { hl = 'GitGutterChange', text = '~' },
+  },
+}
 
 -- Telescope
 require('telescope').setup {
   defaults = {
     mappings = {
       i = {
-        ["<C-u>"] = false,
-        ["<C-d>"] = false,
+        ['<C-u>'] = false,
+        ['<C-d>'] = false,
       },
     },
   },
   extensions = {
     fzf = {
       override_generic_sorter = true, -- override the generic sorter
-      override_file_sorter = true,     -- override the file sorter
-      case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
-                                       -- the default case_mode is "smart_case"
-    }
-  }
+      override_file_sorter = true, -- override the file sorter
+      case_mode = 'smart_case', -- or "ignore_case" or "respect_case"
+      -- the default case_mode is "smart_case"
+    },
+  },
 }
-require('telescope').load_extension('fzf')
+require('telescope').load_extension 'fzf'
 --Add leader shortcuts
-vim.api.nvim_set_keymap('n', '<leader>f', [[<cmd>lua require('telescope.builtin').find_files({previewer = false})<cr>]], { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader><space>', [[<cmd>lua require('telescope.builtin').buffers()<cr>]], { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>sb', [[<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<cr>]], { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>h', [[<cmd>lua require('telescope.builtin').help_tags()<cr>]], { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>st', [[<cmd>lua require('telescope.builtin').tags()<cr>]], { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>?', [[<cmd>lua require('telescope.builtin').oldfiles()<cr>]], { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>sd', [[<cmd>lua require('telescope.builtin').grep_string()<cr>]], { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>sp', [[<cmd>lua require('telescope.builtin').live_grep()<cr>]], { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>so', [[<cmd>lua require('telescope.builtin').tags{ only_current_buffer = true }<cr>]], { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>gc', [[<cmd>lua require('telescope.builtin').git_commits()<cr>]], { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>gb', [[<cmd>lua require('telescope.builtin').git_branches()<cr>]], { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>gs', [[<cmd>lua require('telescope.builtin').git_status()<cr>]], { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>gp', [[<cmd>lua require('telescope.builtin').git_bcommits()<cr>]], { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>wb', [[<cmd>lua require('telescope.builtin').lsp_document_symbols()<cr>]], { noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>f', [[<cmd>lua require('telescope.builtin').find_files({previewer = false})<cr>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader><space>', [[<cmd>lua require('telescope.builtin').buffers()<cr>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>sb', [[<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<cr>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>h', [[<cmd>lua require('telescope.builtin').help_tags()<cr>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>st', [[<cmd>lua require('telescope.builtin').tags()<cr>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>?', [[<cmd>lua require('telescope.builtin').oldfiles()<cr>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>sd', [[<cmd>lua require('telescope.builtin').grep_string()<cr>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>sp', [[<cmd>lua require('telescope.builtin').live_grep()<cr>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>so', [[<cmd>lua require('telescope.builtin').tags{ only_current_buffer = true }<cr>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>gc', [[<cmd>lua require('telescope.builtin').git_commits()<cr>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>gb', [[<cmd>lua require('telescope.builtin').git_branches()<cr>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>gs', [[<cmd>lua require('telescope.builtin').git_status()<cr>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>gp', [[<cmd>lua require('telescope.builtin').git_bcommits()<cr>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>wb', [[<cmd>lua require('telescope.builtin').lsp_document_symbols()<cr>]], { noremap = true, silent = true })
 
 -- Fugitive shortcuts
-vim.api.nvim_set_keymap('n', '<leader>ga', ':Git add %:p<CR><CR>', { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>gg', ':GBrowse<CR>', { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>gd', ':Gdiff<CR>', { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>ge', ':Gedit<CR>', { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>gr', ':Gread<CR>', { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>gw', ':Gwrite<CR><CR>', { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>gl', ':silent! Glog<CR>:bot copen<CR>', { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>gm', ':Gmove<Space>', { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>go', ':Git checkout<Space>', { noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>ga', ':Git add %:p<CR><CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>gg', ':GBrowse<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>gd', ':Gdiff<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>ge', ':Gedit<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>gr', ':Gread<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>gw', ':Gwrite<CR><CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>gl', ':silent! Glog<CR>:bot copen<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>gm', ':Gmove<Space>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>go', ':Git checkout<Space>', { noremap = true, silent = true })
 
 -- alternative shorcuts without fzf
-vim.api.nvim_set_keymap('n', '<leader>,', ':buffer *', { noremap = true})
-vim.api.nvim_set_keymap('n', '<leader>.', ':e<space>**/', { noremap = true})
-vim.api.nvim_set_keymap('n', '<leader>sT', ':tjump *', { noremap = true})
+vim.api.nvim_set_keymap('n', '<leader>,', ':buffer *', { noremap = true })
+vim.api.nvim_set_keymap('n', '<leader>.', ':e<space>**/', { noremap = true })
+vim.api.nvim_set_keymap('n', '<leader>sT', ':tjump *', { noremap = true })
 
 -- Managing quickfix list
-vim.api.nvim_set_keymap('n', '<leader>qo', ':copen<CR>', { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>qq', ':cclose<CR>', { noremap = true, silent = true})
-vim.cmd([[autocmd FileType qf nnoremap <buffer> q :cclose<CR>]])
+vim.api.nvim_set_keymap('n', '<leader>qo', ':copen<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>qq', ':cclose<CR>', { noremap = true, silent = true })
+vim.cmd [[autocmd FileType qf nnoremap <buffer> q :cclose<CR>]]
 
 -- Managing buffers
-vim.api.nvim_set_keymap('n', '<leader>bd', ':bdelete<CR>', { noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>bd', ':bdelete<CR>', { noremap = true, silent = true })
 
 -- Random
-vim.api.nvim_set_keymap('n', '<leader>;', ':', { noremap = true, silent = false})
+vim.api.nvim_set_keymap('n', '<leader>;', ':', { noremap = true, silent = false })
 
 -- LSP management
-vim.api.nvim_set_keymap('n', '<leader>lr', ':LspRestart<CR>', { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>li', ':LspInfo<CR>', { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>ls', ':LspStart<CR>', { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>lt', ':LspStop<CR>', { noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>lr', ':LspRestart<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>li', ':LspInfo<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>ls', ':LspStart<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>lt', ':LspStop<CR>', { noremap = true, silent = true })
 
 -- Neovim management
-vim.api.nvim_set_keymap('n', '<leader>nu', ':PackerUpdate<CR>', { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>nc', ':e $HOME/Repositories/nix/nix-dotfiles/home-manager/configs/neovim/init.lua<CR>', { noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>nu', ':PackerUpdate<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>nc', ':e $HOME/Repositories/nix/nix-dotfiles/home-manager/configs/neovim/init.lua<CR>', { noremap = true, silent = true })
 
-vim.cmd([[autocmd ColorScheme * highlight WhichKeyFloat guifg=ABB2BF guibg=282C34]])
-vim.cmd([[autocmd ColorScheme * highlight FloatBorder guifg=ABB2BF guibg=282C34]])
+vim.cmd [[autocmd ColorScheme * highlight WhichKeyFloat guifg=ABB2BF guibg=282C34]]
+vim.cmd [[autocmd ColorScheme * highlight FloatBorder guifg=ABB2BF guibg=282C34]]
 
-require("which-key").setup {
+require('which-key').setup {
   window = {
-    border = {"─", "─" ,"─", " ", " ", " ", " ", " " }, -- none, single, double, shadow
-    position = "bottom", -- bottom, top
+    border = { '─', '─', '─', ' ', ' ', ' ', ' ', ' ' }, -- none, single, double, shadow
+    position = 'bottom', -- bottom, top
     margin = { 0, 0, 0, 0 }, -- extra window margin [top, right, bottom, left]
     padding = { 0, 0, 1, 0 }, -- extra window padding [top, right, bottom, left]
   },
 }
 
-local wk = require("which-key")
+local wk = require 'which-key'
 -- As an example, we will the create following mappings:
 --  * <leader>ff find files
 --  * <leader>fr show recent files
@@ -272,37 +277,38 @@ local wk = require("which-key")
 
 wk.register({
   f = {
-    name = "file", -- optional group name
+    name = 'file', -- optional group name
   },
   b = {
-    name = "buffer", -- optional group name
+    name = 'buffer', -- optional group name
   },
   n = {
-    name = "neovim", -- optional group name
+    name = 'neovim', -- optional group name
   },
   s = {
-    name = "search", -- optional group name
+    name = 'search', -- optional group name
   },
   w = {
-    name = "workspace", -- optional group name
+    name = 'workspace', -- optional group name
   },
   q = {
-    name = "quickfix", -- optional group name
+    name = 'quickfix', -- optional group name
   },
   g = {
-    name = "git", -- optional group name
+    name = 'git', -- optional group name
   },
   h = {
-    name = "help/hunks", -- optional group name
+    name = 'help/hunks', -- optional group name
   },
-  ["?"] = "which_key_ignore",
-  [";"] = "which_key_ignore",
-  [","] = "which_key_ignore",
-  ["<space>"] = "which_key_ignore",
-  ["."] = "which_key_ignore",
-  ["<space>"] = "which_key_ignore",
-}, { prefix = "<leader>" })
-
+  ['?'] = 'which_key_ignore',
+  [';'] = 'which_key_ignore',
+  [','] = 'which_key_ignore',
+  ['<space>'] = 'which_key_ignore',
+  ['.'] = 'which_key_ignore',
+  ['<space>'] = 'which_key_ignore',
+}, {
+  prefix = '<leader>',
+})
 
 -- Make gutentags use ripgrep
 -- --python-kinds=-iv
@@ -324,35 +330,38 @@ vim.g.markdown_syntax_conceal = 0
 vim.g.splitbelow = true
 
 -- Remap number increment to alt
-vim.api.nvim_set_keymap('n', '<A-a>', '<C-a>', { noremap = true})
-vim.api.nvim_set_keymap('v', '<A-a>', '<C-a>', { noremap = true})
-vim.api.nvim_set_keymap('n', '<A-x>', '<C-x>', { noremap = true})
-vim.api.nvim_set_keymap('v', '<A-x>', '<C-x>', { noremap = true})
+vim.api.nvim_set_keymap('n', '<A-a>', '<C-a>', { noremap = true })
+vim.api.nvim_set_keymap('v', '<A-a>', '<C-a>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<A-x>', '<C-x>', { noremap = true })
+vim.api.nvim_set_keymap('v', '<A-x>', '<C-x>', { noremap = true })
 
 -- n always goes forward
-vim.api.nvim_set_keymap('n', 'n', "'Nn'[v:searchforward]", { noremap = true, expr = true})
-vim.api.nvim_set_keymap('x', 'n', "'Nn'[v:searchforward]", { noremap = true, expr = true})
-vim.api.nvim_set_keymap('o', 'n', "'Nn'[v:searchforward]", { noremap = true, expr = true})
-vim.api.nvim_set_keymap('n', 'N', "'nN'[v:searchforward]", { noremap = true, expr = true})
-vim.api.nvim_set_keymap('x', 'N', "'nN'[v:searchforward]", { noremap = true, expr = true})
-vim.api.nvim_set_keymap('o', 'N', "'nN'[v:searchforward]", { noremap = true, expr = true})
+vim.api.nvim_set_keymap('n', 'n', "'Nn'[v:searchforward]", { noremap = true, expr = true })
+vim.api.nvim_set_keymap('x', 'n', "'Nn'[v:searchforward]", { noremap = true, expr = true })
+vim.api.nvim_set_keymap('o', 'n', "'Nn'[v:searchforward]", { noremap = true, expr = true })
+vim.api.nvim_set_keymap('n', 'N', "'nN'[v:searchforward]", { noremap = true, expr = true })
+vim.api.nvim_set_keymap('x', 'N', "'nN'[v:searchforward]", { noremap = true, expr = true })
+vim.api.nvim_set_keymap('o', 'N', "'nN'[v:searchforward]", { noremap = true, expr = true })
 
 -- Neovim python support
 vim.g.loaded_python_provider = 0
 
 -- Highlight on yank
-vim.api.nvim_exec([[
+vim.api.nvim_exec(
+  [[
   augroup YankHighlight
     autocmd!
     autocmd TextYankPost * silent! lua vim.highlight.on_yank()
   augroup end
-]], false)
+]],
+  false
+)
 
 -- Y yank until the end of line
-vim.api.nvim_set_keymap('n', 'Y', 'y$', { noremap = true})
+vim.api.nvim_set_keymap('n', 'Y', 'y$', { noremap = true })
 
 -- Clear white space on empty lines and end of line
-vim.api.nvim_set_keymap('n', '<F6>', [[:let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>]], { noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<F6>', [[:let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>]], { noremap = true, silent = true })
 
 -- Nerdtree like sidepanel
 -- absolute width of netrw window
@@ -372,8 +381,8 @@ ToggleNetrw = function()
   if vim.g.NetrwIsOpen == 1 then
     local i = vim.api.nvim_get_current_buf()
     while i >= 1 do
-      if vim.bo.filetype == "netrw" then
-        vim.cmd([[ silent exe "bwipeout " . ]] .. i )
+      if vim.bo.filetype == 'netrw' then
+        vim.cmd([[ silent exe "bwipeout " . ]] .. i)
       end
       i = i - 1
     end
@@ -383,19 +392,22 @@ ToggleNetrw = function()
   else
     vim.g.NetrwIsOpen = 1
     vim.g.netrw_liststyle = 3
-    vim.cmd([[silent Lexplore]])
+    vim.cmd [[silent Lexplore]]
   end
 end
 
 vim.api.nvim_set_keymap('n', '<leader>wt', ':lua ToggleNetrw()<cr><paste>', { noremap = true, silent = true })
 
 -- Function to open preview of file under netrw
-vim.api.nvim_exec([[
+vim.api.nvim_exec(
+  [[
   augroup Netrw
     autocmd!
     autocmd filetype netrw nmap <leader>; <cr>:wincmd W<cr>
   augroup end
-]], false)
+]],
+  false
+)
 
 -- directory managmeent, including autochdir
 -- vim.cmd[[nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>]]
@@ -403,11 +415,12 @@ vim.api.nvim_exec([[
 -- vim.api.nvim_exec([[
 --   augroup BufferCD
 --     autocmd!
---     autocmd BufEnter * silent! Glcd 
+--     autocmd BufEnter * silent! Glcd
 --   augroup end
 -- ]], false)
 
-vim.api.nvim_exec([[
+vim.api.nvim_exec(
+  [[
   augroup nvim-luadev
     autocmd!
     function! SetLuaDevOptions()
@@ -419,7 +432,9 @@ vim.api.nvim_exec([[
     endfunction
     autocmd BufEnter \[nvim-lua\] call SetLuaDevOptions()
   augroup end
-]], false)
+]],
+  false
+)
 
 -- Vim polyglot language specific settings
 vim.g.python_highlight_space_errors = 0
@@ -429,27 +444,25 @@ vim.g.python_highlight_space_errors = 0
 -- LSP settings
 -- log file location: /Users/michael/.local/share/nvim/lsp.log
 -- Add nvim-lspconfig plugin
-local nvim_lsp = require('lspconfig')
+local nvim_lsp = require 'lspconfig'
 -- vim.lsp.set_log_level("debug")
 local on_attach = function(_client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-  vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-    vim.lsp.diagnostic.on_publish_diagnostics, {
-      virtual_text = true;
-      signs = true,
-      update_in_insert = true,
-    }
-  )
+  vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+    virtual_text = true,
+    signs = true,
+    update_in_insert = true,
+  })
 
   -- local overridden_hover = vim.lsp.with(vim.lsp.handlers.hover, { border = "single" })
   local overridden_hover = vim.lsp.handlers.hover
-  vim.lsp.handlers["textDocument/hover"] = function(...)
-    local buf = overridden_hover (...)
-    vim.api.nvim_buf_set_keymap(buf, 'n', 'K', '<Cmd>wincmd p<CR>', {noremap = true, silent = true})
+  vim.lsp.handlers['textDocument/hover'] = function(...)
+    local buf = overridden_hover(...)
+    vim.api.nvim_buf_set_keymap(buf, 'n', 'K', '<Cmd>wincmd p<CR>', { noremap = true, silent = true })
   end
 
   -- Mappings.
-  local opts = { noremap=true, silent=true }
+  local opts = { noremap = true, silent = true }
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
@@ -475,10 +488,15 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
     'documentation',
     'detail',
     'additionalTextEdits',
-  }
+  },
 }
 local servers = {
-  'clangd', 'gopls', 'rust_analyzer', 'rnix', 'hls', 'pyright',
+  'clangd',
+  'gopls',
+  'rust_analyzer',
+  'rnix',
+  'hls',
+  'pyright',
 }
 --local servers = {
 --  'gopls', 'clangd', 'vuels', 'hls', 'solargraph', 'rnix', 'ocamllsp',
@@ -487,46 +505,46 @@ local servers = {
 
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
-    capabilities=capabilities,
+    capabilities = capabilities,
     on_attach = on_attach,
-}
+  }
 end
 
-nvim_lsp.texlab.setup{
-  on_attach = on_attach;
+nvim_lsp.texlab.setup {
+  on_attach = on_attach,
   settings = {
     latex = {
-      rootDirectory = ".",
+      rootDirectory = '.',
       build = {
-        args = { "-pdf", "-interaction=nonstopmode", "-synctex=1", "-pvc" },
+        args = { '-pdf', '-interaction=nonstopmode', '-synctex=1', '-pvc' },
         forwardSearchAfter = true,
-        onSave = true
+        onSave = true,
       },
       forwardSearch = {
-        executable = "zathura",
-        args = {"--synctex-forward", "%l:1:%f", "%p"},
-        onSave = true
-      }
-    }
-  }
+        executable = 'zathura',
+        args = { '--synctex-forward', '%l:1:%f', '%p' },
+        onSave = true,
+      },
+    },
+  },
 }
 
 local sumneko_cmd
-if vim.fn.executable("lua-language-server") == 1 then
-  sumneko_cmd = {"lua-language-server"}
+if vim.fn.executable 'lua-language-server' == 1 then
+  sumneko_cmd = { 'lua-language-server' }
 else
-  local sumneko_root_path = vim.fn.getenv("HOME").."/.local/bin/sumneko_lua"
-  sumneko_cmd = {sumneko_root_path.."/bin/macOS/lua-language-server", "-E", sumneko_root_path.."/main.lua" }
+  local sumneko_root_path = vim.fn.getenv 'HOME' .. '/.local/bin/sumneko_lua'
+  sumneko_cmd = { sumneko_root_path .. '/bin/macOS/lua-language-server', '-E', sumneko_root_path .. '/main.lua' }
 end
 
 local runtime_path = vim.split(package.path, ';')
-table.insert(runtime_path, "lua/?.lua")
-table.insert(runtime_path, "lua/?/init.lua")
+table.insert(runtime_path, 'lua/?.lua')
+table.insert(runtime_path, 'lua/?/init.lua')
 
-require'lspconfig'.sumneko_lua.setup {
+require('lspconfig').sumneko_lua.setup {
   cmd = sumneko_cmd,
   autostart = false,
-  on_attach=on_attach,
+  on_attach = on_attach,
   settings = {
     Lua = {
       runtime = {
@@ -537,11 +555,11 @@ require'lspconfig'.sumneko_lua.setup {
       },
       diagnostics = {
         -- Get the language server to recognize the `vim` global
-        globals = {'vim'},
+        globals = { 'vim' },
       },
       workspace = {
         -- Make the server aware of Neovim runtime files
-        library = vim.api.nvim_get_runtime_file("", true),
+        library = vim.api.nvim_get_runtime_file('', true),
       },
       -- Do not send telemetry data containing a randomized but unique identifier
       telemetry = {
@@ -557,29 +575,29 @@ FormatRange = function()
   vim.lsp.buf.range_formatting({}, start_pos, end_pos)
 end
 
-vim.cmd([[
+vim.cmd [[
   command! -range FormatRange  execute 'lua FormatRange()'
-]])
+]]
 
-vim.cmd([[
+vim.cmd [[
   command! Format execute 'lua vim.lsp.buf.formatting()'
-]])
+]]
 
 -- Set completeopt to have a better completion experience
-vim.o.completeopt="menuone,noinsert,noselect"
+vim.o.completeopt = 'menuone,noinsert,noselect'
 
-require'nvim-treesitter.configs'.setup {
+require('nvim-treesitter.configs').setup {
   -- ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
   highlight = {
-    enable = true,              -- false will disable the whole extension
+    enable = true, -- false will disable the whole extension
   },
   incremental_selection = {
     enable = true,
     keymaps = {
-      init_selection = "gnn",
-      node_incremental = "grn",
-      scope_incremental = "grc",
-      node_decremental = "grm",
+      init_selection = 'gnn',
+      node_incremental = 'grn',
+      scope_incremental = 'grc',
+      node_decremental = 'grm',
     },
   },
   indent = {
@@ -589,22 +607,22 @@ require'nvim-treesitter.configs'.setup {
     select = {
       enable = true,
 
-      -- Automatically jump forward to textobj, similar to targets.vim 
+      -- Automatically jump forward to textobj, similar to targets.vim
       lookahead = true,
 
       keymaps = {
         -- You can use the capture groups defined in textobjects.scm
-        ["af"] = "@function.outer",
-        ["if"] = "@function.inner",
-        ["ac"] = "@class.outer",
-        ["ic"] = "@class.inner",
+        ['af'] = '@function.outer',
+        ['if'] = '@function.inner',
+        ['ac'] = '@class.outer',
+        ['ic'] = '@class.inner',
 
         -- Or you can define your own textobjects like this
-        ["iF"] = {
-          python = "(function_definition) @function",
-          cpp = "(function_definition) @function",
-          c = "(function_definition) @function",
-          java = "(method_declaration) @function",
+        ['iF'] = {
+          python = '(function_definition) @function',
+          cpp = '(function_definition) @function',
+          c = '(function_definition) @function',
+          java = '(method_declaration) @function',
         },
       },
     },
@@ -614,10 +632,10 @@ require'nvim-treesitter.configs'.setup {
 -- Formatters
 vim.g.neoformat_enabled_python = { 'black' }
 
-local iron = require('iron')
+local iron = require 'iron'
 
 iron.core.set_config {
   preferred = {
-    python = "ipython",
-  }
+    python = 'ipython',
+  },
 }

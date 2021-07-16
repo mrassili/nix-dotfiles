@@ -5,8 +5,11 @@
     neovim-nightly
     rnix-lsp
     rust-analyzer
+    vale
+    shellcheck
     gopls
     nodePackages.pyright
+    (if pkgs.stdenv.isDarwin then pkgs.sumneko-lua-language-server-mac else pkgs.sumneko-lua-language-server)
   ];
   # xdg.configFile."nvim/init.lua".source = config.lib.file.mkOutOfStoreSymlink ../configs/neovim/init.lua;
   xdg.configFile."nvim/init.lua".source = ../configs/neovim/init.lua;

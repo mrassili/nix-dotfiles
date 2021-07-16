@@ -53,6 +53,7 @@
         (self: super: {
           zsh-powerlevel10k = super.callPackage ./packages/powerlevel10k.nix {};
         })
+        (import ./packages/sumneko_mac.nix)
         inputs.emacs-overlay.overlay
         inputs.neovim-nightly-overlay.overlay
         (final: prev: { LS_COLORS = inputs.LS_COLORS; })

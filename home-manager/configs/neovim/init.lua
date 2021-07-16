@@ -502,6 +502,7 @@ local servers = {
   'clangd',
   'gopls',
   'rust_analyzer',
+  'tsserver',
   'rnix',
   'hls',
   'pyright',
@@ -578,6 +579,9 @@ require('lint').linters_by_ft = {
   markdown = {'vale'},
   zsh = {'shellcheck'}
 }
+
+-- Trigger linting
+vim.api.nvim_set_keymap('n', '<leader>bl', "<cmd>lua require('lint').try_lint()<CR>", { noremap = true, silent = true })
 
 -- Treesitter configuration
 -- Parsers must be installed manually via :TSInstall

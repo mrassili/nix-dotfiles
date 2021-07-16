@@ -513,13 +513,6 @@ for _, lsp in ipairs(servers) do
     on_attach = on_attach,
   }
 end
-local sumneko_cmd
-if vim.fn.executable 'lua-language-server' == 1 then
-  sumneko_cmd = { 'lua-language-server' }
-else
-  local sumneko_root_path = vim.fn.getenv 'HOME' .. '/.local/bin/sumneko_lua'
-  sumneko_cmd = { sumneko_root_path .. '/bin/macOS/lua-language-server', '-E', sumneko_root_path .. '/main.lua' }
-end
 
 -- Make runtime files discoverable to the server
 local runtime_path = vim.split(package.path, ';')
@@ -527,7 +520,7 @@ table.insert(runtime_path, 'lua/?.lua')
 table.insert(runtime_path, 'lua/?/init.lua')
 
 require('lspconfig').sumneko_lua.setup {
-  cmd = sumneko_cmd,
+  cmd = { 'lua-language-server' },
   on_attach = on_attach,
   settings = {
     Lua = {

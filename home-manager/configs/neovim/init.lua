@@ -484,15 +484,15 @@ local on_attach = function(_client, bufnr)
     local end_pos = vim.api.nvim_buf_get_mark(0, '>')
     vim.lsp.buf.range_formatting({}, start_pos, end_pos)
   end
-  
+
   vim.cmd [[
     command! -range FormatRange  execute 'lua FormatRange()'
   ]]
-  
+
   vim.cmd [[
     command! Format execute 'lua vim.lsp.buf.formatting()'
   ]]
-  
+
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -571,6 +571,12 @@ nvim_lsp.texlab.setup {
       },
     },
   },
+}
+
+
+require('lint').linters_by_ft = {
+  markdown = {'vale'},
+  zsh = {'shellcheck'}
 }
 
 -- Treesitter configuration

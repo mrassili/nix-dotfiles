@@ -24,6 +24,7 @@ require('packer').startup(function()
   use 'tpope/vim-vinegar'
   use 'tpope/vim-surround'
   use 'tpope/vim-unimpaired'
+  use 'tpope/vim-sleuth'
   use 'tpope/vim-repeat'
   use 'ludovicchabant/vim-gutentags'
   use 'justinmk/vim-dirvish'
@@ -41,8 +42,9 @@ require('packer').startup(function()
   use 'nvim-treesitter/nvim-treesitter'
   -- Additional textobjects for treesitter
   use 'nvim-treesitter/nvim-treesitter-textobjects'
+  use 'mfussenegger/nvim-lint'
   use 'neovim/nvim-lspconfig' -- Collection of configurations for built-in LSP client
-  use 'hkupty/iron.nvim'
+  -- use 'hkupty/iron.nvim'
   use 'folke/which-key.nvim'
   use 'bfredl/nvim-luadev'
   use 'tbastos/vim-lua'
@@ -306,7 +308,6 @@ wk.register({
   [','] = 'which_key_ignore',
   ['<space>'] = 'which_key_ignore',
   ['.'] = 'which_key_ignore',
-  ['<space>'] = 'which_key_ignore',
 }, {
   prefix = '<leader>',
 })
@@ -343,6 +344,9 @@ vim.api.nvim_set_keymap('o', 'n', "'Nn'[v:searchforward]", { noremap = true, exp
 vim.api.nvim_set_keymap('n', 'N', "'nN'[v:searchforward]", { noremap = true, expr = true })
 vim.api.nvim_set_keymap('x', 'N', "'nN'[v:searchforward]", { noremap = true, expr = true })
 vim.api.nvim_set_keymap('o', 'N', "'nN'[v:searchforward]", { noremap = true, expr = true })
+
+-- map :W to :w (helps which-key issue)
+vim.cmd [[ command! W  execute ':w' ]]
 
 -- Neovim python support
 vim.g.loaded_python_provider = 0
@@ -463,7 +467,7 @@ local on_attach = function(_client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-s>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
@@ -550,6 +554,25 @@ require('lspconfig').sumneko_lua.setup {
   },
 }
 
+nvim_lsp.texlab.setup {
+  on_attach = on_attach,
+  settings = {
+    latex = {
+      rootDirectory = '.',
+      build = {
+        args = { '-pdf', '-interaction=nonstopmode', '-synctex=1', '-pvc' },
+        forwardSearchAfter = true,
+        onSave = true,
+      },
+      forwardSearch = {
+        executable = 'zathura',
+        args = { '--synctex-forward', '%l:1:%f', '%p' },
+        onSave = true,
+      },
+    },
+  },
+}
+
 -- Treesitter configuration
 -- Parsers must be installed manually via :TSInstall
 require('nvim-treesitter.configs').setup {
@@ -603,34 +626,13 @@ require('nvim-treesitter.configs').setup {
   },
 }
 
-nvim_lsp.texlab.setup {
-  on_attach = on_attach,
-  settings = {
-    latex = {
-      rootDirectory = '.',
-      build = {
-        args = { '-pdf', '-interaction=nonstopmode', '-synctex=1', '-pvc' },
-        forwardSearchAfter = true,
-        onSave = true,
-      },
-      forwardSearch = {
-        executable = 'zathura',
-        args = { '--synctex-forward', '%l:1:%f', '%p' },
-        onSave = true,
-      },
-    },
-  },
-}
-
-
-
 -- Set completeopt to have a better completion experience
-vim.o.completeopt = 'menuone,noinsert'
+-- vim.o.completeopt = 'menuone,noinsert'
 
-local iron = require 'iron'
+-- local iron = require 'iron'
 
-iron.core.set_config {
-  preferred = {
-    python = 'ipython',
-  },
-}
+-- iron.core.set_config {
+--   preferred = {
+--     python = 'ipython',
+--   },
+-- }

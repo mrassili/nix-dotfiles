@@ -47,6 +47,7 @@ require('packer').startup(function()
   -- use 'hkupty/iron.nvim'
   use 'folke/which-key.nvim'
   use 'bfredl/nvim-luadev'
+  use 'kristijanhusak/orgmode.nvim'
   use 'tbastos/vim-lua'
   use 'LnL7/vim-nix'
   use 'ziglang/zig.vim'
@@ -628,6 +629,11 @@ require('nvim-treesitter.configs').setup {
     },
   },
 }
+
+require('orgmode').setup({
+  org_agenda_files = {'~/Nextcloud/org/*'},
+  org_default_notes_file = '~/Nextcloud/org/refile.org',
+})
 
 -- Set completeopt to have a better completion experience
 -- vim.o.completeopt = 'menuone,noinsert'

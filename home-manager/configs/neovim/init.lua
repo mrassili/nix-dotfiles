@@ -635,6 +635,9 @@ require('orgmode').setup({
   org_default_notes_file = '~/Nextcloud/org/refile.org',
 })
 
+vim.api.nvim_set_keymap('n', '<leader>os', [[<cmd>lua require('telescope.builtin').live_grep({search_dirs={'$HOME/Nextcloud/org'}})<cr>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>of', [[<cmd>lua require('telescope.builtin').find_files({search_dirs={'$HOME/Nextcloud/org'}})<cr>]], { noremap = true, silent = true })
+
 -- Set completeopt to have a better completion experience
 -- vim.o.completeopt = 'menuone,noinsert'
 

@@ -20,6 +20,7 @@
     nix-zsh-completions
     nmap
     # nnn
+    rclone
     ripgrep
     rsync
     sd

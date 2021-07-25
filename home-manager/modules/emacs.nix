@@ -1,7 +1,7 @@
 { config, pkgs, libs, ... }:
 {
   home.packages = with pkgs; [
-    languagetool
+    # languagetool
     mu
     isync
     sqlite

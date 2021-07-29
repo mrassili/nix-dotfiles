@@ -22,6 +22,8 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
 
+  inputs.flake-utils.url = "github:numtide/flake-utils";
+
   inputs.telescope-fzf-native = {
     url = "github:nvim-telescope/telescope-fzf-native.nvim";
     flake = false;
@@ -59,6 +61,12 @@
         (final: prev: { LS_COLORS = inputs.LS_COLORS; })
       ];
     in
+    # legacyPackages attribute for declarative channels (used by compat/default.nix)
+    inputs.flake-utils.lib.eachDefaultSystem (system:
+    {
+      legacyPackages = inputs.nixpkgs.legacyPackages.${system};
+    }
+    ) //
     {
       homeConfigurations = {
         macbook-pro = inputs.home-manager.lib.homeManagerConfiguration {

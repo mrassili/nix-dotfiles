@@ -639,7 +639,7 @@ vim.api.nvim_set_keymap('n', '<leader>os', [[<cmd>lua require('telescope.builtin
 vim.api.nvim_set_keymap('n', '<leader>of', [[<cmd>lua require('telescope.builtin').find_files({search_dirs={'$HOME/Nextcloud/org'}})<cr>]], { noremap = true, silent = true })
 
 -- Set completeopt to have a better completion experience
--- vim.o.completeopt = 'menuone,noinsert'
+vim.o.completeopt = 'menuone,noinsert'
 
 -- local iron = require 'iron'
 

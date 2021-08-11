@@ -51,6 +51,7 @@ require('packer').startup(function()
   use 'tbastos/vim-lua'
   use 'LnL7/vim-nix'
   use 'ziglang/zig.vim'
+  use 'JuliaEditorSupport/julia-vim'
 end)
 
 --Incremental live completion

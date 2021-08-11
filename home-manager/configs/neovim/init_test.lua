@@ -43,13 +43,14 @@ require('packer').startup({function()
   -- Additional textobjects for treesitter
   use 'nvim-treesitter/nvim-treesitter-textobjects'
   use 'mfussenegger/nvim-lint'
-  use '/Users/michael/Repositories/neovim_development/nvim-lspconfig'
+  use '$HOME/Repositories/neovim_development/nvim-lspconfig'
   -- use 'hkupty/iron.nvim'
   use 'folke/which-key.nvim'
   use 'bfredl/nvim-luadev'
   use 'tbastos/vim-lua'
   use 'LnL7/vim-nix'
   use 'ziglang/zig.vim'
+  use 'JuliaEditorSupport/julia-vim'
   end,
   config = {
   package_root = "/tmp/nvim/site/pack",
@@ -455,7 +456,7 @@ local border = {
 -- log file location: /Users/michael/.local/share/nvim/lsp.log
 -- Add nvim-lspconfig plugin
 local nvim_lsp = require 'lspconfig'
--- vim.lsp.set_log_level("debug")
+vim.lsp.set_log_level("debug")
 local on_attach = function(_client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
   vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
@@ -517,6 +518,7 @@ local servers = {
   'rnix',
   'hls',
   'pyright',
+  'julials',
 }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
@@ -589,56 +591,56 @@ vim.api.nvim_set_keymap('n', '<leader>bl', "<cmd>lua require('lint').try_lint()<
 
 -- Treesitter configuration
 -- Parsers must be installed manually via :TSInstall
-require('nvim-treesitter.configs').setup {
-  highlight = {
-    enable = true, -- false will disable the whole extension
-  },
-  incremental_selection = {
-    enable = true,
-    keymaps = {
-      init_selection = 'gnn',
-      node_incremental = 'grn',
-      scope_incremental = 'grc',
-      node_decremental = 'grm',
-    },
-  },
-  indent = {
-    enable = true,
-  },
-  textobjects = {
-    select = {
-      enable = true,
-      lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
-      keymaps = {
-        -- You can use the capture groups defined in textobjects.scm
-        ['af'] = '@function.outer',
-        ['if'] = '@function.inner',
-        ['ac'] = '@class.outer',
-        ['ic'] = '@class.inner',
-      },
-    },
-    move = {
-      enable = true,
-      set_jumps = true, -- whether to set jumps in the jumplist
-      goto_next_start = {
-        [']m'] = '@function.outer',
-        [']]'] = '@class.outer',
-      },
-      goto_next_end = {
-        [']M'] = '@function.outer',
-        [']['] = '@class.outer',
-      },
-      goto_previous_start = {
-        ['[m'] = '@function.outer',
-        ['[['] = '@class.outer',
-      },
-      goto_previous_end = {
-        ['[M'] = '@function.outer',
-        ['[]'] = '@class.outer',
-      },
-    },
-  },
-}
+-- require('nvim-treesitter.configs').setup {
+--   highlight = {
+--     enable = true, -- false will disable the whole extension
+--   },
+--   incremental_selection = {
+--     enable = true,
+--     keymaps = {
+--       init_selection = 'gnn',
+--       node_incremental = 'grn',
+--       scope_incremental = 'grc',
+--       node_decremental = 'grm',
+--     },
+--   },
+--   indent = {
+--     enable = true,
+--   },
+--   textobjects = {
+--     select = {
+--       enable = true,
+--       lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
+--       keymaps = {
+--         -- You can use the capture groups defined in textobjects.scm
+--         ['af'] = '@function.outer',
+--         ['if'] = '@function.inner',
+--         ['ac'] = '@class.outer',
+--         ['ic'] = '@class.inner',
+--       },
+--     },
+--     move = {
+--       enable = true,
+--       set_jumps = true, -- whether to set jumps in the jumplist
+--       goto_next_start = {
+--         [']m'] = '@function.outer',
+--         [']]'] = '@class.outer',
+--       },
+--       goto_next_end = {
+--         [']M'] = '@function.outer',
+--         [']['] = '@class.outer',
+--       },
+--       goto_previous_start = {
+--         ['[m'] = '@function.outer',
+--         ['[['] = '@class.outer',
+--       },
+--       goto_previous_end = {
+--         ['[M'] = '@function.outer',
+--         ['[]'] = '@class.outer',
+--       },
+--     },
+--   },
+-- }
 
 -- Set completeopt to have a better completion experience
 -- vim.o.completeopt = 'menuone,noinsert'

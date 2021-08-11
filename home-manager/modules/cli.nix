@@ -15,8 +15,9 @@
     gnupg
     gnused
     gnutls
+    google-cloud-sdk
     keychain
-    mosh
+    # mosh
     nix-zsh-completions
     nmap
     # nnn

@@ -57,8 +57,11 @@ output eDP-1 scale 1.5
 # Start network manager
 exec nm-applet --indicator
 
+# Start libinput-gestures
+exec libinput-gestures -c $HOME/.config/libinput-gestures.conf
+
 # Start nextcloud
-exec nextcloud
+exec nextcloud --background
 
 # Start slack
 exec slack -u

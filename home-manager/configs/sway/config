@@ -13,8 +13,10 @@ set $left h
 set $down j
 set $up k
 set $right l
+
 # Your preferred terminal emulator
 set $term kitty
+
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
@@ -56,6 +58,9 @@ output eDP-1 scale 1.5
 
 # Start network manager
 exec nm-applet --indicator
+
+# Start mako
+exec mako
 
 # Start libinput-gestures
 exec libinput-gestures -c $HOME/.config/libinput-gestures.conf
@@ -99,6 +104,9 @@ input "2362:628:PIXA3854:00_093A:0274_Touchpad" {
 
     # Kill focused window
     bindsym $mod+Shift+q kill
+
+    # Use comma to switch to last workspace
+    bindsym $mod+comma workspace back_and_forth
 
     # Start your launcher
     # bindsym $mod+d exec $menu
@@ -216,6 +224,14 @@ input "2362:628:PIXA3854:00_093A:0274_Touchpad" {
     bindsym XF86AudioNext exec playerctl next
     bindsym XF86AudioPrev exec playerctl previous
     bindsym XF86Search exec bemenu-run
+
+    bindsym Print exec grim -t jpeg ~/Pictures/screenshots/$(date +%Y-%m-%d_%H-%m-%s).jpg
+
+    bindsym $mod+Print exec grim -t jpeg -g "$(slurp)" ~/Pictures/screenshots/$(date +%Y-%m-%d_%H-%m-%s).jpg
+    
+    bindsym $mod+Shift+Print exec grim -g "$(slurp)" - | wl-copy
+
+    bindsym Shift+Control+Print exec grim -o $(swaymsg -t get_outputs | jq -r '.[] | select(.focused) | .name') - | wl-copy
 
 #
 # Resizing containers:

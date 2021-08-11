@@ -1,7 +1,7 @@
 * {
     border: none;
     border-radius: 0;
-    font-family: "Meslo LGS Nerd Font";
+    font-family: "Hack";
     font-size: 13px;
     min-height: 0;
 }
@@ -13,7 +13,7 @@ window#waybar {
 
 #window {
     font-weight: bold;
-    font-family: "Meslo LGS Nerd Font";
+    font-family: "Hack";
 }
 /*
 #workspaces {
@@ -100,7 +100,7 @@ window#waybar {
 }* {
     border: none;
     border-radius: 0;
-    font-family: "Meslo LGS Nerd Font", "Font Awesome 5 Free";
+    font-family:  "Hack", "Font Awesome 5 Free";
     font-size: 13px;
     min-height: 0;
 }
@@ -112,7 +112,7 @@ window#waybar {
 
 #window {
     font-weight: bold;
-    font-family: "Meslo LGS Nerd Font";
+    /* font-family: "Meslo LGS Nerd Font"; */
 }
 /*
 #workspaces {

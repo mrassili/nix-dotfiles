@@ -1,5 +1,9 @@
 -- Install packer
-local install_path = '/tmp/nvim/site/pack/packer/start/packer.nvim'
+vim.opt.packpath = "/tmp/nvim/site"
+vim.opt.runtimepath = "$VIMRUNTIME"
+
+local package_root = '/tmp/nvim/site/pack'
+local install_path = package_root .. '/packer/start/packer.nvim'
 
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
   vim.fn.execute('!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
@@ -15,7 +19,6 @@ vim.api.nvim_exec(
   false
 )
 
-vim.cmd[[set packpath=/tmp/nvim/site]]
 local use = require('packer').use
 require('packer').startup({function()
   use 'wbthomason/packer.nvim' -- Package manager
@@ -43,6 +46,7 @@ require('packer').startup({function()
   -- Additional textobjects for treesitter
   use 'nvim-treesitter/nvim-treesitter-textobjects'
   use 'mfussenegger/nvim-lint'
+  -- use 'neovim/nvim-lspconfig'
   use '$HOME/Repositories/neovim_development/nvim-lspconfig'
   -- use 'hkupty/iron.nvim'
   use 'folke/which-key.nvim'
@@ -53,9 +57,10 @@ require('packer').startup({function()
   use 'JuliaEditorSupport/julia-vim'
   end,
   config = {
-  package_root = "/tmp/nvim/site/pack",
+      package_root = package_root,
+      compile_path = install_path .. '/plugin/packer_compiled.lua',
+    }
   }
-	}
 )
 
 --Incremental live completion

@@ -73,7 +73,7 @@ vim.o.mouse = 'a'
 vim.o.breakindent = true
 
 --Save undo history
-vim.cmd [[set undofile]]
+vim.opt.undofile = true
 
 --Case insensitive searching UNLESS /C or capital in search
 vim.o.ignorecase = true
@@ -100,7 +100,7 @@ vim.g.lightline = {
 }
 
 --Fire, walk with me
-vim.cmd [[set guifont="Monaco:h18"]]
+vim.opt.guifont = "Monaco:h18"
 vim.g.firenvim_config = { localSettings = { ['.*'] = { takeover = 'never' } } }
 
 --Remap space as leader key
@@ -502,12 +502,13 @@ capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 local servers = {
   'clangd',
-  'gopls',
+  -- 'gopls',
   'rust_analyzer',
-  'tsserver',
-  'rnix',
-  'hls',
+  -- 'tsserver',
+  -- 'rnix',
+  -- 'hls',
   'pyright',
+  'julials'
 }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {

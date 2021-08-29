@@ -364,6 +364,42 @@ vim.api.nvim_exec(
   false
 )
 
+local configs = require("lspconfig/configs")
+local util = require("lspconfig/util")
+
+-- local bin_path = require("grammar-guard.vars").bin_path
+
+configs.grammar_guard = {
+        default_config = {
+                cmd = { bin_path },
+                filetypes = { "tex", "bib", "markdown" },
+                root_dir = function(filename)
+                        return util.path.dirname(filename)
+                end,
+                settings = {
+                        ltex = {
+                                checkFrequency = "edit",
+                        },
+                },
+        },
+        docs = {
+                package_json = "https://raw.githubusercontent.com/valentjn/vscode-ltex/develop/package.json",
+                description = [[
+        https://github.com/valentjn/ltex-ls
+
+        LTeX Language Server: LSP language server for LanguageTool 🔍✔️ with support for LaTeX 🎓, Markdown 📝, and others
+
+        To install, download the latest [release](https://github.com/valentjn/ltex-ls/releases) and ensure `ltex-ls` is on your path.
+
+        ]],
+
+                default_config = {
+                        root_dir = "vim's starting directory",
+                },
+        },
+}
+require('lspconfig').grammar_guard.setup{}
+
 -- Y yank until the end of line
 vim.api.nvim_set_keymap('n', 'Y', 'y$', { noremap = true })
 
@@ -524,6 +560,8 @@ local servers = {
   'hls',
   'pyright',
   'julials',
+  'diagnosticls',
+  'efm',
 }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
@@ -538,7 +576,7 @@ table.insert(runtime_path, 'lua/?.lua')
 table.insert(runtime_path, 'lua/?/init.lua')
 
 require('lspconfig').sumneko_lua.setup {
-  cmd = { 'lua-language-server' },
+  -- cmd = { 'lua-language-server' },
   on_attach = on_attach,
   settings = {
     Lua = {
@@ -566,33 +604,33 @@ require('lspconfig').sumneko_lua.setup {
   },
 }
 
-nvim_lsp.texlab.setup {
-  on_attach = on_attach,
-  settings = {
-    latex = {
-      rootDirectory = '.',
-      build = {
-        args = { '-pdf', '-interaction=nonstopmode', '-synctex=1', '-pvc' },
-        forwardSearchAfter = true,
-        onSave = true,
-      },
-      forwardSearch = {
-        executable = 'zathura',
-        args = { '--synctex-forward', '%l:1:%f', '%p' },
-        onSave = true,
-      },
-    },
-  },
-}
+-- nvim_lsp.texlab.setup {
+--   on_attach = on_attach,
+--   settings = {
+--     latex = {
+--       rootDirectory = '.',
+--       build = {
+--         args = { '-pdf', '-interaction=nonstopmode', '-synctex=1', '-pvc' },
+--         forwardSearchAfter = true,
+--         onSave = true,
+--       },
+--       forwardSearch = {
+--         executable = 'zathura',
+--         args = { '--synctex-forward', '%l:1:%f', '%p' },
+--         onSave = true,
+--       },
+--     },
+--   },
+-- }
 
 
-require('lint').linters_by_ft = {
-  markdown = {'vale'},
-  zsh = {'shellcheck'}
-}
+-- require('lint').linters_by_ft = {
+--   markdown = {'vale'},
+--   zsh = {'shellcheck'}
+-- }
 
--- Trigger linting
-vim.api.nvim_set_keymap('n', '<leader>bl', "<cmd>lua require('lint').try_lint()<CR>", { noremap = true, silent = true })
+-- -- Trigger linting
+-- vim.api.nvim_set_keymap('n', '<leader>bl', "<cmd>lua require('lint').try_lint()<CR>", { noremap = true, silent = true })
 
 -- Treesitter configuration
 -- Parsers must be installed manually via :TSInstall

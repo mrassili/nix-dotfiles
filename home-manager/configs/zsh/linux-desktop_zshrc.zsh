@@ -39,7 +39,7 @@ conda "$@"
 }
 
 snvim() {
-      $HOME/Repositories/neovim_development/neovim/result/bin/nvim -u ~/.config/nvim/init_test.lua $@
+      VIMRUNTIME=$HOME/Repositories/neovim_development/neovim/runtime $HOME/Repositories/neovim_development/neovim/result/bin/nvim -u ~/.config/nvim/init_test.lua $@
 }
 
 home-upgrade () {

@@ -1,4 +1,4 @@
-# Default config for sway
+# $mod+minus Default config for sway
 #
 # Copy this to ~/.config/sway/config and edit it to your liking.
 #
@@ -35,13 +35,27 @@ default_border pixel 1
 #
 # Default wallpaper (more resolutions are available in @datadir@/backgrounds/sway/)
 output * bg /home/michael/Nextcloud/Wallpapers/ghost_in_the_shell.jpg fill
-output eDP-1 scale 1.5
+
+# Set scaling (1.5 is perfect)
+output eDP-1 scale 1
 #
 # Example configuration:
 #
 #   output HDMI-A-1 resolution 1920x1080 position 1920,0
 #
 # You can get the names of your outputs by running: swaymsg -t get_outputs
+
+# Set powersaver (this results in things being noticeably slower
+# exec powerprofilesctl set power-saver
+
+# Open kwallet
+# exec kwalletd5
+
+# Set blueman
+exec blueman-applet
+
+# Add sworkstyle
+exec /home/michael/.local/cargo/bin/sworkstyle &> /tmp/sworkstyle.log
 
 ### Idle configuration
 #
@@ -66,13 +80,16 @@ exec mako
 exec libinput-gestures -c $HOME/.config/libinput-gestures.conf
 
 # Start nextcloud
-exec nextcloud --background
+exec "sleep 10; nextcloud --background"
 
 # Start slack
-exec slack -u
+exec slack -u --enable-features=UseOzonePlatform --ozone-platform=wayland
 
 # Start discord
 exec Discord --start-minimized
+
+# Start element
+exec element --enable-features=UseOzonePlatform --ozone-platform=wayland
 
 # Start clipboard manager
 exec wl-paste -t text --watch clipman store
@@ -90,6 +107,7 @@ input "2362:628:PIXA3854:00_093A:0274_Touchpad" {
     tap enabled
     natural_scroll enabled
     middle_emulation enabled
+    pointer_accel 0.2
 }
 
 # You can get the names of your inputs by running: swaymsg -t get_inputs

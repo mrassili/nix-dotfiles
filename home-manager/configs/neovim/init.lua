@@ -30,7 +30,7 @@ require('packer').startup(function()
   use 'justinmk/vim-dirvish'
   use 'christoomey/vim-tmux-navigator'
   -- UI to select things (files, grep results, open buffers...)
-  use { 'nvim-telescope/telescope.nvim', requires = { { 'nvim-lua/popup.nvim' }, { 'nvim-lua/plenary.nvim' } } }
+  use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/plenary.nvim' } }
   use 'nvim-telescope/telescope-fzf-native.nvim'
   use 'joshdick/onedark.vim' -- Theme inspired by Atom
   use 'itchyny/lightline.vim' -- Fancier statusline
@@ -52,6 +52,8 @@ require('packer').startup(function()
   use 'LnL7/vim-nix'
   use 'ziglang/zig.vim'
   use 'JuliaEditorSupport/julia-vim'
+  use 'purescripT-contrib/purescript-vim'
+  -- use 'L3MON4D3/LuaSnip' -- Snippets plugin
 end)
 
 --Incremental live completion
@@ -100,7 +102,7 @@ vim.g.lightline = {
 }
 
 --Fire, walk with me
-vim.opt.guifont = "Monaco:h18"
+vim.opt.guifont = 'Monaco:h18'
 vim.g.firenvim_config = { localSettings = { ['.*'] = { takeover = 'never' } } }
 
 --Remap space as leader key
@@ -207,7 +209,12 @@ require('telescope').setup {
 require('telescope').load_extension 'fzf'
 --Add leader shortcuts
 vim.api.nvim_set_keymap('n', '<leader>f', [[<cmd>lua require('telescope.builtin').find_files({previewer = false})<cr>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader><space>', [[<cmd>lua require('telescope.builtin').buffers({sort_lastused = true})<cr>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap(
+  'n',
+  '<leader><space>',
+  [[<cmd>lua require('telescope.builtin').buffers({sort_lastused = true})<cr>]],
+  { noremap = true, silent = true }
+)
 vim.api.nvim_set_keymap('n', '<leader>sb', [[<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<cr>]], { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>h', [[<cmd>lua require('telescope.builtin').help_tags()<cr>]], { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>st', [[<cmd>lua require('telescope.builtin').tags()<cr>]], { noremap = true, silent = true })
@@ -261,7 +268,9 @@ vim.api.nvim_set_keymap('n', '<leader>nc', ':e $HOME/Repositories/nix/nix-dotfil
 vim.cmd [[autocmd ColorScheme * highlight WhichKeyFloat guifg=ABB2BF guibg=282C34]]
 vim.cmd [[autocmd ColorScheme * highlight FloatBorder guifg=ABB2BF guibg=282C34]]
 
-require('which-key').setup {
+local wk = require 'which-key'
+
+wk.setup {
   window = {
     border = { '─', '─', '─', ' ', ' ', ' ', ' ', ' ' }, -- none, single, double, shadow
     position = 'bottom', -- bottom, top
@@ -270,7 +279,6 @@ require('which-key').setup {
   },
 }
 
-local wk = require 'which-key'
 -- As an example, we will the create following mappings:
 --  * <leader>ff find files
 --  * <leader>fr show recent files
@@ -447,7 +455,7 @@ vim.api.nvim_exec(
 -- log file location: /Users/michael/.local/share/nvim/lsp.log
 -- Add nvim-lspconfig plugin
 local nvim_lsp = require 'lspconfig'
--- vim.lsp.set_log_level("debug")
+-- vim.lsp.set_log_level("trace")
 local on_attach = function(_client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
   vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
@@ -494,11 +502,7 @@ local on_attach = function(_client, bufnr)
   vim.cmd [[
     command! Format execute 'lua vim.lsp.buf.formatting()'
   ]]
-
 end
-
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 local servers = {
   'clangd',
@@ -508,14 +512,44 @@ local servers = {
   -- 'rnix',
   -- 'hls',
   'pyright',
-  'julials'
+  -- 'purescriptls',
+  'jsonls',
+  'julials',
 }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
-    capabilities = capabilities,
+    -- capabilities = capabilities,
     on_attach = on_attach,
   }
 end
+
+LaunchPyright = function()
+
+  local settings = {
+    python = {
+      analysis = {
+        autoSearchPaths = true;
+        useLibraryCodeForTypes = true;
+      };
+    };
+  };
+  local client_id = vim.lsp.start_client({
+      cmd = {"pyright-langserver", "--stdio"};
+      -- root_dir = vim.fn.getcwd();
+      capabilities = vim.lsp.protocol.make_client_capabilities();
+      settings = settings;
+      on_init = function(client, _)
+        client.notify('workspace/didChangeConfiguration', {
+          settings = settings;
+        })
+      end
+    })
+  vim.lsp.buf_attach_client(0, client_id)
+end
+
+vim.cmd([[
+  command! -range LaunchPyright  execute 'lua LaunchPyright()'
+]])
 
 -- Make runtime files discoverable to the server
 local runtime_path = vim.split(package.path, ';')
@@ -540,8 +574,8 @@ require('lspconfig').sumneko_lua.setup {
       workspace = {
         -- Make the server aware of Neovim runtime files
         library = vim.api.nvim_get_runtime_file('', true),
-	maxPreload = 2000,
-	preloadFileSize = 1000,
+        maxPreload = 2000,
+        preloadFileSize = 1000,
       },
       -- Do not send telemetry data containing a randomized but unique identifier
       telemetry = {
@@ -570,11 +604,10 @@ nvim_lsp.texlab.setup {
   },
 }
 
-
-require('lint').linters_by_ft = {
-  markdown = {'vale'},
-  zsh = {'shellcheck'}
-}
+-- require('lint').linters_by_ft = {
+--   markdown = { 'vale' },
+--   zsh = { 'shellcheck' },
+-- }
 
 -- Trigger linting
 vim.api.nvim_set_keymap('n', '<leader>bl', "<cmd>lua require('lint').try_lint()<CR>", { noremap = true, silent = true })
@@ -632,21 +665,23 @@ require('nvim-treesitter.configs').setup {
   },
 }
 
-require('orgmode').setup({
-  org_agenda_files = {'~/Nextcloud/org/*'},
+require('orgmode').setup {
+  org_agenda_files = { '~/Nextcloud/org/*' },
   org_default_notes_file = '~/Nextcloud/org/refile.org',
-})
+}
 
-vim.api.nvim_set_keymap('n', '<leader>os', [[<cmd>lua require('telescope.builtin').live_grep({search_dirs={'$HOME/Nextcloud/org'}})<cr>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>of', [[<cmd>lua require('telescope.builtin').find_files({search_dirs={'$HOME/Nextcloud/org'}})<cr>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap(
+  'n',
+  '<leader>os',
+  [[<cmd>lua require('telescope.builtin').live_grep({search_dirs={'$HOME/Nextcloud/org'}})<cr>]],
+  { noremap = true, silent = true }
+)
+vim.api.nvim_set_keymap(
+  'n',
+  '<leader>of',
+  [[<cmd>lua require('telescope.builtin').find_files({search_dirs={'$HOME/Nextcloud/org'}})<cr>]],
+  { noremap = true, silent = true }
+)
 
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noinsert'
-
--- local iron = require 'iron'
-
--- iron.core.set_config {
---   preferred = {
---     python = 'ipython',
---   },
--- }

@@ -2,7 +2,7 @@
     border: none;
     border-radius: 0;
     font-family: "Hack";
-    font-size: 13px;
+    font-size: 8px;
     min-height: 0;
 }
 
@@ -15,17 +15,19 @@ window#waybar {
     font-weight: bold;
     font-family: "Hack";
 }
-/*
 #workspaces {
     padding: 0 5px;
 }
-*/
-
 #workspaces button {
     padding: 0 5px;
     background: transparent;
     color: white;
     border-top: 2px solid transparent;
+    min-width: 25px;
+}
+
+#workspaces button.urgent {
+color: rgba(238, 46, 36, 1);
 }
 
 #workspaces button.focused {
@@ -101,7 +103,7 @@ window#waybar {
     border: none;
     border-radius: 0;
     font-family:  "Hack", "Font Awesome 5 Free";
-    font-size: 13px;
+    font-size: 20px;
     min-height: 0;
 }
 

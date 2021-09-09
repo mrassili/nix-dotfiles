@@ -46,8 +46,8 @@ require('packer').startup({function()
   -- Additional textobjects for treesitter
   use 'nvim-treesitter/nvim-treesitter-textobjects'
   use 'mfussenegger/nvim-lint'
-  -- use 'neovim/nvim-lspconfig'
-  use '$HOME/Repositories/neovim_development/nvim-lspconfig'
+  use 'neovim/nvim-lspconfig'
+  -- use '$HOME/Repositories/neovim_development/nvim-lspconfig'
   -- use 'hkupty/iron.nvim'
   use 'folke/which-key.nvim'
   use 'bfredl/nvim-luadev'
@@ -559,6 +559,7 @@ local servers = {
   'rnix',
   'hls',
   'pyright',
+  'html',
   'julials',
   'diagnosticls',
   'efm',

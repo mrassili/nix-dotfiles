@@ -38,6 +38,8 @@
     zoxide
     # starship
     zsh
+    spotify-tui
+    spotifyd
     # zsh-powerlevel10k
   ];
 

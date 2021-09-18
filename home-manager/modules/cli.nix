@@ -2,6 +2,7 @@
 {
   home.packages = with pkgs; [
     #awscli
+    age
     bat
     bitwarden-cli
     bottom

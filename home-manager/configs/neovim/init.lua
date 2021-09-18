@@ -247,7 +247,12 @@ vim.api.nvim_set_keymap('n', '<leader>sT', ':tjump *', { noremap = true })
 -- Managing quickfix list
 vim.api.nvim_set_keymap('n', '<leader>qo', ':copen<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>qq', ':cclose<CR>', { noremap = true, silent = true })
-vim.cmd [[autocmd FileType qf nnoremap <buffer> q :cclose<CR>]]
+vim.api.nvim_set_keymap('n', '<leader>Qo', ':lopen<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>Qq', ':lclose<CR>', { noremap = true, silent = true })
+vim.cmd [[autocmd FileType qf nnoremap <buffer> q :lclose <bar> cclose <CR> ]]
+
+-- Get rid of annoying ex keybind
+vim.api.nvim_set_keymap('', 'Q', '<Nop>', { noremap = true, silent = true })
 
 -- Managing buffers
 vim.api.nvim_set_keymap('n', '<leader>bd', ':bdelete<CR>', { noremap = true, silent = true })
@@ -489,6 +494,7 @@ local on_attach = function(_client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>Q', '<cmd>lua vim.lsp.diagnostic.set_qflist()<CR>', opts)
   FormatRange = function()
     local start_pos = vim.api.nvim_buf_get_mark(0, '<')
     local end_pos = vim.api.nvim_buf_get_mark(0, '>')

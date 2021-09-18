@@ -240,7 +240,7 @@ vim.api.nvim_set_keymap('n', '<leader>sT', ':tjump *', { noremap = true })
 -- Managing quickfix list
 vim.api.nvim_set_keymap('n', '<leader>qo', ':copen<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>qq', ':cclose<CR>', { noremap = true, silent = true })
-vim.cmd [[autocmd FileType qf nnoremap <buffer> q :cclose<CR>]]
+vim.cmd [[autocmd FileType qf nnoremap <buffer> q :cclose]]
 
 -- Managing buffers
 vim.api.nvim_set_keymap('n', '<leader>bd', ':bdelete<CR>', { noremap = true, silent = true })
@@ -364,42 +364,6 @@ vim.api.nvim_exec(
   false
 )
 
-local configs = require("lspconfig/configs")
-local util = require("lspconfig/util")
-
--- local bin_path = require("grammar-guard.vars").bin_path
-
-configs.grammar_guard = {
-        default_config = {
-                cmd = { bin_path },
-                filetypes = { "tex", "bib", "markdown" },
-                root_dir = function(filename)
-                        return util.path.dirname(filename)
-                end,
-                settings = {
-                        ltex = {
-                                checkFrequency = "edit",
-                        },
-                },
-        },
-        docs = {
-                package_json = "https://raw.githubusercontent.com/valentjn/vscode-ltex/develop/package.json",
-                description = [[
-        https://github.com/valentjn/ltex-ls
-
-        LTeX Language Server: LSP language server for LanguageTool 🔍✔️ with support for LaTeX 🎓, Markdown 📝, and others
-
-        To install, download the latest [release](https://github.com/valentjn/ltex-ls/releases) and ensure `ltex-ls` is on your path.
-
-        ]],
-
-                default_config = {
-                        root_dir = "vim's starting directory",
-                },
-        },
-}
-require('lspconfig').grammar_guard.setup{}
-
 -- Y yank until the end of line
 vim.api.nvim_set_keymap('n', 'Y', 'y$', { noremap = true })
 
@@ -498,7 +462,7 @@ local border = {
 -- Add nvim-lspconfig plugin
 local nvim_lsp = require 'lspconfig'
 vim.lsp.set_log_level("debug")
-local on_attach = function(_client, bufnr)
+local on_attach = function(_, bufnr)
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
   vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
     virtual_text = true,
@@ -577,7 +541,7 @@ table.insert(runtime_path, 'lua/?.lua')
 table.insert(runtime_path, 'lua/?/init.lua')
 
 require('lspconfig').sumneko_lua.setup {
-  -- cmd = { 'lua-language-server' },
+  cmd = { 'lua-language-server' },
   on_attach = on_attach,
   settings = {
     Lua = {

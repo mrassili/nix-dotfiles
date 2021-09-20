@@ -82,14 +82,19 @@ exec libinput-gestures -c $HOME/.config/libinput-gestures.conf
 # Start nextcloud
 exec "sleep 10; nextcloud --background"
 
+# Start spotifyd
+exec spotifyd
+
 # Start slack
-exec slack -u --enable-features=UseOzonePlatform --ozone-platform=wayland
+# exec slack -u --enable-features=UseOzonePlatform --ozone-platform=wayland
+# exec slack -u
 
 # Start discord
-exec Discord --start-minimized
+# exec Discord --start-minimized
 
 # Start element
-exec element --enable-features=UseOzonePlatform --ozone-platform=wayland
+# exec element --enable-features=UseOzonePlatform --ozone-platform=wayland
+# exec element --hidden
 
 # Start clipboard manager
 exec wl-paste -t text --watch clipman store
@@ -127,6 +132,7 @@ input "2362:628:PIXA3854:00_093A:0274_Touchpad" {
     bindsym $mod+comma workspace back_and_forth
 
     # Start your launcher
+    # bindsym $mod+d exec $menu
     # bindsym $mod+d exec $menu
     bindsym $mod+d exec --no-startup-id "rofi -show-icons -show combi -combi-modi window,drun -modi combi"
 

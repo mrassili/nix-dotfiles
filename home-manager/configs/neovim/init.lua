@@ -514,7 +514,7 @@ local servers = {
   'clangd',
   -- 'gopls',
   'rust_analyzer',
-  -- 'tsserver',
+  'tsserver',
   -- 'rnix',
   -- 'hls',
   'pyright',

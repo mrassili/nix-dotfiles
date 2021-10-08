@@ -33,7 +33,8 @@ require('packer').startup(function()
   use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/plenary.nvim' } }
   use 'nvim-telescope/telescope-fzf-native.nvim'
   use 'joshdick/onedark.vim' -- Theme inspired by Atom
-  use 'itchyny/lightline.vim' -- Fancier statusline
+  use 'shadmansaleh/lualine.nvim' -- Fancier statusline
+  use 'arkav/lualine-lsp-progress' -- Integration with progress notifications
   -- Add indentation guides even on blank lines
   use 'lukas-reineke/indent-blankline.nvim'
   -- Add git related info in the signs columns and popups
@@ -44,16 +45,11 @@ require('packer').startup(function()
   use 'nvim-treesitter/nvim-treesitter-textobjects'
   use 'mfussenegger/nvim-lint'
   use 'neovim/nvim-lspconfig' -- Collection of configurations for built-in LSP client
-  -- use 'hkupty/iron.nvim'
   use 'folke/which-key.nvim'
   use 'bfredl/nvim-luadev'
   use 'kristijanhusak/orgmode.nvim'
-  use 'tbastos/vim-lua'
   use 'LnL7/vim-nix'
   use 'ziglang/zig.vim'
-  use 'JuliaEditorSupport/julia-vim'
-  use 'purescripT-contrib/purescript-vim'
-  -- use 'L3MON4D3/LuaSnip' -- Snippets plugin
 end)
 
 --Incremental live completion
@@ -95,10 +91,21 @@ vim.cmd [[ autocmd FileType gitcommit setlocal spell ]]
 vim.cmd [[ autocmd FileType markdown setlocal spell ]]
 
 --Set statusbar
-vim.g.lightline = {
-  colorscheme = 'onedark',
-  active = { left = { { 'mode', 'paste' }, { 'gitbranch', 'readonly', 'filename', 'modified' } } },
-  component_function = { gitbranch = 'fugitive#head' },
+require('lualine').setup {
+  options = {
+    icons_enabled = false,
+    theme = 'onedark',
+    component_separators = '|',
+    section_separators = '',
+  },
+  sections = {
+    lualine_a = { 'mode' },
+    lualine_b = { 'filename' },
+    lualine_c = { 'lsp_progress' },
+    lualine_x = { 'filetype' },
+    lualine_y = { 'progress' },
+    lualine_z = { 'location' },
+  },
 }
 
 --Fire, walk with me
@@ -528,34 +535,6 @@ for _, lsp in ipairs(servers) do
     on_attach = on_attach,
   }
 end
-
-LaunchPyright = function()
-
-  local settings = {
-    python = {
-      analysis = {
-        autoSearchPaths = true;
-        useLibraryCodeForTypes = true;
-      };
-    };
-  };
-  local client_id = vim.lsp.start_client({
-      cmd = {"pyright-langserver", "--stdio"};
-      -- root_dir = vim.fn.getcwd();
-      capabilities = vim.lsp.protocol.make_client_capabilities();
-      settings = settings;
-      on_init = function(client, _)
-        client.notify('workspace/didChangeConfiguration', {
-          settings = settings;
-        })
-      end
-    })
-  vim.lsp.buf_attach_client(0, client_id)
-end
-
-vim.cmd([[
-  command! -range LaunchPyright  execute 'lua LaunchPyright()'
-]])
 
 -- Make runtime files discoverable to the server
 local runtime_path = vim.split(package.path, ';')

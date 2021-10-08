@@ -21,7 +21,7 @@
     # mosh
     nix-zsh-completions
     nmap
-    # nnn
+    nnn
     rclone
     ripgrep
     rsync

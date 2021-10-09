@@ -29,6 +29,7 @@ require('packer').startup(function()
   use 'ludovicchabant/vim-gutentags'
   use 'justinmk/vim-dirvish'
   use 'christoomey/vim-tmux-navigator'
+  use 'jose-elias-alvarez/null-ls.nvim'
   -- UI to select things (files, grep results, open buffers...)
   use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/plenary.nvim' } }
   use 'nvim-telescope/telescope-fzf-native.nvim'
@@ -90,11 +91,16 @@ vim.cmd [[colorscheme onedark]]
 vim.cmd [[ autocmd FileType gitcommit setlocal spell ]]
 vim.cmd [[ autocmd FileType markdown setlocal spell ]]
 
+local onedark = require('lualine.themes.onedark')
+for _, mode in pairs(onedark) do 
+  mode.a.gui = nil
+end
+
 --Set statusbar
 require('lualine').setup {
   options = {
     icons_enabled = false,
-    theme = 'onedark',
+    theme = onedark,
     component_separators = '|',
     section_separators = '',
   },
@@ -476,6 +482,8 @@ local on_attach = function(_client, bufnr)
     update_in_insert = true,
   })
 
+  _client.resolved_capabilities.code_action = false
+
   -- local overridden_hover = vim.lsp.with(vim.lsp.handlers.hover, { border = "single" })
   local overridden_hover = vim.lsp.handlers.hover
   vim.lsp.handlers['textDocument/hover'] = function(...)
@@ -654,6 +662,22 @@ require('orgmode').setup {
   org_agenda_files = { '~/Nextcloud/org/*' },
   org_default_notes_file = '~/Nextcloud/org/refile.org',
 }
+
+-- local null_ls = require("null-ls")
+
+-- -- register any number of sources simultaneously
+-- local sources = {
+--     null_ls.builtins.formatting.prettier,
+--     null_ls.builtins.diagnostics.write_good,
+--     null_ls.builtins.code_actions.gitsigns,
+--     null_ls.builtins.formatting.stylua 
+-- }
+
+-- null_ls.setup {sources = sources}
+
+-- require("lspconfig")["null-ls"].setup({
+--     on_attach = on_attach
+-- })
 
 vim.api.nvim_set_keymap(
   'n',

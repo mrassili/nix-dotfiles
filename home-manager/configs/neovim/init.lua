@@ -29,13 +29,12 @@ require('packer').startup(function()
   use 'ludovicchabant/vim-gutentags'
   use 'justinmk/vim-dirvish'
   use 'christoomey/vim-tmux-navigator'
-  use 'jose-elias-alvarez/null-ls.nvim'
   -- UI to select things (files, grep results, open buffers...)
   use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/plenary.nvim' } }
   use 'nvim-telescope/telescope-fzf-native.nvim'
   use 'joshdick/onedark.vim' -- Theme inspired by Atom
   use 'shadmansaleh/lualine.nvim' -- Fancier statusline
-  use 'arkav/lualine-lsp-progress' -- Integration with progress notifications
+  -- use 'arkav/lualine-lsp-progress' -- Integration with progress notifications
   -- Add indentation guides even on blank lines
   use 'lukas-reineke/indent-blankline.nvim'
   -- Add git related info in the signs columns and popups
@@ -44,7 +43,6 @@ require('packer').startup(function()
   use 'nvim-treesitter/nvim-treesitter'
   -- Additional textobjects for treesitter
   use 'nvim-treesitter/nvim-treesitter-textobjects'
-  use 'mfussenegger/nvim-lint'
   use 'neovim/nvim-lspconfig' -- Collection of configurations for built-in LSP client
   use 'folke/which-key.nvim'
   use 'bfredl/nvim-luadev'
@@ -107,7 +105,7 @@ require('lualine').setup {
   sections = {
     lualine_a = { 'mode' },
     lualine_b = { 'filename' },
-    lualine_c = { 'lsp_progress' },
+    -- lualine_c = { 'lsp_progress' },
     lualine_x = { 'filetype' },
     lualine_y = { 'progress' },
     lualine_z = { 'location' },
@@ -345,7 +343,6 @@ wk.register({
 -- --exclude=build
 -- --exclude=dist
 vim.g.gutentags_file_list_command = 'fd'
-vim.g.gutentags_ctags_extra_args = { '--python-kinds=-iv' }
 
 -- remove conceal on markdown files
 vim.g.markdown_syntax_conceal = 0
@@ -473,7 +470,8 @@ vim.api.nvim_exec(
 -- log file location: /Users/michael/.local/share/nvim/lsp.log
 -- Add nvim-lspconfig plugin
 local nvim_lsp = require 'lspconfig'
--- vim.lsp.set_log_level("trace")
+vim.lsp.set_log_level("debug")
+require('vim.lsp.log').set_format_func(vim.inspect)
 local on_attach = function(_client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
   vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
@@ -481,8 +479,6 @@ local on_attach = function(_client, bufnr)
     signs = true,
     update_in_insert = true,
   })
-
-  _client.resolved_capabilities.code_action = false
 
   -- local overridden_hover = vim.lsp.with(vim.lsp.handlers.hover, { border = "single" })
   local overridden_hover = vim.lsp.handlers.hover
@@ -503,7 +499,7 @@ local on_attach = function(_client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', [[<cmd>lua require('telescope.builtin').lsp_references()<cr>]], opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
@@ -530,6 +526,7 @@ local servers = {
   -- 'gopls',
   'rust_analyzer',
   'tsserver',
+  'bashls',
   -- 'rnix',
   -- 'hls',
   'pyright',
@@ -540,6 +537,7 @@ local servers = {
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     -- capabilities = capabilities,
+    -- cmd = {"/home/michael/Repositories/rust-analyzer/target/release/rust-analyzer"},
     on_attach = on_attach,
   }
 end
@@ -603,7 +601,7 @@ nvim_lsp.texlab.setup {
 -- }
 
 -- Trigger linting
-vim.api.nvim_set_keymap('n', '<leader>bl', "<cmd>lua require('lint').try_lint()<CR>", { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('n', '<leader>bl', "<cmd>lua require('lint').try_lint()<CR>", { noremap = true, silent = true })
 
 -- Treesitter configuration
 -- Parsers must be installed manually via :TSInstall

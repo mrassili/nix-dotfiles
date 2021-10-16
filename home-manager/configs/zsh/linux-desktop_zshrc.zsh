@@ -44,10 +44,10 @@ snvim() {
 
 home-upgrade () {
   nix flake update $HOME/Repositories/nix/nix-dotfiles/home-manager
-  home-manager switch --flake "/home/michael/Repositories/nix/nix-dotfiles/home-manager#linux-desktop"
+  home-manager switch -b backup --flake "/home/michael/Repositories/nix/nix-dotfiles/home-manager#linux-desktop"
   # (( $+commands[doom] )) && doom -y upgrade
 }
 
 home-switch () {
-  home-manager switch --flake "/home/michael/Repositories/nix/nix-dotfiles/home-manager#linux-desktop"
+  home-manager switch -b backup --flake "/home/michael/Repositories/nix/nix-dotfiles/home-manager#linux-desktop"
 }

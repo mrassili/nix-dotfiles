@@ -82,7 +82,7 @@ vim.wo.signcolumn = 'yes'
 
 --Set colorscheme (order is important here)
 vim.o.termguicolors = true
-vim.g.onedark_terminal_italics = 2
+vim.g.onedark_terminal_italics = 1
 vim.cmd [[colorscheme onedark]]
 
 -- Set completeopt
@@ -286,6 +286,8 @@ vim.api.nvim_set_keymap('n', '<leader>nc', ':e $HOME/Repositories/nix/nix-dotfil
 
 vim.cmd [[autocmd ColorScheme * highlight WhichKeyFloat guifg=ABB2BF guibg=282C34]]
 vim.cmd [[autocmd ColorScheme * highlight FloatBorder guifg=ABB2BF guibg=282C34]]
+vim.cmd [[highlight WhichKeyFloat guifg=ABB2BF guibg=282C34]]
+vim.cmd [[highlight FloatBorder guifg=ABB2BF guibg=282C34]]
 
 local wk = require 'which-key'
 
@@ -478,7 +480,7 @@ vim.diagnostic.config {
 
 -- LSP settings
 -- log file location: $HOME/.cache/nvim/lsp.log
--- vim.lsp.set_log_level("debug")
+vim.lsp.set_log_level("debug")
 require('vim.lsp.log').set_format_func(vim.inspect)
 
 -- Add nvim-lspconfig plugin

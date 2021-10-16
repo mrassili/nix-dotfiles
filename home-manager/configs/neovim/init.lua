@@ -85,6 +85,9 @@ vim.o.termguicolors = true
 vim.g.onedark_terminal_italics = 2
 vim.cmd [[colorscheme onedark]]
 
+-- Set completeopt
+vim.o.completeopt = 'menuone,noinsert'
+
 --Add spellchecking
 vim.cmd [[ autocmd FileType gitcommit setlocal spell ]]
 vim.cmd [[ autocmd FileType markdown setlocal spell ]]
@@ -466,26 +469,22 @@ vim.api.nvim_exec(
   false
 )
 
+-- Diagnostic settings
+vim.diagnostic.config {
+  virtual_text = true,
+  signs = true,
+  update_in_insert = true,
+}
+
 -- LSP settings
--- log file location: /Users/michael/.local/share/nvim/lsp.log
+-- log file location: $HOME/.cache/nvim/lsp.log
+-- vim.lsp.set_log_level("debug")
+require('vim.lsp.log').set_format_func(vim.inspect)
+
 -- Add nvim-lspconfig plugin
 local nvim_lsp = require 'lspconfig'
-vim.lsp.set_log_level("debug")
-require('vim.lsp.log').set_format_func(vim.inspect)
 local on_attach = function(_client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-  vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-    virtual_text = true,
-    signs = true,
-    update_in_insert = true,
-  })
-
-  -- local overridden_hover = vim.lsp.with(vim.lsp.handlers.hover, { border = "single" })
-  local overridden_hover = vim.lsp.handlers.hover
-  vim.lsp.handlers['textDocument/hover'] = function(...)
-    local buf = overridden_hover(...)
-    vim.api.nvim_buf_set_keymap(buf, 'n', 'K', '<Cmd>wincmd p<CR>', { noremap = true, silent = true })
-  end
 
   -- Mappings.
   local opts = { noremap = true, silent = true }
@@ -506,6 +505,7 @@ local on_attach = function(_client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>Q', '<cmd>lua vim.lsp.diagnostic.set_qflist()<CR>', opts)
+
   FormatRange = function()
     local start_pos = vim.api.nvim_buf_get_mark(0, '<')
     local end_pos = vim.api.nvim_buf_get_mark(0, '>')
@@ -520,6 +520,13 @@ local on_attach = function(_client, bufnr)
     command! Format execute 'lua vim.lsp.buf.formatting()'
   ]]
 end
+
+local handlers = {
+  ['textDocument/hover'] = function(...)
+    local buf = vim.lsp.handlers.hover(...)
+    vim.api.nvim_buf_set_keymap(buf, 'n', 'K', '<Cmd>wincmd p<CR>', { noremap = true, silent = true })
+  end
+}
 
 local servers = {
   'clangd',
@@ -536,9 +543,9 @@ local servers = {
 }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
-    -- capabilities = capabilities,
-    -- cmd = {"/home/michael/Repositories/rust-analyzer/target/release/rust-analyzer"},
     on_attach = on_attach,
+    handlers = handlers,
+
   }
 end
 
@@ -550,6 +557,7 @@ table.insert(runtime_path, 'lua/?/init.lua')
 require('lspconfig').sumneko_lua.setup {
   cmd = { 'lua-language-server' },
   on_attach = on_attach,
+  handlers = handlers,
   settings = {
     Lua = {
       runtime = {
@@ -578,6 +586,7 @@ require('lspconfig').sumneko_lua.setup {
 
 nvim_lsp.texlab.setup {
   on_attach = on_attach,
+  handlers = handlers,
   settings = {
     latex = {
       rootDirectory = '.',
@@ -661,22 +670,6 @@ require('orgmode').setup {
   org_default_notes_file = '~/Nextcloud/org/refile.org',
 }
 
--- local null_ls = require("null-ls")
-
--- -- register any number of sources simultaneously
--- local sources = {
---     null_ls.builtins.formatting.prettier,
---     null_ls.builtins.diagnostics.write_good,
---     null_ls.builtins.code_actions.gitsigns,
---     null_ls.builtins.formatting.stylua 
--- }
-
--- null_ls.setup {sources = sources}
-
--- require("lspconfig")["null-ls"].setup({
---     on_attach = on_attach
--- })
-
 vim.api.nvim_set_keymap(
   'n',
   '<leader>os',
@@ -689,6 +682,3 @@ vim.api.nvim_set_keymap(
   [[<cmd>lua require('telescope.builtin').find_files({search_dirs={'$HOME/Nextcloud/org'}})<cr>]],
   { noremap = true, silent = true }
 )
-
--- Set completeopt to have a better completion experience
-vim.o.completeopt = 'menuone,noinsert'

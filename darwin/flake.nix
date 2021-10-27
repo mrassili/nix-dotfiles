@@ -17,6 +17,7 @@
     # $ darwin-rebuild build --flake ./modules/examples#darwinConfigurations.simple.system \
     #       --override-input darwin .
     darwinConfigurations.MacBook-Pro = darwin.lib.darwinSystem {
+      system = "x86_64-darwin";
       modules = [ configuration darwin.darwinModules.simple ];
     };
 

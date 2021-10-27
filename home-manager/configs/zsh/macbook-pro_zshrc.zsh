@@ -60,9 +60,9 @@ home-switch () {
 
 system-upgrade () {
    nix flake update $HOME/Repositories/nix/nix-dotfiles/darwin
-   darwin-rebuild switch --flake $HOME/Repositories/nix/nix-dotfiles/darwin
+   darwin-rebuild switch --flake "$HOME/Repositories/nix/nix-dotfiles/darwin#MacBook-Pro"
 }
 
 system-switch () {
-   darwin-rebuild switch --flake $HOME/Repositories/nix/nix-dotfiles/darwin
+   darwin-rebuild switch --flake "$HOME/Repositories/nix/nix-dotfiles/darwin#MacBook-Pro"
 }

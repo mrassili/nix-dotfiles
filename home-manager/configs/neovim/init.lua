@@ -33,8 +33,8 @@ require('packer').startup(function()
   use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/plenary.nvim' } }
   use 'nvim-telescope/telescope-fzf-native.nvim'
   use 'joshdick/onedark.vim' -- Theme inspired by Atom
-  use 'shadmansaleh/lualine.nvim' -- Fancier statusline
-  -- use 'arkav/lualine-lsp-progress' -- Integration with progress notifications
+  use 'nvim-lualine/lualine.nvim' -- Fancier statusline
+  use 'arkav/lualine-lsp-progress' -- Integration with progress notifications
   -- Add indentation guides even on blank lines
   use 'lukas-reineke/indent-blankline.nvim'
   -- Add git related info in the signs columns and popups
@@ -108,7 +108,7 @@ require('lualine').setup {
   sections = {
     lualine_a = { 'mode' },
     lualine_b = { 'filename' },
-    -- lualine_c = { 'lsp_progress' },
+    lualine_c = { 'lsp_progress' },
     lualine_x = { 'filetype' },
     lualine_y = { 'progress' },
     lualine_z = { 'location' },
@@ -535,6 +535,7 @@ local servers = {
   -- 'gopls',
   'rust_analyzer',
   'tsserver',
+  'cssls',
   'bashls',
   -- 'rnix',
   -- 'hls',
